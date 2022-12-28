@@ -2,6 +2,8 @@
 ** Boombaclaat
 *** Harddisk
 
+List disk partitions.
+
 #+begin_src sh :dir /sudo:: :results verbatim
   fdisk -l /dev/nvme0n1
 #+end_src
@@ -29,6 +31,137 @@ Device             Start       End   Sectors  Size Type
 
 Partition table entries are not in disk order.
 #+end_example
+
+Show fstab.
+
+#+begin_src sh :results verbatim
+  cat /etc/fstab
+#+end_src
+
+#+RESULTS:
+: UUID=d4aef2a9-8f90-467e-96fc-9405c9bae56c / ext4 rw,relatime,x-systemd.growfs 0 1
+: UUID=1381-9611 /boot/efi vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro    0 2
+
+Create the LUKS encrypted container in partition =/dev/nvme0n1p9=.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  cryptsetup luksFormat --label cryptroot --type luks2 --pbkdf pbkdf2 /dev/nvme0n1p9
+#+end_src
+
+List the UUIDs of the partitions.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  blkid
+#+end_src
+
+#+RESULTS:
+: /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
+: /dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
+: /dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
+: /dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
+: /dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
+: /dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
+: /dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
+: /dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
+: /dev/nvme0n1p9: UUID="47e53c2d-0c1b-4d40-b738-8ecba562986d" LABEL="cryptroot" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
+
+Open the LUKS partition.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  cryptsetup luksOpen /dev/nvme0n1p9 cryptroot
+#+end_src
+
+Create a physical volume in the partition.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  pvcreate /dev/mapper/cryptroot
+#+end_src
+
+#+RESULTS:
+:   Physical volume "/dev/mapper/cryptroot" successfully created.
+
+Create a volume group in the physical volume, named =bombaclaat=.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  vgcreate bombaclaat /dev/mapper/cryptroot
+#+end_src
+
+#+RESULTS:
+:   Volume group "bombaclaat" successfully created
+
+Create a logical volume for the swap partition.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  lvcreate --size 16G bombaclaat --name swap
+#+end_src
+
+#+RESULTS:
+:   Logical volume "swap" created.
+
+Create a logical volume for the =home= partition.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  lvcreate -L 200G bombaclaat --name home
+#+end_src
+
+#+RESULTS:
+:   Logical volume "home" created.
+
+Create a logical volume for the =root= partition.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  lvcreate -l 100%FREE bombaclaat --name root
+#+end_src
+
+#+RESULTS:
+:   Logical volume "root" created.
+
+Format the filesystem and swap partitions.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  mkfs.ext4 -L root /dev/bombaclaat/root
+  mkfs.ext4 -L home /dev/bombaclaat/home
+  mkswap --label swap /dev/bombaclaat/swap
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Creating filesystem with 346024960 4k blocks and 86507520 inodes
+Filesystem UUID: 6bf4970e-5353-4bbb-bc1f-58ef7b224012
+Superblock backups stored on blocks:
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
+	102400000, 214990848
+
+Allocating group tables:     0/10560
+Writing inode tables:     0/10560
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information:     0/10560
+
+Creating filesystem with 52428800 4k blocks and 13107200 inodes
+Filesystem UUID: cbc6ebd8-c76d-4c24-afd1-bbc330c6fb2f
+Superblock backups stored on blocks:
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+	4096000, 7962624, 11239424, 20480000, 23887872
+
+Allocating group tables:    0/1600
+Writing inode tables:    0/1600
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information:    0/1600
+
+Setting up swapspace version 1, size = 16 GiB (17179852800 bytes)
+LABEL=swap, UUID=ce9eea83-344a-4fcf-bb8b-a5b75e118211
+#+end_example
+
+Mount the filesystems.
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  mount /dev/bombaclaat/root /mnt
+  mount --mkdir /dev/bombaclaat/home /mnt/home
+  swapon /dev/bombaclaat/swap
+#+end_src
+
+#+RESULTS:
 
 *** Mount Points
 
@@ -196,3 +329,5 @@ EFI Boot Partition
 /boot/efi/asahi/stub_info.json
 /boot/efi/asahi/installer.log
 #+end_example
+
+*** Image
