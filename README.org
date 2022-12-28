@@ -1,0 +1,198 @@
+* Guix Systems
+** Boombaclaat
+*** Harddisk
+
+#+begin_src sh :dir /sudo:: :results verbatim
+  fdisk -l /dev/nvme0n1
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Disk /dev/nvme0n1: 1.82 TiB, 2001111162880 bytes, 488552530 sectors
+Disk model: APPLE SSD AP2048R
+Units: sectors of 1 * 4096 = 4096 bytes
+Sector size (logical/physical): 4096 bytes / 4096 bytes
+I/O size (minimum/optimal): 4096 bytes / 4096 bytes
+Disklabel type: gpt
+Disk identifier: A67A7E47-AE3F-436F-9BF7-9DCBCB1151C5
+
+Device             Start       End   Sectors  Size Type
+/dev/nvme0n1p1         6    128005    128000  500M Apple Silicon boot
+/dev/nvme0n1p2    128006  24542067  24414062 93.1G Apple APFS
+/dev/nvme0n1p3  24542068  25152371    610304  2.3G Apple APFS
+/dev/nvme0n1p4  25152372  25274483    122112  477M EFI System
+/dev/nvme0n1p5  25274484  51488767  26214284  100G Linux filesystem
+/dev/nvme0n1p6  51488768  52099071    610304  2.3G Apple APFS
+/dev/nvme0n1p7  52099072  52221183    122112  477M EFI System
+/dev/nvme0n1p8 487241816 488552524   1310709    5G Apple Silicon recovery
+/dev/nvme0n1p9  52221184 454874367 402653184  1.5T Linux filesystem
+
+Partition table entries are not in disk order.
+#+end_example
+
+*** Mount Points
+
+#+begin_src sh :results verbatim
+  mount
+#+end_src
+
+#+RESULTS:
+#+begin_example
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+sys on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+dev on /dev type devtmpfs (rw,nosuid,relatime,size=16201680k,nr_inodes=1012605,mode=755)
+run on /run type tmpfs (rw,nosuid,nodev,relatime,mode=755)
+efivarfs on /sys/firmware/efi/efivars type efivarfs (ro,nosuid,nodev,noexec,relatime)
+/dev/nvme0n1p5 on / type ext4 (rw,relatime)
+vendorfw on /usr/lib/firmware/vendor type tmpfs (rw,relatime)
+securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
+pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
+bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime,mode=700)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=8822)
+hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=32M)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+/dev/nvme0n1p5 on /gnu/store type ext4 (ro,relatime)
+debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev,size=16239664k,nr_inodes=1048576)
+fusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)
+configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
+ramfs on /run/credentials/systemd-sysctl.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+ramfs on /run/credentials/systemd-tmpfiles-setup-dev.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+/dev/nvme0n1p4 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
+ramfs on /run/credentials/systemd-tmpfiles-setup.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
+overlay on /var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/WMQYMA4JK5QPZGTGCF4MQSHKQJ:/var/lib/docker/overlay2/l/HN7EIUT6CDPFOUPTL3NCAUNXK3:/var/lib/docker/overlay2/l/2HJFJ7XVKLLLDU6GA4CCLL7DDE:/var/lib/docker/overlay2/l/DTSUBKLW6UJ3DN3R6VOD37QPCK:/var/lib/docker/overlay2/l/AXSGK4HOGCPZRMETSAEU52MT4F:/var/lib/docker/overlay2/l/IFVIS2DVGT33FZV6GY3A5RISEK:/var/lib/docker/overlay2/l/BWDBR63ZB35JF5O3OJLLSC4OQ5:/var/lib/docker/overlay2/l/5FLD75YS5HDB2L6NYOW5FVTKOO:/var/lib/docker/overlay2/l/5Y7ESUE24IUJTFBIMGSRHIYAI2:/var/lib/docker/overlay2/l/Z2IFUCS4GD2FFW7YAXITDCGKL3:/var/lib/docker/overlay2/l/ARVQKEOQQ75FLCYSLBU644YJHP:/var/lib/docker/overlay2/l/TOXS72PSCMETOJABAO4VFPIJHD:/var/lib/docker/overlay2/l/RUBYHQ2UECTU7WLACVQ7KBYK4V:/var/lib/docker/overlay2/l/E3BVRYAW4RISGVT5LQJJ236YQF:/var/lib/docker/overlay2/l/OHU6T2NLS2Y6UFCOFBGPU7Z3SJ,upperdir=/var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/diff,workdir=/var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/work)
+nsfs on /run/docker/netns/2f814c7cb597 type nsfs (rw)
+tmpfs on /run/user/1001 type tmpfs (rw,nosuid,nodev,relatime,size=3247920k,nr_inodes=811980,mode=700,uid=1001,gid=1001)
+#+end_example
+
+*** Partitions
+
+EFI Boot Partition
+
+#+begin_src sh :results verbatim
+  find /boot/efi
+#+end_src
+
+#+RESULTS:
+#+begin_example
+/boot/efi
+/boot/efi/.Spotlight-V100
+/boot/efi/.Spotlight-V100/Store-V2
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/psid.db
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.Lion
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/Lion.created
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.Cab
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/Cab.created
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.Star
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/indexState
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexHead
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexIds
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexBigDates
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexGroups
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexPostings
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexTermIds
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexPositions
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexPositionTable
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexDirectory
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexCompactDirectory
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexArrays
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexUpdates
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.directoryStoreFile
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexHead
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexIds
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexBigDates
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexGroups
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexPostings
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexTermIds
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexPositions
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexPositionTable
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexDirectory
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexCompactDirectory
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexArrays
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexUpdates
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.directoryStoreFile
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/store.db
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/.store.db
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.header
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.data
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.offsets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.buckets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.header
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.data
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.offsets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.buckets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.header
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.data
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.offsets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.buckets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.header
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.data
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.offsets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.buckets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.header
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.data
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.offsets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.buckets
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/reverseDirectoryStore
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.spotlight.state
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/store_generation
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.corespotlight
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live_system
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live_user
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live_priority
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.assisted_import_pre
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.assisted_import_post
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.health_check
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.migration
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.migration_secondchance
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journalExclusion
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.scan
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/shutdown_time
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/reverseDirectoryStore.shadow
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.shadowIndexHead
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/store.updates
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.directoryStoreFile.shadow
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.shadowIndexGroups
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexHead
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexTermIds
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexPositionTable
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexCompactDirectory
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexDirectory
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexArrays
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.directoryStoreFile.shadow
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexGroups
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/reverseStore.updates
+/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.spotlight.loc
+/boot/efi/.Spotlight-V100/VolumeConfiguration.plist
+/boot/efi/.Trashes
+/boot/efi/.Trashes/501
+/boot/efi/.Trashes/._501
+/boot/efi/.fseventsd
+/boot/efi/.fseventsd/fseventsd-uuid
+/boot/efi/.fseventsd/0000000000567979
+/boot/efi/.fseventsd/000000000056797a
+/boot/efi/m1n1
+/boot/efi/m1n1/boot.bin.old
+/boot/efi/m1n1/boot.bin
+/boot/efi/EFI
+/boot/efi/EFI/BOOT
+/boot/efi/EFI/BOOT/BOOTAA64.EFI
+/boot/efi/vendorfw
+/boot/efi/vendorfw/firmware.cpio
+/boot/efi/vendorfw/firmware.tar
+/boot/efi/vendorfw/manifest.txt
+/boot/efi/asahi
+/boot/efi/asahi/BuildManifest.plist
+/boot/efi/asahi/RestoreVersion.plist
+/boot/efi/asahi/kernelcache.release.mac13j
+/boot/efi/asahi/AdminUserRecoveryInfo.plist
+/boot/efi/asahi/SystemVersion.plist
+/boot/efi/asahi/all_firmware.tar.gz
+/boot/efi/asahi/stub_info.json
+/boot/efi/asahi/installer.log
+#+end_example
