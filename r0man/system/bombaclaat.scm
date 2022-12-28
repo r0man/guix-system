@@ -30,7 +30,7 @@
                      #:qemu-networking? #f
                      rest)))
 
-    (initrd-modules '("usb-storage"
+    (initrd-modules '(;; "usb-storage"
                       ;; "uas"
                       ;; "usbhid"
                       ;; "hid-apple"
@@ -45,7 +45,7 @@
                       ;; "virtio-rng"
                       ))
 
-    ;; Add the 'net.ifnames' argument to prevent network interfaces
+    ;; add the 'net.ifnames' argument to prevent network interfaces
     ;; from having really long names.  This can cause an issue with
     ;; wpa_supplicant when you try to connect to a wifi network.
     (kernel-arguments '("quiet" "modprobe.blacklist=radeon" "net.ifnames=0"))
@@ -97,16 +97,17 @@
     (packages (append (list (specification->package "nss-certs"))
                       %base-packages))
 
-    (services (modify-services (cons (service gnome-desktop-service-type)
-                                     %desktop-services)
-                (guix-service-type config =>
-                                   (guix-configuration
-                                    (inherit config)
-                                    (substitute-urls
-                                     (append (list "https://substitutes.nonguix.org")
-                                             %default-substitute-urls))
-                                    (authorized-keys
-                                     (append (list (local-file "./keys/nonguix.pub"))
-                                             %default-authorized-guix-keys))))))))
+    ;; (services (modify-services (cons (service gnome-desktop-service-type)
+    ;;                                  %desktop-services)
+    ;;             (guix-service-type config =>
+    ;;                                (guix-configuration
+    ;;                                 (inherit config)
+    ;;                                 (substitute-urls
+    ;;                                  (append (list "https://substitutes.nonguix.org")
+    ;;                                          %default-substitute-urls))
+    ;;                                 (authorized-keys
+    ;;                                  (append (list (local-file "./keys/nonguix.pub"))
+    ;;                                          %default-authorized-guix-keys))))))
+    ))
 
 bombaclaat
