@@ -331,3 +331,15 @@ EFI Boot Partition
 #+end_example
 
 *** Image
+
+Build the Guix installation image.
+
+#+begin_src sh :results verbatim
+  guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/system/bombaclaat.scm
+#+end_src
+
+Build the Guix installation image using cross compilation.
+
+#+begin_src sh :results verbatim
+  guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux --target=aarch64-linux-gnu r0man/system/bombaclaat.scm
+#+end_src

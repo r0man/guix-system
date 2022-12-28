@@ -1,16 +1,17 @@
-(use-modules (gnu)
-             (gnu system nss)
-             (nongnu packages linux)
-             (nongnu system linux-initrd))
+(define-module (r0man system bombaclaat)
+  #:use-module (asahi packages)
+  #:use-module (gnu)
+  #:use-module (gnu system nss)
+  #:use-module (nongnu packages linux)
+  #:use-module (nongnu system linux-initrd))
 
 (use-service-modules desktop networking ssh xorg)
 (use-package-modules certs linux screen ssh)
 
 (define bombaclaat
   (operating-system
-    (kernel linux)
-    (initrd microcode-initrd)
-    (firmware (list sof-firmware linux-firmware))
+    (kernel asahi-linux)
+    (firmware (list linux-firmware))
     (host-name "bombaclaat")
     (timezone "Europe/Berlin")
     (locale "en_US.utf8")
@@ -20,6 +21,34 @@
                  (bootloader grub-efi-bootloader)
                  (targets (list "/boot/efi"))
                  (keyboard-layout keyboard-layout)))
+
+    ;; (initrd microcode-initrd)
+    (initrd (lambda (file-systems . rest)
+              ;; Create a standard initrd but set up networking
+              ;; with the parameters QEMU expects by default.
+              (apply base-initrd file-systems
+                     #:qemu-networking? #f
+                     rest)))
+
+    (initrd-modules '("usb-storage"
+                      ;; "uas"
+                      ;; "usbhid"
+                      ;; "hid-apple"
+                      ;; "dm-crypt"
+                      ;; "serpent_generic"
+                      ;; "wp512"
+                      ;; "nls_iso8859-1"
+                      ;; "virtio_pci"
+                      ;; "virtio_balloon"
+                      ;; "virtio_blk"
+                      ;; "virtio_net"
+                      ;; "virtio-rng"
+                      ))
+
+    ;; Add the 'net.ifnames' argument to prevent network interfaces
+    ;; from having really long names.  This can cause an issue with
+    ;; wpa_supplicant when you try to connect to a wifi network.
+    (kernel-arguments '("quiet" "modprobe.blacklist=radeon" "net.ifnames=0"))
 
     (mapped-devices (list (mapped-device
                            (source (uuid "47e53c2d-0c1b-4d40-b738-8ecba562986d"))
@@ -50,7 +79,9 @@
                            (dependencies mapped-devices))
                          %base-file-systems))
 
-    (swap-devices (list (file-system-label "swap")))
+    (swap-devices (list (swap-space
+                         (target (file-system-label "swap"))
+                         (dependencies mapped-devices))))
 
     (users (cons* (user-account
                    (name "roman")
