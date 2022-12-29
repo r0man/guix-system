@@ -4,7 +4,7 @@
 
 List disk partitions.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   fdisk -l /dev/nvme0n1
 #+end_src
 
@@ -34,7 +34,7 @@ Partition table entries are not in disk order.
 
 Show fstab.
 
-#+begin_src sh :results verbatim
+#+begin_src sh :exports both :results verbatim
   cat /etc/fstab
 #+end_src
 
@@ -44,17 +44,18 @@ Show fstab.
 
 Create the LUKS encrypted container in partition =/dev/nvme0n1p9=.
 
-#+begin_src sh :dir /sudo:: :results verbatim
-  cryptsetup luksFormat --label cryptroot --type luks2 --pbkdf pbkdf2 /dev/nvme0n1p9
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
+  cryptsetup luksFormat --label cryptroot /dev/nvme0n1p9
 #+end_src
 
 List the UUIDs of the partitions.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   blkid
 #+end_src
 
 #+RESULTS:
+: /dev/nvme0n1p9: UUID="5ef57b67-bc1e-4115-888f-bdc851fc6d2c" LABEL="cryptroot" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
 : /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
 : /dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
 : /dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
@@ -63,17 +64,16 @@ List the UUIDs of the partitions.
 : /dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
 : /dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
 : /dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
-: /dev/nvme0n1p9: UUID="47e53c2d-0c1b-4d40-b738-8ecba562986d" LABEL="cryptroot" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
 
 Open the LUKS partition.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   cryptsetup luksOpen /dev/nvme0n1p9 cryptroot
 #+end_src
 
 Create a physical volume in the partition.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   pvcreate /dev/mapper/cryptroot
 #+end_src
 
@@ -82,7 +82,7 @@ Create a physical volume in the partition.
 
 Create a volume group in the physical volume, named =bombaclaat=.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   vgcreate bombaclaat /dev/mapper/cryptroot
 #+end_src
 
@@ -91,7 +91,7 @@ Create a volume group in the physical volume, named =bombaclaat=.
 
 Create a logical volume for the swap partition.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   lvcreate --size 16G bombaclaat --name swap
 #+end_src
 
@@ -100,7 +100,7 @@ Create a logical volume for the swap partition.
 
 Create a logical volume for the =home= partition.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   lvcreate -L 200G bombaclaat --name home
 #+end_src
 
@@ -109,7 +109,7 @@ Create a logical volume for the =home= partition.
 
 Create a logical volume for the =root= partition.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   lvcreate -l 100%FREE bombaclaat --name root
 #+end_src
 
@@ -118,7 +118,7 @@ Create a logical volume for the =root= partition.
 
 Format the filesystem and swap partitions.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   mkfs.ext4 -L root /dev/bombaclaat/root
   mkfs.ext4 -L home /dev/bombaclaat/home
   mkswap --label swap /dev/bombaclaat/swap
@@ -155,7 +155,7 @@ LABEL=swap, UUID=ce9eea83-344a-4fcf-bb8b-a5b75e118211
 
 Mount the filesystems.
 
-#+begin_src sh :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   mount /dev/bombaclaat/root /mnt
   mount --mkdir /dev/bombaclaat/home /mnt/home
   mount --mkdir /dev/nvme0n1p7 /mnt/boot/efi
@@ -166,7 +166,7 @@ Mount the filesystems.
 
 *** Mount Points
 
-#+begin_src sh :results verbatim
+#+begin_src sh :exports both :results verbatim
   mount
 #+end_src
 
@@ -174,7 +174,7 @@ Mount the filesystems.
 #+begin_example
 proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
 sys on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
-dev on /dev type devtmpfs (rw,nosuid,relatime,size=16201680k,nr_inodes=1012605,mode=755)
+dev on /dev type devtmpfs (rw,nosuid,relatime,size=16201664k,nr_inodes=1012604,mode=755)
 run on /run type tmpfs (rw,nosuid,nodev,relatime,mode=755)
 efivarfs on /sys/firmware/efi/efivars type efivarfs (ro,nosuid,nodev,noexec,relatime)
 /dev/nvme0n1p5 on / type ext4 (rw,relatime)
@@ -185,7 +185,7 @@ devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmod
 cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
 pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
 bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime,mode=700)
-systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=8822)
+systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=2491)
 hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=32M)
 mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
 /dev/nvme0n1p5 on /gnu/store type ext4 (ro,relatime)
@@ -198,15 +198,18 @@ ramfs on /run/credentials/systemd-tmpfiles-setup-dev.service type ramfs (ro,nosu
 /dev/nvme0n1p4 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
 ramfs on /run/credentials/systemd-tmpfiles-setup.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
 overlay on /var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/WMQYMA4JK5QPZGTGCF4MQSHKQJ:/var/lib/docker/overlay2/l/HN7EIUT6CDPFOUPTL3NCAUNXK3:/var/lib/docker/overlay2/l/2HJFJ7XVKLLLDU6GA4CCLL7DDE:/var/lib/docker/overlay2/l/DTSUBKLW6UJ3DN3R6VOD37QPCK:/var/lib/docker/overlay2/l/AXSGK4HOGCPZRMETSAEU52MT4F:/var/lib/docker/overlay2/l/IFVIS2DVGT33FZV6GY3A5RISEK:/var/lib/docker/overlay2/l/BWDBR63ZB35JF5O3OJLLSC4OQ5:/var/lib/docker/overlay2/l/5FLD75YS5HDB2L6NYOW5FVTKOO:/var/lib/docker/overlay2/l/5Y7ESUE24IUJTFBIMGSRHIYAI2:/var/lib/docker/overlay2/l/Z2IFUCS4GD2FFW7YAXITDCGKL3:/var/lib/docker/overlay2/l/ARVQKEOQQ75FLCYSLBU644YJHP:/var/lib/docker/overlay2/l/TOXS72PSCMETOJABAO4VFPIJHD:/var/lib/docker/overlay2/l/RUBYHQ2UECTU7WLACVQ7KBYK4V:/var/lib/docker/overlay2/l/E3BVRYAW4RISGVT5LQJJ236YQF:/var/lib/docker/overlay2/l/OHU6T2NLS2Y6UFCOFBGPU7Z3SJ,upperdir=/var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/diff,workdir=/var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/work)
-nsfs on /run/docker/netns/2f814c7cb597 type nsfs (rw)
+nsfs on /run/docker/netns/cc8ea249d4e2 type nsfs (rw)
 tmpfs on /run/user/1001 type tmpfs (rw,nosuid,nodev,relatime,size=3247920k,nr_inodes=811980,mode=700,uid=1001,gid=1001)
+/dev/mapper/bombaclaat-root on /mnt type ext4 (rw,relatime)
+/dev/mapper/bombaclaat-home on /mnt/home type ext4 (rw,relatime)
+/dev/nvme0n1p7 on /mnt/boot/efi type vfat (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
 #+end_example
 
 *** Partitions
 
 EFI Boot Partition
 
-#+begin_src sh :results verbatim
+#+begin_src sh :exports both :results verbatim
   find /boot/efi
 #+end_src
 
@@ -335,12 +338,12 @@ EFI Boot Partition
 
 Build the Guix installation image.
 
-#+begin_src sh :results verbatim
+#+begin_src sh :exports both :results verbatim
   guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/system/bombaclaat.scm
 #+end_src
 
 Initialize the system in =/mnt=.
 
-#+begin_src sh :results verbatim
+#+begin_src sh :exports both :results verbatim
   guix time-machine -C r0man/system/channels.scm -- system init -L . --system=aarch64-linux r0man/system/bombaclaat.scm /mnt
 #+end_src

@@ -51,7 +51,7 @@
     (kernel-arguments '("quiet" "modprobe.blacklist=radeon" "net.ifnames=0"))
 
     (mapped-devices (list (mapped-device
-                           (source (uuid "47e53c2d-0c1b-4d40-b738-8ecba562986d"))
+                           (source (uuid "5ef57b67-bc1e-4115-888f-bdc851fc6d2c"))
                            (target "cryptroot")
                            (type luks-device-mapping))
                           (mapped-device
