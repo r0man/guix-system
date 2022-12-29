@@ -158,6 +158,7 @@ Mount the filesystems.
 #+begin_src sh :dir /sudo:: :results verbatim
   mount /dev/bombaclaat/root /mnt
   mount --mkdir /dev/bombaclaat/home /mnt/home
+  mount --mkdir /dev/nvme0n1p7 /mnt/boot/efi
   swapon /dev/bombaclaat/swap
 #+end_src
 
@@ -338,8 +339,8 @@ Build the Guix installation image.
   guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/system/bombaclaat.scm
 #+end_src
 
-Build the Guix installation image using cross compilation.
+Initialize the system in =/mnt=.
 
 #+begin_src sh :results verbatim
-  guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux --target=aarch64-linux-gnu r0man/system/bombaclaat.scm
+  guix time-machine -C r0man/system/channels.scm -- system init -L . --system=aarch64-linux r0man/system/bombaclaat.scm /mnt
 #+end_src

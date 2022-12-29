@@ -18,7 +18,7 @@
     (keyboard-layout (keyboard-layout "us"))
 
     (bootloader (bootloader-configuration
-                 (bootloader grub-efi-bootloader)
+                 (bootloader grub-efi-removable-bootloader)
                  (targets (list "/boot/efi"))
                  (keyboard-layout keyboard-layout)))
 
