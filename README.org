@@ -55,21 +55,15 @@ List the UUIDs of the partitions.
 #+end_src
 
 #+RESULTS:
-#+begin_example
-/dev/mapper/bombaclaat-swap: LABEL="swap" UUID="0556d6e8-7a3e-4be8-b18d-dfebec885f5c" TYPE="swap"
-/dev/nvme0n1p9: UUID="b75f35dd-85fb-4b0d-86ac-9cc0a3dd632c" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
-/dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
-/dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
-/dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
-/dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
-/dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
-/dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
-/dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
-/dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
-/dev/mapper/bombaclaat-home: LABEL="home" UUID="95f958a8-24b1-413a-951a-d3a0990f6c42" BLOCK_SIZE="4096" TYPE="ext4"
-/dev/mapper/cryptroot: UUID="vTgKDB-rifQ-T026-p2v5-u05B-c01s-lMZ2GU" TYPE="LVM2_member"
-/dev/mapper/bombaclaat-root: LABEL="root" UUID="2f5a9bca-e460-4498-a133-cb6bc6bbdf3b" BLOCK_SIZE="4096" TYPE="ext4"
-#+end_example
+: /dev/nvme0n1p9: UUID="b75f35dd-85fb-4b0d-86ac-9cc0a3dd632c" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
+: /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
+: /dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
+: /dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
+: /dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
+: /dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
+: /dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
+: /dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
+: /dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
 
 Open the LUKS partition.
 
