@@ -75,6 +75,31 @@
                         "bombaclaat-swap"))
          (type lvm-device-mapping))))
 
+(define %file-systems
+  (list (file-system
+          (mount-point "/")
+          (device "/dev/mapper/bombaclaat-root")
+          ;; (device (file-system-label "root"))
+          (type "ext4")
+          (needed-for-boot? #t)
+          (dependencies %mapped-devices))
+        (file-system
+          (mount-point "/boot/efi")
+          (device (uuid "9B92-14F6" 'fat32))
+          (type "vfat"))
+        (file-system
+          (mount-point "/home")
+          (device "/dev/mapper/bombaclaat-home")
+          ;; (device (file-system-label "home"))
+          (type "ext4")
+          (needed-for-boot? #t)
+          (dependencies %mapped-devices))))
+
+(define %swap-devices
+  (list (swap-space
+         (target (file-system-label "swap"))
+         (dependencies %mapped-devices))))
+
 (define bombaclaat
   (operating-system
     (inherit desktop-operating-system)
@@ -84,29 +109,7 @@
     (initrd asahi-initrd)
     (initrd-modules %modules)
     (mapped-devices %mapped-devices)
-
-    (file-systems (cons* (file-system
-                           (mount-point "/")
-                           (device "/dev/mapper/bombaclaat-root")
-                           ;; (device (file-system-label "root"))
-                           (type "ext4")
-                           (needed-for-boot? #t)
-                           (dependencies mapped-devices))
-                         (file-system
-                           (mount-point "/boot/efi")
-                           (device (uuid "9B92-14F6" 'fat32))
-                           (type "vfat"))
-                         (file-system
-                           (mount-point "/home")
-                           (device "/dev/mapper/bombaclaat-home")
-                           ;; (device (file-system-label "home"))
-                           (type "ext4")
-                           (needed-for-boot? #t)
-                           (dependencies mapped-devices))
-                         %base-file-systems))
-
-    (swap-devices (list (swap-space
-                         (target (file-system-label "swap"))
-                         (dependencies mapped-devices))))))
+    (file-systems (append %file-systems %base-file-systems))
+    (swap-devices %swap-devices)))
 
 bombaclaat
