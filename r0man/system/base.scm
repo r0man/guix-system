@@ -77,7 +77,6 @@
                                                        (web-interface? #t)
                                                        (extensions
                                                         (list cups-filters))))
-                                             (service dhcp-client-service-type)
                                              (service libvirt-service-type
                                                       (libvirt-configuration
                                                        (unix-sock-group "libvirt")
