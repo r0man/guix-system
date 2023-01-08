@@ -17,13 +17,40 @@
   #:use-module (srfi srfi-1)
   #:export (base-operating-system))
 
-(define base-operating-system
+(define %keyboard-layout
+  (keyboard-layout "us" #:options '("altwin:swap_lalt_lwin"
+                                    "caps:ctrl_modifier"
+                                    "terminate:ctrl_alt_bksp")))
+
+(define %packages
+  (map specification->package
+       '("cryptsetup-static"
+         "e2fsprogs"
+         "emacs-next"
+         "lvm2-static"
+         "network-manager"
+         "nss-certs")))
+
+(define %users
+  (list (user-account
+         (name "r0man")
+         (comment "r0man")
+         (group "users")
+         (home-directory "/home/r0man")
+         (supplementary-groups '("audio" "netdev" "video" "wheel")))
+        (user-account
+         (name "roman")
+         (comment "Roman Scherer")
+         (group "users")
+         (home-directory "/home/roman")
+         (supplementary-groups '("audio" "netdev" "video" "wheel")))))
+
+(define-public base-operating-system
   (operating-system
     (host-name "base")
     (locale "en_US.utf8")
     (timezone "Europe/Berlin")
-    (keyboard-layout (keyboard-layout "us"))
-
+    (keyboard-layout %keyboard-layout)
     (bootloader (bootloader-configuration
                  (bootloader grub-efi-removable-bootloader)
                  (targets (list "/boot/efi"))
@@ -40,37 +67,17 @@
                )
              %default-kernel-arguments))
     (firmware (list linux-firmware))
-
     (initrd microcode-initrd)
-
     (file-systems (cons*
                    (file-system
+                     ;; TODO: Change to root?
                      (mount-point "/tmp")
                      (device "none")
                      (type "tmpfs")
                      (check? #f))
                    %base-file-systems))
-
-    (users (cons* (user-account
-                   (name "roman")
-                   (comment "Roman Scherer")
-                   (group "users")
-                   (home-directory "/home/roman")
-                   (supplementary-groups '("audio"
-                                           "netdev"
-                                           "video"
-                                           "wheel")))
-                  %base-user-accounts))
-
-    (packages (append (map specification->package
-                           (list "cryptsetup-static"
-                                 "e2fsprogs"
-                                 "emacs-next"
-                                 "lvm2-static"
-                                 "network-manager"
-                                 "nss-certs"))
-                      %base-packages))
-
+    (users (append %users %base-user-accounts))
+    (packages (append %packages %base-packages))
     (services (modify-services (append (list (service avahi-service-type)
                                              (service cups-service-type
                                                       (cups-configuration
@@ -105,3 +112,5 @@
                                     (authorized-keys
                                      (append (list (local-file "./keys/nonguix.pub"))
                                              %default-authorized-guix-keys))))))))
+
+base-operating-system

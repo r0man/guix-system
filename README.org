@@ -348,6 +348,12 @@ EFI Boot Partition
 Build the Guix installation image.
 
 #+begin_src sh :exports both :results verbatim
+  guix system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
+#+end_src
+
+Or, build the image with the Guix time machine.
+
+#+begin_src sh :exports both :results verbatim
   guix time-machine -C r0man/guix/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
 #+end_src
 
