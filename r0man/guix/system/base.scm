@@ -67,7 +67,6 @@
     (initrd microcode-initrd)
     (file-systems (cons*
                    (file-system
-                     ;; TODO: Change to root?
                      (mount-point "/")
                      (device "none")
                      (type "tmpfs")
