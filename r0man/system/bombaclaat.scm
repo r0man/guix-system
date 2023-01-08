@@ -2,12 +2,15 @@
   #:use-module (asahi initrd)
   #:use-module (asahi installer)
   #:use-module (asahi packages)
+  #:use-module (gnu packages ssh)
+  #:use-module (gnu services avahi)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
   #:use-module (gnu system nss)
   #:use-module (gnu)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
+  #:use-module (r0man system base)
   #:use-module (srfi srfi-1))
 
 (use-service-modules networking ssh xorg)
@@ -15,14 +18,8 @@
 
 (define bombaclaat
   (operating-system
+    (inherit base-operating-system)
     (host-name "bombaclaat")
-    (locale "en_US.utf8")
-    (timezone "Europe/Berlin")
-    (keyboard-layout (keyboard-layout "us"))
-    (bootloader (bootloader-configuration
-                 (bootloader grub-efi-removable-bootloader)
-                 (targets (list "/boot/efi"))
-                 (keyboard-layout keyboard-layout)))
     (kernel asahi-linux-edge)
     (kernel-arguments
      (append '("modprobe.blacklist=radeon"
@@ -86,8 +83,9 @@
        "virtio_blk"
        "virtio_net"
        "virtio-rng"))
+
     (mapped-devices (list (mapped-device
-                           (source (uuid "65d8f2a0-9ebc-44a4-8d68-adeae9221701"))
+                           (source (uuid "f06f4977-d529-4890-9d0e-4ad697886dce"))
                            (target "cryptroot")
                            (type luks-device-mapping))
                           (mapped-device
@@ -96,9 +94,11 @@
                                           "bombaclaat-root"
                                           "bombaclaat-swap"))
                            (type lvm-device-mapping))))
+
     (file-systems (cons* (file-system
                            (mount-point "/")
-                           (device (file-system-label "root"))
+                           (device "/dev/mapper/bombaclaat-root")
+                           ;; (device (file-system-label "root"))
                            (type "ext4")
                            (needed-for-boot? #t)
                            (dependencies mapped-devices))
@@ -108,43 +108,15 @@
                            (type "vfat"))
                          (file-system
                            (mount-point "/home")
-                           (device (file-system-label "home"))
+                           (device "/dev/mapper/bombaclaat-home")
+                           ;; (device (file-system-label "home"))
                            (type "ext4")
                            (needed-for-boot? #t)
                            (dependencies mapped-devices))
                          %base-file-systems))
+
     (swap-devices (list (swap-space
                          (target (file-system-label "swap"))
-                         (dependencies mapped-devices))))
-    (users (cons* (user-account
-                   (name "roman")
-                   (comment "Roman Scherer")
-                   (group "users")
-                   (home-directory "/home/roman")
-                   (supplementary-groups '("audio"
-                                           "netdev"
-                                           "video"
-                                           "wheel")))
-                  %base-user-accounts))
-    (packages (append (map specification->package
-                           (list "cryptsetup-static"
-                                 "lvm2-static"
-                                 "nss-certs"))
-                      %base-packages))
-    (services (modify-services (append (list (service dhcp-client-service-type)
-                                             (service openssh-service-type
-                                                      (openssh-configuration
-                                                       (openssh openssh-sans-x)
-                                                       (port-number 22))))
-                                       %base-services)
-                (guix-service-type config =>
-                                   (guix-configuration
-                                    (inherit config)
-                                    (substitute-urls
-                                     (append (list "https://substitutes.nonguix.org")
-                                             %default-substitute-urls))
-                                    (authorized-keys
-                                     (append (list (local-file "./keys/nonguix.pub"))
-                                             %default-authorized-guix-keys))))))))
+                         (dependencies mapped-devices))))))
 
 bombaclaat

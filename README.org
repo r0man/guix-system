@@ -61,19 +61,15 @@ List the UUIDs of the partitions.
 #+end_src
 
 #+RESULTS:
-#+begin_example
-/dev/nvme0n1p9: UUID="65d8f2a0-9ebc-44a4-8d68-adeae9221701" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
-/dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
-/dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
-/dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
-/dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
-/dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
-/dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
-/dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
-/dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
-/dev/sda2: LABEL="Guix_image" UUID="5b18929c-6168-e718-ad36-132e5b18929c" BLOCK_SIZE="4096" TYPE="ext4"
-/dev/sda1: SEC_TYPE="msdos" LABEL_FATBOOT="GNU-ESP" LABEL="GNU-ESP" UUID="F48A-D297" BLOCK_SIZE="512" TYPE="vfat"
-#+end_example
+: /dev/nvme0n1p9: UUID="f06f4977-d529-4890-9d0e-4ad697886dce" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
+: /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
+: /dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
+: /dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
+: /dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
+: /dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
+: /dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
+: /dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
+: /dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
 
 Create a physical volume in the partition.
 
@@ -122,7 +118,7 @@ Create a logical volume for the =root= partition.
 
 Format the filesystem and swap partitions.
 
-#+begin_src sh :exports both :dir /sudo:: :results verbatim
+#+begin_src sh :exports both :dir /sudo:: :results silent
   mkfs.ext4 -L root /dev/bombaclaat/root
   mkfs.ext4 -L home /dev/bombaclaat/home
   mkswap --label swap /dev/bombaclaat/swap
@@ -130,31 +126,31 @@ Format the filesystem and swap partitions.
 
 #+RESULTS:
 #+begin_example
-Creating filesystem with 346024960 4k blocks and 86507520 inodes
-Filesystem UUID: 6bf4970e-5353-4bbb-bc1f-58ef7b224012
+Creating filesystem with 346029056 4k blocks and 86507520 inodes
+Filesystem UUID: 8842a70f-fdc3-40e0-aa81-66940ddb32c3
 Superblock backups stored on blocks:
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
 	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
 	102400000, 214990848
 
-Allocating group tables:     0/10560
-Writing inode tables:     0/10560
+Allocating group tables:     0/10560           done
+Writing inode tables:     0/10560           done
 Creating journal (262144 blocks): done
-Writing superblocks and filesystem accounting information:     0/10560
+Writing superblocks and filesystem accounting information:     0/10560           done
 
 Creating filesystem with 52428800 4k blocks and 13107200 inodes
-Filesystem UUID: cbc6ebd8-c76d-4c24-afd1-bbc330c6fb2f
+Filesystem UUID: ecdf5cce-f306-4165-864c-49e2518c1619
 Superblock backups stored on blocks:
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
 	4096000, 7962624, 11239424, 20480000, 23887872
 
-Allocating group tables:    0/1600
-Writing inode tables:    0/1600
+Allocating group tables:    0/1600         done
+Writing inode tables:    0/1600         done
 Creating journal (262144 blocks): done
-Writing superblocks and filesystem accounting information:    0/1600
+Writing superblocks and filesystem accounting information:    0/1600         done
 
 Setting up swapspace version 1, size = 16 GiB (17179852800 bytes)
-LABEL=swap, UUID=ce9eea83-344a-4fcf-bb8b-a5b75e118211
+LABEL=swap, UUID=cf679d9a-9498-42c9-84ea-c21f14601c25
 #+end_example
 
 Mount the filesystems.
@@ -344,6 +340,12 @@ Build the Guix installation image.
 
 #+begin_src sh :exports both :results verbatim
   guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/system/bombaclaat.scm
+#+end_src
+
+Write the image to the USB stick at =/dev/sda=.
+
+#+begin_src sh :results verbatim
+  sudo dd if=/gnu/store/65j2k2drs2pl6fngkpifwxffjsdsz0x6-disk-image of=/dev/sda bs=4M status=progress oflag=sync
 #+end_src
 
 Initialize the system in =/mnt=.
