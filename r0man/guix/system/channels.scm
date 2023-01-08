@@ -1,4 +1,4 @@
-(define-module (r0man system channels)
+(define-module (r0man guix system channels)
   #:use-module (guix channels))
 
 (define channels

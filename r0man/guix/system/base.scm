@@ -1,4 +1,4 @@
-(define-module (r0man system base)
+(define-module (r0man guix system base)
   #:use-module (gnu packages cups)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages ssh)

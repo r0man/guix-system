@@ -348,7 +348,7 @@ EFI Boot Partition
 Build the Guix installation image.
 
 #+begin_src sh :exports both :results verbatim
-  guix time-machine -C r0man/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/system/bombaclaat.scm
+  guix time-machine -C r0man/guix/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
 #+end_src
 
 Write the image to the USB stick at =/dev/sda=.
@@ -362,23 +362,23 @@ Write the image to the USB stick at =/dev/sda=.
 Initialize the system using the mounted file systems in =/mnt=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  guix system init -L . --system=aarch64-linux r0man/system/bombaclaat.scm /mnt
+  guix system init -L . --system=aarch64-linux r0man/guix/system/bombaclaat.scm /mnt
 #+end_src
 
 Or, initialize the system with the Guix time machine.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  guix time-machine -C r0man/system/channels.scm -- system init -L . --system=aarch64-linux r0man/system/bombaclaat.scm /mnt
+  guix time-machine -C r0man/guix/system/channels.scm -- system init -L . --system=aarch64-linux r0man/guix/system/bombaclaat.scm /mnt
 #+end_src
 
 Copy the channels to =/mnt/etc/channels.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cp r0man/system/channels.scm /mnt/etc/channels.scm
+  cp r0man/guix/system/channels.scm /mnt/etc/channels.scm
 #+end_src
 
 Copy the system configuration to =/mnt/etc/system.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cp r0man/system/bombaclaat.scm /mnt/etc/system.scm
+  cp r0man/guix/system/bombaclaat.scm /mnt/etc/system.scm
 #+end_src

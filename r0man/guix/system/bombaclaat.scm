@@ -1,4 +1,4 @@
-(define-module (r0man system bombaclaat)
+(define-module (r0man guix system bombaclaat)
   #:use-module (asahi initrd)
   #:use-module (asahi installer)
   #:use-module (asahi packages)
@@ -10,7 +10,7 @@
   #:use-module (gnu)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
-  #:use-module (r0man system base)
+  #:use-module (r0man guix system base)
   #:use-module (srfi srfi-1))
 
 (use-service-modules networking ssh xorg)
