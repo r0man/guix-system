@@ -4,6 +4,7 @@
   #:use-module (gnu packages ssh)
   #:use-module (gnu services avahi)
   #:use-module (gnu services cups)
+  #:use-module (gnu services desktop)
   #:use-module (gnu services docker)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
@@ -66,6 +67,7 @@
                                  "e2fsprogs"
                                  "emacs-next"
                                  "lvm2-static"
+                                 "network-manager"
                                  "nss-certs"))
                       %base-packages))
 
@@ -80,7 +82,10 @@
                                                       (libvirt-configuration
                                                        (unix-sock-group "libvirt")
                                                        (tls-port "16555")))
-
+                                             (service modem-manager-service-type)
+                                             (service network-manager-service-type)
+                                             (service usb-modeswitch-service-type)
+                                             (service wpa-supplicant-service-type)
                                              (service openssh-service-type
                                                       (openssh-configuration
                                                        (openssh openssh-sans-x)
