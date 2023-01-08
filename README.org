@@ -153,6 +153,8 @@ Setting up swapspace version 1, size = 16 GiB (17179852800 bytes)
 LABEL=swap, UUID=cf679d9a-9498-42c9-84ea-c21f14601c25
 #+end_example
 
+*** File systems
+
 Mount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
@@ -355,8 +357,28 @@ Write the image to the USB stick at =/dev/sda=.
   sudo dd if=/gnu/store/65j2k2drs2pl6fngkpifwxffjsdsz0x6-disk-image of=/dev/sda bs=4M status=progress oflag=sync
 #+end_src
 
-Initialize the system in =/mnt=.
+*** System
 
-#+begin_src sh :exports both :results verbatim
+Initialize the system using the mounted file systems in =/mnt=.
+
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
+  guix system init -L . --system=aarch64-linux r0man/system/bombaclaat.scm /mnt
+#+end_src
+
+Or, initialize the system with the Guix time machine.
+
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
   guix time-machine -C r0man/system/channels.scm -- system init -L . --system=aarch64-linux r0man/system/bombaclaat.scm /mnt
+#+end_src
+
+Copy the channels to =/mnt/etc/channels.scm=.
+
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
+  cp r0man/system/channels.scm /mnt/etc/channels.scm
+#+end_src
+
+Copy the system configuration to =/mnt/etc/system.scm=.
+
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
+  cp r0man/system/bombaclaat.scm /mnt/etc/system.scm
 #+end_src
