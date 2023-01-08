@@ -1,11 +1,8 @@
 (define-module (r0man guix system base)
-  #:use-module (gnu packages cups)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services avahi)
-  #:use-module (gnu services cups)
   #:use-module (gnu services desktop)
-  #:use-module (gnu services docker)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
@@ -71,27 +68,17 @@
     (file-systems (cons*
                    (file-system
                      ;; TODO: Change to root?
-                     (mount-point "/tmp")
+                     (mount-point "/")
                      (device "none")
                      (type "tmpfs")
                      (check? #f))
                    %base-file-systems))
     (users (append %users %base-user-accounts))
     (packages (append %packages %base-packages))
-    (services (modify-services (append (list (service avahi-service-type)
-                                             (service cups-service-type
-                                                      (cups-configuration
-                                                       (web-interface? #t)
-                                                       (extensions
-                                                        (list cups-filters))))
-                                             (service libvirt-service-type
+    (services (modify-services (append (list (service libvirt-service-type
                                                       (libvirt-configuration
                                                        (unix-sock-group "libvirt")
                                                        (tls-port "16555")))
-                                             (service modem-manager-service-type)
-                                             (service network-manager-service-type)
-                                             (service usb-modeswitch-service-type)
-                                             (service wpa-supplicant-service-type)
                                              (service openssh-service-type
                                                       (openssh-configuration
                                                        (openssh openssh-sans-x)
