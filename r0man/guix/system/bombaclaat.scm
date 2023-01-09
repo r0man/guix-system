@@ -1,5 +1,4 @@
 (define-module (r0man guix system bombaclaat)
-  #:use-module (asahi initrd)
   #:use-module (asahi installer)
   #:use-module (asahi packages)
   #:use-module (gnu packages certs)
@@ -12,7 +11,6 @@
   #:use-module (gnu system nss)
   #:use-module (gnu system uuid)
   #:use-module (gnu system)
-  ;; #:use-module (r0man guix system base)
   #:use-module (r0man guix system desktop))
 
 (define %firmware
@@ -106,7 +104,6 @@
     (host-name "bombaclaat")
     (kernel asahi-linux-edge)
     (firmware %firmware)
-    (initrd asahi-initrd)
     (initrd-modules %modules)
     (mapped-devices %mapped-devices)
     (file-systems (append %file-systems %base-file-systems))
