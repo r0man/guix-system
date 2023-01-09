@@ -36,13 +36,23 @@
             "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
 
         (channel
-         (name 'r0man)
+         (name 'r0man-channel)
          (url "https://github.com/r0man/guix-channel.git")
          (branch "main")
          (commit "96ff0118dd3aecc80bbf90d99797b4a0311dd1fb")
          (introduction
           (make-channel-introduction
            "8eb7a76af9b51b80f5c01f18639e6360833fc377"
+           (openpgp-fingerprint
+            "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))
+
+        (channel
+         (name 'r0man-system)
+         (url "git@github.com:r0man/guix-system.git")
+         (branch "main")
+         (introduction
+          (make-channel-introduction
+           "754146ab5979be91a3ed69c99b9dbccb4d06b6bd"
            (openpgp-fingerprint
             "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))))
 
