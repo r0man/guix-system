@@ -61,7 +61,7 @@ List the UUIDs of the partitions.
 #+end_src
 
 #+RESULTS:
-: /dev/nvme0n1p9: UUID="f06f4977-d529-4890-9d0e-4ad697886dce" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
+: /dev/nvme0n1p9: UUID="1635804f-9693-4a6f-9b6e-8dfc40e57f1c" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
 : /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
 : /dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
 : /dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
