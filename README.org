@@ -385,8 +385,10 @@ Copy the channels to =/mnt/etc/channels.scm=.
   cp r0man/guix/system/channels.scm /mnt/etc/channels.scm
 #+end_src
 
-Copy the system configuration to =/mnt/etc/system.scm=.
+#+RESULTS:
+
+Copy the system configuration to =/mnt/etc/config.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cp r0man/guix/system/bombaclaat.scm /mnt/etc/system.scm
+  cp r0man/guix/system/bombaclaat.scm /mnt/etc/config.scm
 #+end_src
