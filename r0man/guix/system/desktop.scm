@@ -1,5 +1,4 @@
 (define-module (r0man guix system desktop)
-  #:use-module (gnu packages cups)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages libusb)
   #:use-module (gnu packages lisp)
@@ -9,7 +8,6 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
-  #:use-module (gnu services cups)
   #:use-module (gnu services dbus)
   #:use-module (gnu services desktop)
   #:use-module (gnu services networking)
@@ -50,68 +48,9 @@
         stumpwm))
 
 (define %services
-  (modify-services (cons* (service cups-service-type
-                                   (cups-configuration
-                                    (web-interface? #t)
-                                    (extensions
-                                     (list cups-filters))))
-
-                          ;; (service gnome-desktop-service-type)
-                          ;; (service gdm-service-type)
-
-                          ;; ;; (if (string-prefix? "x86_64" (or (%current-target-system)
-                          ;; ;;                                  (%current-system)))
-                          ;; ;;     (service gdm-service-type)
-                          ;; ;;     (service sddm-service-type))
-
-                          ;; ;; Screen lockers are a pretty useful thing and these are small.
-                          ;; (screen-locker-service slock)
-                          ;; (screen-locker-service xlockmore "xlock")
-
-                          ;; ;; Add udev rules for MTP devices so that non-root users can access
-                          ;; ;; them.
-                          ;; (simple-service 'mtp udev-service-type (list libmtp))
-
-                          ;; ;; Add polkit rules, so that non-root users in the wheel group can
-                          ;; ;; perform administrative tasks (similar to "sudo").
-                          ;; polkit-wheel-service
-
-                          ;; ;; This is a volatile read-write file system mounted at /var/lib/gdm,
-                          ;; ;; to avoid GDM stale cache and permission issues.
-                          ;; gdm-file-system-service
-
-                          ;; ;; The global fontconfig cache directory can sometimes contain
-                          ;; ;; stale entries, possibly referencing fonts that have been GC'd,
-                          ;; ;; so mount it read-only.
-                          ;; fontconfig-file-system-service
-
-                          ;; ;; NetworkManager and its applet.
-                          ;; (service network-manager-service-type)
-                          ;; (service wpa-supplicant-service-type)    ;needed by NetworkManager
-                          ;; ;; (simple-service 'network-manager-applet
-                          ;; ;;                 profile-service-type
-                          ;; ;;                 (list network-manager-applet))
-                          ;; (service modem-manager-service-type)
-                          ;; (service usb-modeswitch-service-type)
-
-                          ;; The D-Bus clique.
-                          ;; (service avahi-service-type)
-                          ;; (udisks-service)
-                          ;; (service upower-service-type)
-                          ;; (accountsservice-service)
-                          ;; (service cups-pk-helper-service-type)
-                          ;; (service colord-service-type)
-                          ;; (geoclue-service)
-                          ;; (service polkit-service-type)
-                          ;; (elogind-service)
-                          ;; (dbus-service)
-
-                          ;; (service ntp-service-type)
-
-                          ;; x11-socket-directory-service
-
-                          ;; (service pulseaudio-service-type)
-                          ;; (service alsa-service-type)
+  (modify-services (cons* %cups-service
+                          %libvirt-service
+                          %openssh-service
                           %desktop-services)
     (console-font-service-type config => (console-font-service-config config))
     (guix-service-type config => (guix-service-type-config config))))

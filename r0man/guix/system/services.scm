@@ -1,4 +1,6 @@
 (define-module (r0man guix system services)
+  #:use-module (gnu packages cups)
+  #:use-module (gnu services cups)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services base)
@@ -9,10 +11,18 @@
   #:use-module (gnu services virtualization)
   #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:export (%libvirt-service
+  #:export (%cups-service
+            %libvirt-service
             %openssh-service
             console-font-service-config
             guix-service-type-config))
+
+(define %cups-service
+  (service cups-service-type
+           (cups-configuration
+            (web-interface? #t)
+            (extensions
+             (list cups-filters)))))
 
 (define %libvirt-service
   (service libvirt-service-type

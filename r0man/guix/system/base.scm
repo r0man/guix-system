@@ -36,7 +36,9 @@
          (supplementary-groups '("audio" "netdev" "video" "wheel")))))
 
 (define %services
-  (modify-services (append (list %libvirt-service %openssh-service) %base-services)
+  (modify-services (cons* %libvirt-service
+                          %openssh-service
+                          %base-services)
     (console-font-service-type config => (console-font-service-config config))
     (guix-service-type config => (guix-service-type-config config))))
 
