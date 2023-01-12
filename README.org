@@ -164,6 +164,8 @@ Mount the filesystems.
   swapon /dev/bombaclaat/swap
 #+end_src
 
+#+RESULTS:
+
 Unmount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
