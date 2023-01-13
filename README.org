@@ -18,29 +18,19 @@ I/O size (minimum/optimal): 4096 bytes / 4096 bytes
 Disklabel type: gpt
 Disk identifier: A67A7E47-AE3F-436F-9BF7-9DCBCB1151C5
 
-Device             Start       End   Sectors  Size Type
-/dev/nvme0n1p1         6    128005    128000  500M Apple Silicon boot
-/dev/nvme0n1p2    128006  24542067  24414062 93.1G Apple APFS
-/dev/nvme0n1p3  24542068  25152371    610304  2.3G Apple APFS
-/dev/nvme0n1p4  25152372  25274483    122112  477M EFI System
-/dev/nvme0n1p5  25274484  51488767  26214284  100G Linux filesystem
-/dev/nvme0n1p6  51488768  52099071    610304  2.3G Apple APFS
-/dev/nvme0n1p7  52099072  52221183    122112  477M EFI System
-/dev/nvme0n1p8 487241816 488552524   1310709    5G Apple Silicon recovery
-/dev/nvme0n1p9  52221184 454874367 402653184  1.5T Linux filesystem
+Device             Start       End   Sectors   Size Type
+/dev/nvme0n1p1         6    128005    128000   500M Apple Silicon boot
+/dev/nvme0n1p2    128006  24542067  24414062  93.1G Apple APFS
+/dev/nvme0n1p3  24542068  25152371    610304   2.3G Apple APFS
+/dev/nvme0n1p4  25152372  25274483    122112   477M EFI System
+/dev/nvme0n1p5  25274484  61163123  35888640 136.9G Linux filesystem
+/dev/nvme0n1p6  61163124  61773427    610304   2.3G Apple APFS
+/dev/nvme0n1p7  61773428  61895539    122112   477M EFI System
+/dev/nvme0n1p8 487241816 488552524   1310709     5G Apple Silicon recovery
+/dev/nvme0n1p9  61895680 464548863 402653184   1.5T Linux filesystem
 
 Partition table entries are not in disk order.
 #+end_example
-
-Show fstab.
-
-#+begin_src sh :exports both :results verbatim
-  cat /etc/fstab
-#+end_src
-
-#+RESULTS:
-: UUID=d4aef2a9-8f90-467e-96fc-9405c9bae56c / ext4 rw,relatime,x-systemd.growfs 0 1
-: UUID=1381-9611 /boot/efi vfat rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro    0 2
 
 Create the LUKS encrypted container in partition =/dev/nvme0n1p9=.
 
@@ -60,16 +50,17 @@ List the UUIDs of the partitions.
   blkid
 #+end_src
 
-#+RESULTS:
-: /dev/nvme0n1p9: UUID="1635804f-9693-4a6f-9b6e-8dfc40e57f1c" TYPE="crypto_LUKS" PARTUUID="8c8908b7-15f1-9a4e-9590-43834d44a095"
-: /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9B92-14F6" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="3304633f-78d3-47fa-932b-41a59329c6ae"
-: /dev/nvme0n1p5: LABEL="asahi-root" UUID="d4aef2a9-8f90-467e-96fc-9405c9bae56c" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="eb74fe5c-82a0-c84c-b0d8-17975ea748c0"
-: /dev/nvme0n1p3: UUID="d958a106-1ad7-4568-8eaf-a3b86d4c2f22" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="d169504b-59e1-4a1c-a555-7e9ee3ff29e6"
-: /dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
-: /dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
-: /dev/nvme0n1p6: UUID="a7648ef4-ce60-4ad5-96bf-96c5f61bd744" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="e76afea6-812e-4127-bc3f-677ff32e6cf3"
-: /dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="1381-9611" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="a6543bf9-56ee-4354-aa7b-dc357c7d0d34"
-: /dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
+#+begin_example
+/dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="88A6-151E" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="8df61a9f-b7a6-4899-8994-8b29b3063070"
+/dev/nvme0n1p5: LABEL="asahi-root" UUID="e3b4a97a-3c20-4a0b-bbb0-dc6df7fb471f" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="9b31d9a1-e97e-4535-9557-2ff3d1de9282"
+/dev/nvme0n1p3: UUID="7326ff33-6529-4ba7-95b3-f7d3a63da020" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="9623a60b-b8a6-4dbe-925a-4a95b75bc0e2"
+/dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
+/dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
+/dev/nvme0n1p6: UUID="6c210cae-f52b-48de-9a42-3cd69772d63d" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="790c16b9-d194-4b11-837e-6218d8248762"
+/dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="3005-8D20" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="118b37ff-b0c6-46e1-a038-cd46fd3b53a1"
+/dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
+/dev/nvme0n1p9: UUID="fd5a6979-eb43-4ffb-ad66-f75a191153ce" TYPE="crypto_LUKS" PARTUUID="c4529734-f3c3-ee41-b47e-0403ff61cb9c"
+#+end_example
 
 Create a physical volume in the partition.
 
@@ -92,20 +83,11 @@ Create a volume group in the physical volume, named =bombaclaat=.
 Create a logical volume for the swap partition.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  lvcreate --size 16G bombaclaat --name swap
+  lvcreate --size 34G bombaclaat --name swap
 #+end_src
 
 #+RESULTS:
 :   Logical volume "swap" created.
-
-Create a logical volume for the =home= partition.
-
-#+begin_src sh :exports both :dir /sudo:: :results verbatim
-  lvcreate -L 200G bombaclaat --name home
-#+end_src
-
-#+RESULTS:
-:   Logical volume "home" created.
 
 Create a logical volume for the =root= partition.
 
@@ -120,7 +102,6 @@ Format the filesystem and swap partitions.
 
 #+begin_src sh :exports both :dir /sudo:: :results silent
   mkfs.ext4 -L root /dev/bombaclaat/root
-  mkfs.ext4 -L home /dev/bombaclaat/home
   mkswap --label swap /dev/bombaclaat/swap
 #+end_src
 
@@ -159,7 +140,6 @@ Mount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
   mount /dev/bombaclaat/root /mnt
-  mount --mkdir /dev/bombaclaat/home /mnt/home
   mount --mkdir /dev/nvme0n1p7 /mnt/boot/efi
   swapon /dev/bombaclaat/swap
 #+end_src
@@ -171,179 +151,8 @@ Unmount the filesystems.
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
   swapoff /dev/bombaclaat/swap
   umount /mnt/boot/efi
-  umount /mnt/home
   umount /mnt
 #+end_src
-
-*** Mount Points
-
-#+begin_src sh :exports both :results verbatim
-  mount
-#+end_src
-
-#+RESULTS:
-#+begin_example
-proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
-sys on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
-dev on /dev type devtmpfs (rw,nosuid,relatime,size=16201664k,nr_inodes=1012604,mode=755)
-run on /run type tmpfs (rw,nosuid,nodev,relatime,mode=755)
-efivarfs on /sys/firmware/efi/efivars type efivarfs (ro,nosuid,nodev,noexec,relatime)
-/dev/nvme0n1p5 on / type ext4 (rw,relatime)
-vendorfw on /usr/lib/firmware/vendor type tmpfs (rw,relatime)
-securityfs on /sys/kernel/security type securityfs (rw,nosuid,nodev,noexec,relatime)
-tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
-devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
-cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
-pstore on /sys/fs/pstore type pstore (rw,nosuid,nodev,noexec,relatime)
-bpf on /sys/fs/bpf type bpf (rw,nosuid,nodev,noexec,relatime,mode=700)
-systemd-1 on /proc/sys/fs/binfmt_misc type autofs (rw,relatime,fd=30,pgrp=1,timeout=0,minproto=5,maxproto=5,direct,pipe_ino=1477)
-hugetlbfs on /dev/hugepages type hugetlbfs (rw,relatime,pagesize=32M)
-mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
-/dev/nvme0n1p5 on /gnu/store type ext4 (ro,relatime)
-debugfs on /sys/kernel/debug type debugfs (rw,nosuid,nodev,noexec,relatime)
-tmpfs on /tmp type tmpfs (rw,nosuid,nodev,nr_inodes=1048576)
-fusectl on /sys/fs/fuse/connections type fusectl (rw,nosuid,nodev,noexec,relatime)
-configfs on /sys/kernel/config type configfs (rw,nosuid,nodev,noexec,relatime)
-ramfs on /run/credentials/systemd-sysctl.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
-ramfs on /run/credentials/systemd-tmpfiles-setup-dev.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
-/dev/nvme0n1p4 on /boot/efi type vfat (rw,relatime,fmask=0022,dmask=0022,codepage=437,iocharset=iso8859-1,shortname=mixed,errors=remount-ro)
-ramfs on /run/credentials/systemd-tmpfiles-setup.service type ramfs (ro,nosuid,nodev,noexec,relatime,mode=700)
-tmpfs on /run/user/1001 type tmpfs (rw,nosuid,nodev,relatime,size=3247920k,nr_inodes=811980,mode=700,uid=1001,gid=1001)
-overlay on /var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/merged type overlay (rw,relatime,lowerdir=/var/lib/docker/overlay2/l/WMQYMA4JK5QPZGTGCF4MQSHKQJ:/var/lib/docker/overlay2/l/HN7EIUT6CDPFOUPTL3NCAUNXK3:/var/lib/docker/overlay2/l/2HJFJ7XVKLLLDU6GA4CCLL7DDE:/var/lib/docker/overlay2/l/DTSUBKLW6UJ3DN3R6VOD37QPCK:/var/lib/docker/overlay2/l/AXSGK4HOGCPZRMETSAEU52MT4F:/var/lib/docker/overlay2/l/IFVIS2DVGT33FZV6GY3A5RISEK:/var/lib/docker/overlay2/l/BWDBR63ZB35JF5O3OJLLSC4OQ5:/var/lib/docker/overlay2/l/5FLD75YS5HDB2L6NYOW5FVTKOO:/var/lib/docker/overlay2/l/5Y7ESUE24IUJTFBIMGSRHIYAI2:/var/lib/docker/overlay2/l/Z2IFUCS4GD2FFW7YAXITDCGKL3:/var/lib/docker/overlay2/l/ARVQKEOQQ75FLCYSLBU644YJHP:/var/lib/docker/overlay2/l/TOXS72PSCMETOJABAO4VFPIJHD:/var/lib/docker/overlay2/l/RUBYHQ2UECTU7WLACVQ7KBYK4V:/var/lib/docker/overlay2/l/E3BVRYAW4RISGVT5LQJJ236YQF:/var/lib/docker/overlay2/l/OHU6T2NLS2Y6UFCOFBGPU7Z3SJ,upperdir=/var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/diff,workdir=/var/lib/docker/overlay2/893524f239671540c666aa5d5859375d1e7b1bc31e69be958985345a786a18c1/work)
-nsfs on /run/docker/netns/7fe66d4cac16 type nsfs (rw)
-/dev/mapper/bombaclaat-root on /mnt type ext4 (rw,relatime)
-/dev/mapper/bombaclaat-home on /mnt/home type ext4 (rw,relatime)
-/dev/nvme0n1p7 on /mnt/boot/efi type vfat (rw,relatime,fmask=0077,dmask=0077,codepage=437,iocharset=ascii,shortname=mixed,errors=remount-ro)
-#+end_example
-
-*** Partitions
-
-EFI Boot Partition
-
-#+begin_src sh :exports both :results verbatim
-  find /boot/efi
-#+end_src
-
-#+RESULTS:
-#+begin_example
-/boot/efi
-/boot/efi/.Spotlight-V100
-/boot/efi/.Spotlight-V100/Store-V2
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/psid.db
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.Lion
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/Lion.created
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.Cab
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/Cab.created
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.Star
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/indexState
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexHead
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexIds
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexBigDates
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexGroups
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexPostings
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexTermIds
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexPositions
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexPositionTable
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexDirectory
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexCompactDirectory
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexArrays
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.indexUpdates
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.directoryStoreFile
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexHead
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexIds
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexBigDates
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexGroups
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexPostings
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexTermIds
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexPositions
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexPositionTable
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexDirectory
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexCompactDirectory
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexArrays
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.indexUpdates
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.directoryStoreFile
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/store.db
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/.store.db
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.header
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.data
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.offsets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-1.map.buckets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.header
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.data
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.offsets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-2.map.buckets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.header
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.data
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.offsets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-3.map.buckets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.header
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.data
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.offsets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-4.map.buckets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.header
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.data
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.offsets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/dbStr-5.map.buckets
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/reverseDirectoryStore
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.spotlight.state
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/store_generation
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.corespotlight
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live_system
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live_user
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.live_priority
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.assisted_import_pre
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.assisted_import_post
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.health_check
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.migration
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.migration_secondchance
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journalExclusion
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/journals.scan
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/shutdown_time
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/reverseDirectoryStore.shadow
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.shadowIndexHead
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/store.updates
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.directoryStoreFile.shadow
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/0.shadowIndexGroups
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexHead
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexTermIds
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexPositionTable
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexCompactDirectory
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexDirectory
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexArrays
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.directoryStoreFile.shadow
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/live.0.shadowIndexGroups
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/reverseStore.updates
-/boot/efi/.Spotlight-V100/Store-V2/222557B6-075D-4886-BCAF-B957A7BD1893/tmp.spotlight.loc
-/boot/efi/.Spotlight-V100/VolumeConfiguration.plist
-/boot/efi/.Trashes
-/boot/efi/.Trashes/501
-/boot/efi/.Trashes/._501
-/boot/efi/.fseventsd
-/boot/efi/.fseventsd/fseventsd-uuid
-/boot/efi/.fseventsd/0000000000567979
-/boot/efi/.fseventsd/000000000056797a
-/boot/efi/m1n1
-/boot/efi/m1n1/boot.bin.old
-/boot/efi/m1n1/boot.bin
-/boot/efi/EFI
-/boot/efi/EFI/BOOT
-/boot/efi/EFI/BOOT/BOOTAA64.EFI
-/boot/efi/vendorfw
-/boot/efi/vendorfw/firmware.cpio
-/boot/efi/vendorfw/firmware.tar
-/boot/efi/vendorfw/manifest.txt
-/boot/efi/asahi
-/boot/efi/asahi/BuildManifest.plist
-/boot/efi/asahi/RestoreVersion.plist
-/boot/efi/asahi/kernelcache.release.mac13j
-/boot/efi/asahi/AdminUserRecoveryInfo.plist
-/boot/efi/asahi/SystemVersion.plist
-/boot/efi/asahi/all_firmware.tar.gz
-/boot/efi/asahi/stub_info.json
-/boot/efi/asahi/installer.log
-#+end_example
 
 *** Image
 

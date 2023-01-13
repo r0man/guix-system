@@ -63,13 +63,12 @@
 
 (define %mapped-devices
   (list (mapped-device
-         (source (uuid "1635804f-9693-4a6f-9b6e-8dfc40e57f1c"))
+         (source (uuid "fd5a6979-eb43-4ffb-ad66-f75a191153ce"))
          (target "cryptroot")
          (type luks-device-mapping))
         (mapped-device
          (source "bombaclaat")
-         (targets (list "bombaclaat-home"
-                        "bombaclaat-root"
+         (targets (list "bombaclaat-root"
                         "bombaclaat-swap"))
          (type lvm-device-mapping))))
 
@@ -83,15 +82,8 @@
           (dependencies %mapped-devices))
         (file-system
           (mount-point "/boot/efi")
-          (device (uuid "9B92-14F6" 'fat32))
-          (type "vfat"))
-        (file-system
-          (mount-point "/home")
-          (device "/dev/mapper/bombaclaat-home")
-          ;; (device (file-system-label "home"))
-          (type "ext4")
-          (needed-for-boot? #t)
-          (dependencies %mapped-devices))))
+          (device (uuid "88A6-151E" 'fat32))
+          (type "vfat"))))
 
 (define %swap-devices
   (list (swap-space
