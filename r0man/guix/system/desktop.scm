@@ -14,12 +14,12 @@
   #:use-module (gnu services sddm)
   #:use-module (gnu services sound)
   #:use-module (gnu services xorg)
+  #:use-module (gnu services)
   #:use-module (gnu system)
-  #:use-module (gnu)
   #:use-module (guix utils)
   #:use-module (r0man guix system base)
-  #:use-module (srfi srfi-1)
   #:use-module (r0man guix system services)
+  #:use-module (srfi srfi-1)
   #:export (desktop-operating-system))
 
 (define %packages
