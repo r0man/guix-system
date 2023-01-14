@@ -15,6 +15,7 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (r0man guix system base)
+  #:use-module (r0man guix system keyboard)
   #:export (%cups-service
             %libvirt-service
             %openssh-service

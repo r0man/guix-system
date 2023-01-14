@@ -4,14 +4,9 @@
   #:use-module (guix packages)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
+  #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
-  #:export (%keyboard-layout
-            base-operating-system))
-
-(define %keyboard-layout
-  (keyboard-layout "us" #:options '("altwin:swap_lalt_lwin"
-                                    "caps:ctrl_modifier"
-                                    "terminate:ctrl_alt_bksp")))
+  #:export (base-operating-system))
 
 (define %packages
   (map specification->package
