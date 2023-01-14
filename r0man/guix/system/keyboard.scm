@@ -3,8 +3,7 @@
   #:export (%keyboard-layout %keyboard-options))
 
 (define %keyboard-options
-  '("altwin:swap_lalt_lwin"
-    "caps:ctrl_modifier"
+  '("caps:ctrl_modifier"
     "terminate:ctrl_alt_bksp"))
 
 (define %keyboard-layout
