@@ -8,6 +8,7 @@
   #:use-module (gnu services desktop)
   #:use-module (gnu services desktop)
   #:use-module (gnu services networking)
+  #:use-module (gnu services security-token)
   #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
   #:use-module (gnu services xorg)
@@ -17,6 +18,7 @@
   #:export (%cups-service
             %libvirt-service
             %openssh-service
+            %pcscd-service-type
             %slim-service
             console-font-service-config
             guix-service-type-config))
@@ -39,6 +41,9 @@
            (openssh-configuration
             (openssh openssh-sans-x)
             (port-number 22))))
+
+(define %pcscd-service-type
+  (service pcscd-service-type))
 
 (define %xorg-libinput-config "
 Section \"InputClass\"

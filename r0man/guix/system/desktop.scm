@@ -55,6 +55,7 @@
   (modify-services (cons* %cups-service
                           %libvirt-service
                           %openssh-service
+                          %pcscd-service-type
                           %slim-service
                           %desktop-services)
     (delete sddm-service-type)
