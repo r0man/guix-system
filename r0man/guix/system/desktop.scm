@@ -52,7 +52,7 @@
   (modify-services (cons* %cups-service
                           %libvirt-service
                           %openssh-service
-                          (service gdm-service-type)
+                          %slim-service
                           %desktop-services)
     (delete sddm-service-type)
     (console-font-service-type config => (console-font-service-config config))

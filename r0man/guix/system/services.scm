@@ -1,19 +1,22 @@
 (define-module (r0man guix system services)
   #:use-module (gnu packages cups)
-  #:use-module (gnu services cups)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages ssh)
-  #:use-module (gnu services base)
   #:use-module (gnu services avahi)
+  #:use-module (gnu services base)
+  #:use-module (gnu services cups)
+  #:use-module (gnu services desktop)
   #:use-module (gnu services desktop)
   #:use-module (gnu services networking)
   #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
+  #:use-module (gnu services xorg)
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:export (%cups-service
             %libvirt-service
             %openssh-service
+            %slim-service
             console-font-service-config
             guix-service-type-config))
 
@@ -35,6 +38,11 @@
            (openssh-configuration
             (openssh openssh-sans-x)
             (port-number 22))))
+
+(define %slim-service
+  (service slim-service-type (slim-configuration
+                              (display ":0")
+                              (vt "vt7"))))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
