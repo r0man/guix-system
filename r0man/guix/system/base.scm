@@ -5,7 +5,8 @@
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
   #:use-module (r0man guix system services)
-  #:export (base-operating-system))
+  #:export (%keyboard-layout
+            base-operating-system))
 
 (define %keyboard-layout
   (keyboard-layout "us" #:options '("altwin:swap_lalt_lwin"

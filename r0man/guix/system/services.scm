@@ -13,6 +13,7 @@
   #:use-module (gnu services xorg)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (r0man guix system base)
   #:export (%cups-service
             %libvirt-service
             %openssh-service
@@ -39,16 +40,39 @@
             (openssh openssh-sans-x)
             (port-number 22))))
 
+(define %xorg-libinput-config "
+Section \"InputClass\"
+  Identifier \"Touchpads\"
+  Driver \"libinput\"
+  MatchDevicePath \"/dev/input/event*\"
+  MatchIsTouchpad \"on\"
+  Option \"Tapping\" \"on\"
+  Option \"TappingDrag\" \"on\"
+  Option \"DisableWhileTyping\" \"on\"
+  Option \"MiddleEmulation\" \"on\"
+  Option \"ScrollMethod\" \"twofinger\"
+EndSection
+
+Section \"InputClass\"
+  Identifier \"Keyboards\"
+  Driver \"libinput\"
+  MatchDevicePath \"/dev/input/event*\"
+  MatchIsKeyboard \"on\"
+EndSection
+")
+
 (define %slim-service
-  (service slim-service-type (slim-configuration
-                              (display ":0")
-                              (vt "vt7"))))
+  (service slim-service-type
+           (slim-configuration
+            (xorg-configuration
+             (xorg-configuration
+              (keyboard-layout %keyboard-layout)
+              (extra-config (list %xorg-libinput-config)))))))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
          (cons tty (file-append font-terminus "/share/consolefonts/ter-132n")))
        '("tty1" "tty2" "tty3" "tty4" "tty5" "tty6")))
-
 
 (define (guix-service-type-config config)
   (guix-configuration

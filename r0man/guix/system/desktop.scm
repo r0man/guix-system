@@ -6,6 +6,7 @@
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xorg)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
   #:use-module (gnu services dbus)
@@ -24,30 +25,31 @@
   #:export (desktop-operating-system))
 
 (define %packages
-  (list ;; cl-stumpwm
-        ;; sbcl
-        ;; sbcl-local-time
-        ;; sbcl-slime-swank
-        ;; sbcl-slynk
-        ;; sbcl-stumpwm-battery-portable
-        ;; sbcl-stumpwm-cpu
-        ;; sbcl-stumpwm-disk
-        ;; sbcl-stumpwm-globalwindows
-        ;; sbcl-stumpwm-kbd-layouts
-        ;; sbcl-stumpwm-mem
-        ;; sbcl-stumpwm-net
-        ;; sbcl-stumpwm-numpad-layouts
-        ;; sbcl-stumpwm-pamixer
-        ;; sbcl-stumpwm-pass
-        ;; sbcl-stumpwm-screenshot
-        ;; sbcl-stumpwm-stumptray
-        ;; sbcl-stumpwm-swm-gaps
-        ;; sbcl-stumpwm-ttf-fonts
-        ;; sbcl-stumpwm-wifi
-        ;; sbcl-stumpwm-winner-mode
-        ;; stumpish
-        ;; stumpwm
-        ))
+  (list
+   ;; cl-stumpwm
+   ;; sbcl
+   ;; sbcl-local-time
+   ;; sbcl-slime-swank
+   ;; sbcl-slynk
+   ;; sbcl-stumpwm-battery-portable
+   ;; sbcl-stumpwm-cpu
+   ;; sbcl-stumpwm-disk
+   ;; sbcl-stumpwm-globalwindows
+   ;; sbcl-stumpwm-kbd-layouts
+   ;; sbcl-stumpwm-mem
+   ;; sbcl-stumpwm-net
+   ;; sbcl-stumpwm-numpad-layouts
+   ;; sbcl-stumpwm-pamixer
+   ;; sbcl-stumpwm-pass
+   ;; sbcl-stumpwm-screenshot
+   ;; sbcl-stumpwm-stumptray
+   ;; sbcl-stumpwm-swm-gaps
+   ;; sbcl-stumpwm-ttf-fonts
+   ;; sbcl-stumpwm-wifi
+   ;; sbcl-stumpwm-winner-mode
+   ;; stumpish
+   ;; stumpwm
+   xf86-input-libinput))
 
 (define %services
   (modify-services (cons* %cups-service
