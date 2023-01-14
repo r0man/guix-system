@@ -24,29 +24,30 @@
   #:export (desktop-operating-system))
 
 (define %packages
-  (list cl-stumpwm
-        sbcl
-        sbcl-local-time
-        sbcl-slime-swank
-        sbcl-slynk
-        sbcl-stumpwm-battery-portable
-        sbcl-stumpwm-cpu
-        sbcl-stumpwm-disk
-        sbcl-stumpwm-globalwindows
-        sbcl-stumpwm-kbd-layouts
-        sbcl-stumpwm-mem
-        sbcl-stumpwm-net
-        sbcl-stumpwm-numpad-layouts
-        sbcl-stumpwm-pamixer
-        sbcl-stumpwm-pass
-        sbcl-stumpwm-screenshot
-        sbcl-stumpwm-stumptray
-        sbcl-stumpwm-swm-gaps
-        sbcl-stumpwm-ttf-fonts
-        sbcl-stumpwm-wifi
-        sbcl-stumpwm-winner-mode
-        stumpish
-        stumpwm))
+  (list ;; cl-stumpwm
+        ;; sbcl
+        ;; sbcl-local-time
+        ;; sbcl-slime-swank
+        ;; sbcl-slynk
+        ;; sbcl-stumpwm-battery-portable
+        ;; sbcl-stumpwm-cpu
+        ;; sbcl-stumpwm-disk
+        ;; sbcl-stumpwm-globalwindows
+        ;; sbcl-stumpwm-kbd-layouts
+        ;; sbcl-stumpwm-mem
+        ;; sbcl-stumpwm-net
+        ;; sbcl-stumpwm-numpad-layouts
+        ;; sbcl-stumpwm-pamixer
+        ;; sbcl-stumpwm-pass
+        ;; sbcl-stumpwm-screenshot
+        ;; sbcl-stumpwm-stumptray
+        ;; sbcl-stumpwm-swm-gaps
+        ;; sbcl-stumpwm-ttf-fonts
+        ;; sbcl-stumpwm-wifi
+        ;; sbcl-stumpwm-winner-mode
+        ;; stumpish
+        ;; stumpwm
+        ))
 
 (define %services
   (modify-services (cons* %cups-service
