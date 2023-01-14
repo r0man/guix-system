@@ -19,6 +19,7 @@
   #:use-module (guix utils)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system services)
+  #:use-module (r0man packages lisp)
   #:use-module (srfi srfi-1)
   #:export (desktop-operating-system))
 
