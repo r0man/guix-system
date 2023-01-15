@@ -16,13 +16,17 @@
   #:use-module (guix gexp)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system keyboard)
-  #:export (%cups-service
+  #:export (%bluetooth-service
+            %cups-service
             %libvirt-service
             %openssh-service
             %pcscd-service-type
             %slim-service
             console-font-service-config
             guix-service-type-config))
+
+(define %bluetooth-service
+  (service bluetooth-service-type))
 
 (define %cups-service
   (service cups-service-type

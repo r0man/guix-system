@@ -52,7 +52,8 @@
    xf86-input-libinput))
 
 (define %services
-  (modify-services (cons* %cups-service
+  (modify-services (cons* %bluetooth-service
+                          %cups-service
                           %libvirt-service
                           %openssh-service
                           %pcscd-service-type
