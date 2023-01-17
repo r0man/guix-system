@@ -90,5 +90,6 @@ EndSection
     (append (list "https://substitutes.nonguix.org")
             %default-substitute-urls))
    (authorized-keys
-    (append (list (local-file "./keys/nonguix.pub"))
+    (append (list (local-file "./keys/nonguix.pub")
+                  (local-file "./keys/precision.pub"))
             %default-authorized-guix-keys))))
