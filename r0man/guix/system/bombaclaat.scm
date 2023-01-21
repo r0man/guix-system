@@ -63,7 +63,7 @@
 
 (define %mapped-devices
   (list (mapped-device
-         (source (uuid "fd5a6979-eb43-4ffb-ad66-f75a191153ce"))
+         (source (uuid "b40f68c2-7d55-4e3d-85a0-e972b157bbc8"))
          (target "cryptroot")
          (type luks-device-mapping))
         (mapped-device
@@ -82,7 +82,7 @@
           (dependencies %mapped-devices))
         (file-system
           (mount-point "/boot/efi")
-          (device (uuid "88A6-151E" 'fat32))
+          (device (uuid "9FBE-130E" 'fat32))
           (type "vfat"))))
 
 (define %swap-devices
