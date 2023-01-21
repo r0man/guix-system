@@ -63,7 +63,7 @@
 
 (define %mapped-devices
   (list (mapped-device
-         (source (uuid "5aa8ffba-6fa2-4d25-8d4c-67a3c2dfe52c"))
+         (source (uuid "56b68fba-21cb-49b5-ac44-84dc382f3426"))
          (target "cryptroot")
          (type luks-device-mapping))
         (mapped-device
