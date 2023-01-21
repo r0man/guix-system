@@ -19,18 +19,18 @@
 (define %modules
   '(;; Asahi
     ;; For NVMe & SMC
-    ;; "apple-mailbox"
+    "apple-mailbox"
     ;; For NVMe
     "nvme-apple"
     ;; For USB and HID
     "pinctrl-apple-gpio"
     ;; SMC core
-    ;; "macsmc" "macsmc-rtkit"
+    "macsmc" "macsmc-rtkit"
     ;; For USB
     "apple-dart"
     "dwc3"
     "dwc3-of-simple"
-    ;; "gpio_macsmc"
+    "gpio_macsmc"
     "i2c-apple"
     "nvmem-apple-efuses"
     "pcie-apple"
@@ -41,11 +41,11 @@
     "spi-apple" "spi-hid-apple" "spi-hid-apple-of"
     ;; For RTC
     "rtc-macsmc" "simple-mfd-spmi"
-    ;; "spmi-apple-controller"
+    "spmi-apple-controller"
     "nvmem_spmi_mfd"
     ;; For MTP HID
     "apple-dockchannel" "dockchannel-hid"
-    ;; "apple-rtkit-helper"
+    "apple-rtkit-helper"
     ;; Guix
     "usb-storage"
     "uas"
