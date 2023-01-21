@@ -44,24 +44,6 @@ Open the LUKS partition.
   cryptsetup luksOpen /dev/nvme0n1p9 cryptroot
 #+end_src
 
-List the UUIDs of the partitions.
-
-#+begin_src sh :exports both :dir /sudo:: :results verbatim
-  blkid
-#+end_src
-
-#+begin_example
-/dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9FBE-130E" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="376f4ff5-3a94-4151-baef-59466fb35801"
-/dev/nvme0n1p5: LABEL="asahi-root" UUID="5d3f0ec5-c6a3-41a2-a181-6fc49279239d" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="33fa19cc-7269-4916-8d66-f9bc55adef90"
-/dev/nvme0n1p3: UUID="f3b2124c-3c4d-49ef-9945-dca555185dbd" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="c8770a42-bbdd-4dd9-9312-d2df91d8dc10"
-/dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
-/dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
-/dev/nvme0n1p6: UUID="96427d1c-ff6c-44d7-84bf-7082e3748c0a" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="30738918-6131-4967-8474-b94decdc238e"
-/dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="35B7-2F3A" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="5fd144d2-2e4c-46f4-8de5-c9c3020105dd"
-/dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
-/dev/nvme0n1p9: UUID="b40f68c2-7d55-4e3d-85a0-e972b157bbc8" TYPE="crypto_LUKS" PARTUUID="ba253f57-3e75-b142-9bf5-e5351ad18caa"
-#+end_example
-
 Create a physical volume in the partition.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
@@ -139,7 +121,7 @@ LABEL=swap, UUID=cf679d9a-9498-42c9-84ea-c21f14601c25
 Mount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  mount /dev/bombaclaat/root /mnt
+  mount /dev/bombaclaat/root /mnto
   mount --mkdir /dev/nvme0n1p7 /mnt/boot/efi
   swapon /dev/bombaclaat/swap
 #+end_src
@@ -153,6 +135,33 @@ Unmount the filesystems.
   umount /mnt/boot/efi
   umount /mnt
 #+end_src
+
+*** Guix Configuration
+
+List the UUIDs of the partitions.
+
+#+begin_src sh :exports both :dir /sudo:: :results verbatim
+  blkid
+#+end_src
+
+#+begin_example
+/dev/mapper/bombaclaat-swap: LABEL="swap" UUID="78cc817f-d305-4fe6-8c61-aa145e263fcb" TYPE="swap"
+/dev/nvme0n1p9: UUID="5aa8ffba-6fa2-4d25-8d4c-67a3c2dfe52c" TYPE="crypto_LUKS" PARTUUID="ba253f57-3e75-b142-9bf5-e5351ad18caa"
+/dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9FBE-130E" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="376f4ff5-3a94-4151-baef-59466fb35801"
+/dev/nvme0n1p5: LABEL="asahi-root" UUID="5d3f0ec5-c6a3-41a2-a181-6fc49279239d" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="33fa19cc-7269-4916-8d66-f9bc55adef90"
+/dev/nvme0n1p3: UUID="f3b2124c-3c4d-49ef-9945-dca555185dbd" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="c8770a42-bbdd-4dd9-9312-d2df91d8dc10"
+/dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
+/dev/nvme0n1p8: UUID="50df1db6-e408-463a-a121-7ba8203da3c5" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="RecoveryOSContainer" PARTUUID="c7f84b19-2d15-4e82-b23d-9bead07f7570"
+/dev/nvme0n1p6: UUID="96427d1c-ff6c-44d7-84bf-7082e3748c0a" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="30738918-6131-4967-8474-b94decdc238e"
+/dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="35B7-2F3A" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="5fd144d2-2e4c-46f4-8de5-c9c3020105dd"
+/dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
+/dev/mapper/bombaclaat-root: LABEL="root" UUID="9dd841e5-1d12-4d93-be88-900ad60e2b1f" BLOCK_SIZE="4096" TYPE="ext4"
+/dev/mapper/cryptroot: UUID="ukRZUs-6vet-TwY2-VPLv-gk08-UbKm-dtPs1U" TYPE="LVM2_member"
+/dev/sda2: LABEL="Guix_image" UUID="416bf41b-f6b1-2062-ba06-4196416bf41b" BLOCK_SIZE="4096" TYPE="ext4"
+/dev/sda1: SEC_TYPE="msdos" LABEL_FATBOOT="GNU-ESP" LABEL="GNU-ESP" UUID="649E-604B" BLOCK_SIZE="512" TYPE="vfat"
+#+end_example
+
+Update UUIDs in =r0man/guix/system/bombaclaat.scm=.
 
 *** Image
 
