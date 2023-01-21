@@ -200,7 +200,8 @@ Or, initialize the system with the Guix time machine.
 Copy the channels to =/mnt/etc/channels.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cp r0man/guix/system/channels.scm /mnt/etc/channels.scm
+  mkdir -p /mnt/etc/guix
+  cp r0man/guix/system/channels.scm /mnt/etc/guix/channels.scm
 #+end_src
 
 #+RESULTS:
