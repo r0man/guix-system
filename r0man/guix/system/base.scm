@@ -23,13 +23,13 @@
          (comment "r0man")
          (group "users")
          (home-directory "/home/r0man")
-         (supplementary-groups '("audio" "netdev" "video" "wheel")))
+         (supplementary-groups '("audio" "docker" "netdev" "video" "wheel")))
         (user-account
          (name "roman")
          (comment "Roman Scherer")
          (group "users")
          (home-directory "/home/roman")
-         (supplementary-groups '("audio" "netdev" "video" "wheel")))))
+         (supplementary-groups '("audio" "docker" "netdev" "video" "wheel")))))
 
 (define %services
   (modify-services (cons* %libvirt-service
