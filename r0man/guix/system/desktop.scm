@@ -1,8 +1,11 @@
 (define-module (r0man guix system desktop)
+  #:use-module (gnu packages audio)
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages libusb)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages lisp)
   #:use-module (gnu packages lisp-xyz)
+  #:use-module (gnu packages networking)
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
@@ -26,6 +29,9 @@
 
 (define %packages
   (list
+   alsa-plugins
+   alsa-utils
+   blueman
    ;; cl-stumpwm
    ;; sbcl
    ;; sbcl-local-time
@@ -49,6 +55,8 @@
    ;; sbcl-stumpwm-winner-mode
    ;; stumpish
    ;; stumpwm
+   pipewire
+   wireplumber
    xf86-input-libinput))
 
 (define %services

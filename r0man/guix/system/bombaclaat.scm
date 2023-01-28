@@ -14,7 +14,15 @@
   #:use-module (r0man guix system desktop))
 
 (define %firmware
-  (cons asahi-firmware (operating-system-firmware desktop-operating-system)))
+  (cons* asahi-firmware
+         (operating-system-firmware desktop-operating-system)))
+
+(define %packages
+  (cons* alsa-ucm-conf-asahi
+         asahi-firmware
+         asahi-scripts
+         mesa-asahi-edge
+         (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices
   (list (mapped-device
@@ -54,6 +62,7 @@
     (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
     (file-systems (append %file-systems %base-file-systems))
+    (packages %packages)
     (swap-devices %swap-devices)))
 
 bombaclaat
