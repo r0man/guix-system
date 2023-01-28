@@ -6,6 +6,7 @@
   #:use-module (gnu services base)
   #:use-module (gnu services cups)
   #:use-module (gnu services desktop)
+  #:use-module (gnu services docker)
   #:use-module (gnu services networking)
   #:use-module (gnu services security-token)
   #:use-module (gnu services ssh)
@@ -17,6 +18,7 @@
   #:use-module (r0man guix system keyboard)
   #:export (%bluetooth-service
             %cups-service
+            %docker-service
             %libvirt-service
             %openssh-service
             %pcscd-service-type
@@ -33,6 +35,9 @@
             (web-interface? #t)
             (extensions
              (list cups-filters)))))
+
+(define %docker-service
+  (service docker-service-type))
 
 (define %libvirt-service
   (service libvirt-service-type

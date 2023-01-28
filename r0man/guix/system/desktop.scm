@@ -54,6 +54,7 @@
 (define %services
   (modify-services (cons* %bluetooth-service
                           %cups-service
+                          %docker-service
                           %libvirt-service
                           %openssh-service
                           %pcscd-service-type
