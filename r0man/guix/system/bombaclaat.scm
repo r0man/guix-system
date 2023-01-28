@@ -1,5 +1,5 @@
 (define-module (r0man guix system bombaclaat)
-  #:use-module (asahi guix installer)
+  #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages ssh)
@@ -15,51 +15,6 @@
 
 (define %firmware
   (cons asahi-firmware (operating-system-firmware desktop-operating-system)))
-
-(define %modules
-  '(;; Asahi
-    ;; For NVMe & SMC
-    "apple-mailbox"
-    ;; For NVMe
-    "nvme-apple"
-    ;; For USB and HID
-    "pinctrl-apple-gpio"
-    ;; SMC core
-    "macsmc" "macsmc-rtkit"
-    ;; For USB
-    "apple-dart"
-    "dwc3"
-    "dwc3-of-simple"
-    "gpio_macsmc"
-    "i2c-apple"
-    "nvmem-apple-efuses"
-    "pcie-apple"
-    "phy-apple-atc"
-    "tps6598x"
-    "xhci-pci"
-    ;; For HID
-    "spi-apple" "spi-hid-apple" "spi-hid-apple-of"
-    ;; For RTC
-    "rtc-macsmc" "simple-mfd-spmi"
-    "spmi-apple-controller"
-    "nvmem_spmi_mfd"
-    ;; For MTP HID
-    "apple-dockchannel" "dockchannel-hid"
-    "apple-rtkit-helper"
-    ;; Guix
-    "usb-storage"
-    "uas"
-    "usbhid"
-    "hid-apple"
-    "dm-crypt"
-    "serpent_generic"
-    "wp512"
-    "nls_iso8859-1"
-    "virtio_pci"
-    "virtio_balloon"
-    "virtio_blk"
-    "virtio_net"
-    "virtio-rng"))
 
 (define %mapped-devices
   (list (mapped-device
@@ -96,7 +51,7 @@
     (host-name "bombaclaat")
     (kernel asahi-linux-edge)
     (firmware %firmware)
-    (initrd-modules %modules)
+    (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
     (file-systems (append %file-systems %base-file-systems))
     (swap-devices %swap-devices)))
