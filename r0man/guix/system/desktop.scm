@@ -68,6 +68,8 @@
                           %pcscd-service-type
                           %slim-service
                           %desktop-services)
+    (delete alsa-service-type)
+    (delete pulseaudio-service-type)
     (delete sddm-service-type)
     (console-font-service-type config => (console-font-service-config config))
     (guix-service-type config => (guix-service-type-config config))))
