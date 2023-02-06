@@ -1,6 +1,7 @@
 (define-module (r0man guix system bombaclaat)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
+  #:use-module (asahi guix transformations)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services avahi)
@@ -57,7 +58,7 @@
   (operating-system
     (inherit desktop-operating-system)
     (host-name "bombaclaat")
-    (kernel asahi-linux-edge)
+    (kernel (replace-jemalloc asahi-linux-edge))
     (firmware %firmware)
     (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
