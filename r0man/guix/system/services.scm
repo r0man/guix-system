@@ -76,13 +76,23 @@ Section \"InputClass\"
 EndSection
 ")
 
+(define %xorg-modeset-config "
+Section \"OutputClass\"
+    Identifier \"appledrm\"
+    MatchDriver \"apple\"
+    Driver \"modesetting\"
+    Option \"PrimaryGPU\" \"true\"
+EndSection
+")
+
 (define %slim-service
   (service slim-service-type
            (slim-configuration
             (xorg-configuration
              (xorg-configuration
               (keyboard-layout %keyboard-layout)
-              (extra-config (list %xorg-libinput-config)))))))
+              (extra-config (list %xorg-libinput-config
+                                  %xorg-modeset-config)))))))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
