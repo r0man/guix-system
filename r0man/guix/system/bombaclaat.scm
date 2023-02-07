@@ -21,6 +21,7 @@
 (define %packages
   (cons* alsa-ucm-conf-asahi
          asahi-firmware
+         asahi-mesa-utils
          asahi-scripts
          mesa-asahi-edge
          (operating-system-packages desktop-operating-system)))
