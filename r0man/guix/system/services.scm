@@ -8,6 +8,7 @@
   #:use-module (gnu services desktop)
   #:use-module (gnu services docker)
   #:use-module (gnu services networking)
+  #:use-module (gnu services nix)
   #:use-module (gnu services security-token)
   #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
@@ -20,6 +21,7 @@
             %cups-service
             %docker-service
             %libvirt-service
+            %nix-service
             %openssh-service
             %pcscd-service-type
             %slim-service
@@ -44,6 +46,9 @@
            (libvirt-configuration
             (unix-sock-group "libvirt")
             (tls-port "16555"))))
+
+(define %nix-service
+  (service nix-service-type))
 
 (define %openssh-service
   (service openssh-service-type
