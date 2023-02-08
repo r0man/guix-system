@@ -60,7 +60,8 @@
    xf86-input-libinput))
 
 (define %services
-  (modify-services (cons* %bluetooth-service
+  (modify-services (cons* %auditd-service-type
+                          %bluetooth-service
                           %cups-service
                           %docker-service
                           %libvirt-service

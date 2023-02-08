@@ -2,6 +2,7 @@
   #:use-module (gnu packages cups)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu services auditd)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
   #:use-module (gnu services cups)
@@ -17,7 +18,8 @@
   #:use-module (guix gexp)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system keyboard)
-  #:export (%bluetooth-service
+  #:export (%auditd-service-type
+            %bluetooth-service
             %cups-service
             %docker-service
             %libvirt-service
@@ -27,6 +29,9 @@
             %slim-service
             console-font-service-config
             guix-service-type-config))
+
+(define %auditd-service-type
+  (service auditd-service-type))
 
 (define %bluetooth-service
   (service bluetooth-service-type))
