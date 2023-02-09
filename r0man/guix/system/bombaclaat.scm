@@ -41,7 +41,6 @@
   (list (file-system
           (mount-point "/")
           (device "/dev/mapper/bombaclaat-root")
-          ;; (device (file-system-label "root"))
           (type "ext4")
           (needed-for-boot? #t)
           (dependencies %mapped-devices))
@@ -52,7 +51,7 @@
 
 (define %swap-devices
   (list (swap-space
-         (target (file-system-label "swap"))
+         (target "/dev/mapper/bombaclaat-swap")
          (dependencies %mapped-devices))))
 
 (define bombaclaat
