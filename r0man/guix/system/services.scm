@@ -102,6 +102,7 @@ EndSection
            (slim-configuration
             (xorg-configuration
              (xorg-configuration
+              (drivers (list "modesetting" "vesa"))
               (keyboard-layout %keyboard-layout)
               (extra-config (list %xorg-libinput-config
                                   %xorg-modeset-config)))))))
