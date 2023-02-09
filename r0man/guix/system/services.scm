@@ -2,6 +2,7 @@
   #:use-module (gnu packages cups)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu services auditd)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
@@ -27,6 +28,7 @@
             %openssh-service
             %pcscd-service-type
             %slim-service
+            %screen-locker-service
             console-font-service-config
             guix-service-type-config))
 
@@ -103,6 +105,9 @@ EndSection
               (keyboard-layout %keyboard-layout)
               (extra-config (list %xorg-libinput-config
                                   %xorg-modeset-config)))))))
+
+(define %screen-locker-service
+  (screen-locker-service xlockmore "xlock"))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
