@@ -19,6 +19,7 @@
   #:use-module (guix gexp)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system keyboard)
+  #:use-module (r0man guix system xorg)
   #:export (%auditd-service-type
             %bluetooth-service
             %cups-service
@@ -67,45 +68,13 @@
 (define %pcscd-service-type
   (service pcscd-service-type))
 
-(define %xorg-libinput-config "
-Section \"InputClass\"
-  Identifier \"Touchpads\"
-  Driver \"libinput\"
-  MatchDevicePath \"/dev/input/event*\"
-  MatchIsTouchpad \"on\"
-  Option \"Tapping\" \"on\"
-  Option \"TappingDrag\" \"on\"
-  Option \"DisableWhileTyping\" \"on\"
-  Option \"MiddleEmulation\" \"on\"
-  Option \"ScrollMethod\" \"twofinger\"
-EndSection
-
-Section \"InputClass\"
-  Identifier \"Keyboards\"
-  Driver \"libinput\"
-  MatchDevicePath \"/dev/input/event*\"
-  MatchIsKeyboard \"on\"
-EndSection
-")
-
-(define %xorg-modeset-config "
-Section \"OutputClass\"
-    Identifier \"appledrm\"
-    MatchDriver \"apple\"
-    Driver \"modesetting\"
-    Option \"PrimaryGPU\" \"true\"
-EndSection
-")
-
 (define %slim-service
   (service slim-service-type
            (slim-configuration
             (xorg-configuration
              (xorg-configuration
-              (drivers (list "modesetting" "vesa"))
               (keyboard-layout %keyboard-layout)
-              (extra-config (list %xorg-libinput-config
-                                  %xorg-modeset-config)))))))
+              (extra-config (list %xorg-libinput-config)))))))
 
 (define %screen-locker-service
   (screen-locker-service xlockmore "xlock"))
