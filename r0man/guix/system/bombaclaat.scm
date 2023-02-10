@@ -38,16 +38,18 @@
          (type lvm-device-mapping))))
 
 (define %file-systems
-  (list (file-system
-          (mount-point "/")
-          (device "/dev/mapper/bombaclaat-root")
-          (type "ext4")
-          (needed-for-boot? #t)
-          (dependencies %mapped-devices))
-        (file-system
-          (mount-point "/boot/efi")
-          (device (uuid "9FBE-130E" 'fat32))
-          (type "vfat"))))
+  (cons* (file-system
+           (mount-point "/")
+           (device "/dev/mapper/bombaclaat-root")
+           (type "ext4")
+           (needed-for-boot? #t)
+           (dependencies %mapped-devices))
+         (file-system
+           (mount-point "/boot/efi")
+           (device (uuid "9FBE-130E" 'fat32))
+           (type "vfat"))
+         %base-file-systems))
+
 
 (define %swap-devices
   (list (swap-space
@@ -62,7 +64,7 @@
     (firmware %firmware)
     (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
-    (file-systems (append %file-systems %base-file-systems))
+    (file-systems %file-systems)
     (packages %packages)
     (swap-devices %swap-devices)))
 
