@@ -69,6 +69,13 @@
                          (xorg-configuration
                           ;; (drivers (list "modesetting" "vesa"))
                           (keyboard-layout %keyboard-layout)
+                          (modules (list mesa-asahi-edge
+                                         xf86-video-vesa
+                                         xf86-video-fbdev
+                                         xf86-input-libinput
+                                         xf86-input-evdev
+                                         xf86-input-keyboard
+                                         xf86-input-mouse))
                           (extra-config (list %xorg-libinput-config
                                               %xorg-modeset-config))
                           (server (replace-mesa (replace-libdrm xorg-server)))))))))
