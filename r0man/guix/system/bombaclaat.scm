@@ -67,7 +67,6 @@
                         (inherit config)
                         (xorg-configuration
                          (xorg-configuration
-                          ;; (drivers (list "modesetting" "vesa"))
                           (keyboard-layout %keyboard-layout)
                           (modules (list mesa-asahi-edge
                                          xf86-video-fbdev
