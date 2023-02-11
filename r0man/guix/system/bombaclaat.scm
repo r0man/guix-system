@@ -1,6 +1,7 @@
 (define-module (r0man guix system bombaclaat)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
+  #:use-module (asahi guix services xorg)
   #:use-module (asahi guix transformations)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages ssh)
@@ -17,6 +18,8 @@
   #:use-module (gnu system nss)
   #:use-module (gnu system uuid)
   #:use-module (gnu system)
+  #:use-module (guix gexp)
+  #:use-module (guix packages)
   #:use-module (r0man guix system desktop)
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system xorg))
@@ -61,6 +64,9 @@
   (modify-services (cons* (service kernel-module-loader-service-type
                                    '("asahi"
                                      "appledrm"))
+                          (simple-service 'asahi-config etc-service-type
+                                          (list `("modprobe.d/asahi.conf"
+                                                  ,(plain-file "asahi.conf" "options debug_flags=1"))))
                           (operating-system-user-services desktop-operating-system))
     (slim-service-type config =>
                        (slim-configuration
