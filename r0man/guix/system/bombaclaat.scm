@@ -70,7 +70,6 @@
                           ;; (drivers (list "modesetting" "vesa"))
                           (keyboard-layout %keyboard-layout)
                           (modules (list mesa-asahi-edge
-                                         xf86-video-vesa
                                          xf86-video-fbdev
                                          xf86-input-libinput
                                          xf86-input-evdev
