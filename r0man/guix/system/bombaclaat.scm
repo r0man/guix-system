@@ -68,8 +68,7 @@
                         (xorg-configuration
                          (xorg-configuration
                           (keyboard-layout %keyboard-layout)
-                          (modules (list mesa-asahi-edge
-                                         xf86-video-fbdev
+                          (modules (list xf86-video-fbdev
                                          xf86-input-libinput
                                          xf86-input-evdev
                                          xf86-input-keyboard
