@@ -4,15 +4,22 @@
   #:use-module (asahi guix transformations)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages xorg)
   #:use-module (gnu services avahi)
+  #:use-module (gnu services linux)
   #:use-module (gnu services networking)
+  #:use-module (gnu services sound)
   #:use-module (gnu services ssh)
+  #:use-module (gnu services xorg)
+  #:use-module (gnu services)
   #:use-module (gnu system file-systems)
   #:use-module (gnu system mapped-devices)
   #:use-module (gnu system nss)
   #:use-module (gnu system uuid)
   #:use-module (gnu system)
-  #:use-module (r0man guix system desktop))
+  #:use-module (r0man guix system desktop)
+  #:use-module (r0man guix system keyboard)
+  #:use-module (r0man guix system xorg))
 
 (define %firmware
   (cons* asahi-firmware
@@ -21,7 +28,7 @@
 (define %packages
   (cons* alsa-ucm-conf-asahi
          asahi-firmware
-         asahi-mesa-utils
+         (replace-libdrm asahi-mesa-utils)
          asahi-scripts
          mesa-asahi-edge
          (operating-system-packages desktop-operating-system)))
@@ -50,6 +57,21 @@
            (type "vfat"))
          %base-file-systems))
 
+(define %services
+  (modify-services (cons* (service kernel-module-loader-service-type
+                                   '("asahi"
+                                     "appledrm"))
+                          (operating-system-user-services desktop-operating-system))
+    (slim-service-type config =>
+                       (slim-configuration
+                        (inherit config)
+                        (xorg-configuration
+                         (xorg-configuration
+                          ;; (drivers (list "modesetting" "vesa"))
+                          (keyboard-layout %keyboard-layout)
+                          (extra-config (list %xorg-libinput-config
+                                              %xorg-modeset-config))
+                          (server (replace-mesa (replace-libdrm xorg-server)))))))))
 
 (define %swap-devices
   (list (swap-space
@@ -66,6 +88,7 @@
     (mapped-devices %mapped-devices)
     (file-systems %file-systems)
     (packages %packages)
+    (services %services)
     (swap-devices %swap-devices)))
 
 bombaclaat
