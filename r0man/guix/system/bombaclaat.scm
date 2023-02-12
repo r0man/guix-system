@@ -31,7 +31,7 @@
 (define %packages
   (cons* alsa-ucm-conf-asahi
          asahi-firmware
-         (replace-libdrm asahi-mesa-utils)
+         (replace-asahi asahi-mesa-utils)
          asahi-scripts
          mesa-asahi-edge
          (operating-system-packages desktop-operating-system)))
@@ -81,7 +81,7 @@
                                          xf86-input-mouse))
                           (extra-config (list %xorg-libinput-config
                                               %xorg-modeset-config))
-                          (server (replace-mesa (replace-libdrm xorg-server)))))))))
+                          (server (replace-asahi xorg-server))))))))
 
 (define %swap-devices
   (list (swap-space
@@ -92,7 +92,7 @@
   (operating-system
     (inherit desktop-operating-system)
     (host-name "bombaclaat")
-    (kernel (replace-jemalloc asahi-linux-edge))
+    (kernel (replace-asahi asahi-linux-edge))
     (firmware %firmware)
     (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
