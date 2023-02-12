@@ -66,7 +66,7 @@
                                      "appledrm"))
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
-                                                  ,(plain-file "asahi.conf" "options debug_flags=1"))))
+                                                  ,(plain-file "asahi.conf" "options asahi debug_flags=1"))))
                           (operating-system-user-services desktop-operating-system))
     (slim-service-type config =>
                        (slim-configuration
