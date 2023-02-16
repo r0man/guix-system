@@ -1,7 +1,7 @@
 (define-module (r0man guix system bombaclaat)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
-  #:use-module (asahi guix services xorg)
+  #:use-module (asahi guix services)
   #:use-module (asahi guix transformations)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages ssh)
@@ -67,6 +67,7 @@
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=1"))))
+                          %udev-rules-service
                           (operating-system-user-services desktop-operating-system))
     (slim-service-type config =>
                        (slim-configuration
