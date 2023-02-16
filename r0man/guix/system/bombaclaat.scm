@@ -67,7 +67,8 @@
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=1"))))
-                          %udev-rules-service
+                          %udev-backlight-service
+                          %udev-kbd-backlight-service
                           (operating-system-user-services desktop-operating-system))
     (slim-service-type config =>
                        (slim-configuration
