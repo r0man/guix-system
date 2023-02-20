@@ -69,7 +69,7 @@
                           %openssh-service
                           %pcscd-service-type
                           %slim-service
-                          %udev-yubikey-service
+                          %udev-fido2-service
                           %desktop-services)
     (delete alsa-service-type)
     (delete pulseaudio-service-type)

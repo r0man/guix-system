@@ -1,6 +1,7 @@
 (define-module (r0man guix system services)
   #:use-module (gnu packages cups)
   #:use-module (gnu packages fonts)
+  #:use-module (gnu packages security-token)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu services auditd)
@@ -31,7 +32,7 @@
             %pcscd-service-type
             %screen-locker-service
             %slim-service
-            %udev-yubikey-service
+            %udev-fido2-service
             console-font-service-config
             guix-service-type-config))
 
@@ -81,8 +82,8 @@
 (define %screen-locker-service
   (screen-locker-service xlockmore "xlock"))
 
-(define %udev-yubikey-service
-  (udev-rules-service 'yubikey %udev-yubikey-rule))
+(define %udev-fido2-service
+  (udev-rules-service 'fido2 libfido2 #:groups '("plugdev")))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
