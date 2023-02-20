@@ -19,6 +19,7 @@
   #:use-module (guix gexp)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system keyboard)
+  #:use-module (r0man guix system udev)
   #:use-module (r0man guix system xorg)
   #:export (%auditd-service-type
             %bluetooth-service
@@ -28,8 +29,9 @@
             %nix-service
             %openssh-service
             %pcscd-service-type
-            %slim-service
             %screen-locker-service
+            %slim-service
+            %udev-yubikey-service
             console-font-service-config
             guix-service-type-config))
 
@@ -78,6 +80,9 @@
 
 (define %screen-locker-service
   (screen-locker-service xlockmore "xlock"))
+
+(define %udev-yubikey-service
+  (udev-rules-service 'yubikey %udev-yubikey-rule))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
