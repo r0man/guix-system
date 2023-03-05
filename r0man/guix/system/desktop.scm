@@ -68,6 +68,7 @@
                           %nix-service
                           %openssh-service
                           %pcscd-service-type
+                          %qemu-service
                           %slim-service
                           %udev-fido2-service
                           %desktop-services)
