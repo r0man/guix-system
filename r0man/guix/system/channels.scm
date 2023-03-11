@@ -39,7 +39,7 @@
          (name 'nonguix)
          (url "https://gitlab.com/nonguix/nonguix")
          (branch "master")
-         (commit "b8f0231f35f0e82c6d196b5cbdbeab3bd463bb93")
+         (commit "7d9da8246fe6365a22a6fcb980312363e74af7c1")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
