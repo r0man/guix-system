@@ -6,7 +6,7 @@
          (name 'asahi)
          (url "https://github.com/r0man/asahi-guix.git")
          (branch "main")
-         (commit "e58f8c6135783be798dea9edb4377efc0d30a219")
+         (commit "2e178b253243719b60a4ff6da2067696d66ac7a2")
          (introduction
           (make-channel-introduction
            "c11f1c583d11b1ed55d34d7041b0c12d51d573e4"
