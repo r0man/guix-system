@@ -53,19 +53,19 @@ Create a physical volume in the partition.
 #+RESULTS:
 :   Physical volume "/dev/mapper/cryptroot" successfully created.
 
-Create a volume group in the physical volume, named =bombaclaat=.
+Create a volume group in the physical volume, named =macbook=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  vgcreate bombaclaat /dev/mapper/cryptroot
+  vgcreate macbook /dev/mapper/cryptroot
 #+end_src
 
 #+RESULTS:
-:   Volume group "bombaclaat" successfully created
+:   Volume group "macbook" successfully created
 
 Create a logical volume for the swap partition.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  lvcreate --size 34G bombaclaat --name swap
+  lvcreate --size 34G macbook --name swap
 #+end_src
 
 #+RESULTS:
@@ -74,7 +74,7 @@ Create a logical volume for the swap partition.
 Create a logical volume for the =root= partition.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  lvcreate -l 100%FREE bombaclaat --name root
+  lvcreate -l 100%FREE macbook --name root
 #+end_src
 
 #+RESULTS:
@@ -83,8 +83,8 @@ Create a logical volume for the =root= partition.
 Format the filesystem and swap partitions.
 
 #+begin_src sh :exports both :dir /sudo:: :results silent
-  mkfs.ext4 -L root /dev/bombaclaat/root
-  mkswap --label swap /dev/bombaclaat/swap
+  mkfs.ext4 -L root /dev/macbook/root
+  mkswap --label swap /dev/macbook/swap
 #+end_src
 
 #+RESULTS:
@@ -121,9 +121,9 @@ LABEL=swap, UUID=cf679d9a-9498-42c9-84ea-c21f14601c25
 Mount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  mount /dev/bombaclaat/root /mnt
+  mount /dev/macbook/root /mnt
   mount --mkdir /dev/nvme0n1p7 /mnt/boot/efi
-  swapon /dev/bombaclaat/swap
+  swapon /dev/macbook/swap
 #+end_src
 
 #+RESULTS:
@@ -131,7 +131,7 @@ Mount the filesystems.
 Unmount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  swapoff /dev/bombaclaat/swap
+  swapoff /dev/macbook/swap
   umount /mnt/boot/efi
   umount /mnt
 #+end_src
@@ -146,7 +146,7 @@ List the UUIDs of the partitions.
 
 #+RESULTS:
 #+begin_example
-/dev/mapper/bombaclaat-swap: LABEL="swap" UUID="ce630ee0-04f0-4e37-9ec7-1efd08b14050" TYPE="swap"
+/dev/mapper/macbook-swap: LABEL="swap" UUID="ce630ee0-04f0-4e37-9ec7-1efd08b14050" TYPE="swap"
 /dev/nvme0n1p9: UUID="56b68fba-21cb-49b5-ac44-84dc382f3426" TYPE="crypto_LUKS" PARTUUID="ba253f57-3e75-b142-9bf5-e5351ad18caa"
 /dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9FBE-130E" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="376f4ff5-3a94-4151-baef-59466fb35801"
 /dev/nvme0n1p5: LABEL="asahi-root" UUID="5d3f0ec5-c6a3-41a2-a181-6fc49279239d" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="33fa19cc-7269-4916-8d66-f9bc55adef90"
@@ -156,26 +156,26 @@ List the UUIDs of the partitions.
 /dev/nvme0n1p6: UUID="96427d1c-ff6c-44d7-84bf-7082e3748c0a" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="30738918-6131-4967-8474-b94decdc238e"
 /dev/nvme0n1p4: LABEL_FATBOOT="EFI - ASAHI" LABEL="EFI - ASAHI" UUID="35B7-2F3A" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="5fd144d2-2e4c-46f4-8de5-c9c3020105dd"
 /dev/nvme0n1p2: UUID="f7040a26-c920-451c-9f01-9850f32725c6" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="Container" PARTUUID="03752c1b-d126-4932-9be0-838f12ab4086"
-/dev/mapper/bombaclaat-root: LABEL="root" UUID="ee886222-468a-41d3-965d-add8f2c95003" BLOCK_SIZE="4096" TYPE="ext4"
+/dev/mapper/macbook-root: LABEL="root" UUID="ee886222-468a-41d3-965d-add8f2c95003" BLOCK_SIZE="4096" TYPE="ext4"
 /dev/mapper/cryptroot: UUID="8X2AnN-OLVX-foTL-wAEs-0Lwe-GaI0-PK08Rx" TYPE="LVM2_member"
 /dev/sda2: LABEL="Guix_image" UUID="416bf41b-f6b1-2062-ba06-4196416bf41b" BLOCK_SIZE="4096" TYPE="ext4"
 /dev/sda1: SEC_TYPE="msdos" LABEL_FATBOOT="GNU-ESP" LABEL="GNU-ESP" UUID="72A9-2BFE" BLOCK_SIZE="512" TYPE="vfat"
 #+end_example
 
-Update UUIDs in =r0man/guix/system/bombaclaat.scm=.
+Update UUIDs in =r0man/guix/system/macbook.scm=.
 
 *** Image
 
 Build the Guix installation image.
 
 #+begin_src sh :exports both :results verbatim
-  guix system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
+  guix system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/macbook.scm
 #+end_src
 
 Or, build the image with the Guix time machine.
 
 #+begin_src sh :exports both :results verbatim
-  guix time-machine -C r0man/guix/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
+  guix time-machine -C r0man/guix/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/macbook.scm
 #+end_src
 
 Write the image to the USB stick at =/dev/sda=.
@@ -189,13 +189,13 @@ Write the image to the USB stick at =/dev/sda=.
 Initialize the system using the mounted file systems in =/mnt=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  guix system init -L . --system=aarch64-linux r0man/guix/system/bombaclaat.scm /mnt
+  guix system init -L . --system=aarch64-linux r0man/guix/system/macbook.scm /mnt
 #+end_src
 
 Or, initialize the system with the Guix time machine.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  guix time-machine -C r0man/guix/system/channels.scm -- system init -L . --system=aarch64-linux r0man/guix/system/bombaclaat.scm /mnt
+  guix time-machine -C r0man/guix/system/channels.scm -- system init -L . --system=aarch64-linux r0man/guix/system/macbook.scm /mnt
 #+end_src
 
 Copy the channels to =/mnt/etc/channels.scm=.
@@ -210,5 +210,5 @@ Copy the channels to =/mnt/etc/channels.scm=.
 Copy the system configuration to =/mnt/etc/config.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cp r0man/guix/system/bombaclaat.scm /mnt/etc/config.scm
+  cp r0man/guix/system/macbook.scm /mnt/etc/config.scm
 #+end_src

@@ -1,4 +1,4 @@
-(define-module (r0man guix system bombaclaat)
+(define-module (r0man guix system macbook)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
   #:use-module (asahi guix services)
@@ -42,15 +42,15 @@
          (target "cryptroot")
          (type luks-device-mapping))
         (mapped-device
-         (source "bombaclaat")
-         (targets (list "bombaclaat-root"
-                        "bombaclaat-swap"))
+         (source "macbook")
+         (targets (list "macbook-root"
+                        "macbook-swap"))
          (type lvm-device-mapping))))
 
 (define %file-systems
   (cons* (file-system
            (mount-point "/")
-           (device "/dev/mapper/bombaclaat-root")
+           (device "/dev/mapper/macbook-root")
            (type "ext4")
            (needed-for-boot? #t)
            (dependencies %mapped-devices))
@@ -87,13 +87,13 @@
 
 (define %swap-devices
   (list (swap-space
-         (target "/dev/mapper/bombaclaat-swap")
+         (target "/dev/mapper/macbook-swap")
          (dependencies %mapped-devices))))
 
-(define bombaclaat
+(define macbook
   (operating-system
     (inherit desktop-operating-system)
-    (host-name "bombaclaat")
+    (host-name "macbook")
     (kernel (replace-asahi asahi-linux-edge))
     (firmware %firmware)
     (initrd-modules asahi-initrd-modules-edge)
@@ -103,4 +103,4 @@
     (services %services)
     (swap-devices %swap-devices)))
 
-bombaclaat
+macbook
