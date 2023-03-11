@@ -2,8 +2,6 @@
   #:use-module (gnu system nss)
   #:use-module (gnu)
   #:use-module (guix packages)
-  #:use-module (nongnu packages linux)
-  #:use-module (nongnu system linux-initrd)
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
   #:export (base-operating-system))
@@ -48,8 +46,6 @@
                  (bootloader grub-efi-removable-bootloader)
                  (targets (list "/boot/efi"))
                  (keyboard-layout keyboard-layout)))
-
-    (kernel linux)
     (kernel-arguments
      (append '("modprobe.blacklist=radeon"
                ;; Prevent network interfaces from having really long
@@ -59,8 +55,6 @@
                ;; "quiet"
                )
              %default-kernel-arguments))
-    (firmware (list linux-firmware))
-    (initrd microcode-initrd)
     (file-systems (cons*
                    (file-system
                      (mount-point "/")
