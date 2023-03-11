@@ -25,8 +25,13 @@
             "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
 
         (channel
-         (name 'guix-system)
-         (url "/home/roman/workspace/guix-system")
-         (branch "main"))))
+         (name 'r0man-system)
+         (url "git@github.com:r0man/guix-system.git")
+         (branch "main")
+         (introduction
+          (make-channel-introduction
+           "754146ab5979be91a3ed69c99b9dbccb4d06b6bd"
+           (openpgp-fingerprint
+            "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))))
 
 channels
