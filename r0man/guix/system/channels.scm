@@ -13,22 +13,11 @@
            (openpgp-fingerprint
             "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))
 
-        ;; (channel
-        ;;  (name 'guix)
-        ;;  (url "https://github.com/r0man/guix.git")
-        ;;  (branch "master")
-        ;;  (commit "14dfe8be59ef5cda15540b22cf0cbcb2f6681b29")
-        ;;  (introduction
-        ;;   (make-channel-introduction
-        ;;    "9edb3f66fd807b096b48283debdcddccfea34bad"
-        ;;    (openpgp-fingerprint
-        ;;     "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
-
         (channel
          (name 'guix)
          (url "https://git.savannah.gnu.org/git/guix.git")
          (branch "master")
-         (commit "7833acab0da02335941974608510c02e2d1d8069")
+         (commit "14dfe8be59ef5cda15540b22cf0cbcb2f6681b29")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
