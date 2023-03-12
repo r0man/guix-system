@@ -32,16 +32,16 @@ Device             Start       End   Sectors   Size Type
 Partition table entries are not in disk order.
 #+end_example
 
-Create the LUKS encrypted container in partition =/dev/nvme0n1p9=.
+Create the LUKS encrypted container in partition =/dev/nvme0n1p12=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cryptsetup luksFormat --label cryptroot --type luks1 /dev/nvme0n1p9
+  cryptsetup luksFormat --label cryptroot --type luks1 /dev/nvme0n1p12
 #+end_src
 
 Open the LUKS partition.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cryptsetup luksOpen /dev/nvme0n1p9 cryptroot
+  cryptsetup luksOpen /dev/nvme0n1p12 cryptroot
 #+end_src
 
 Create a physical volume in the partition.
@@ -122,7 +122,8 @@ Mount the filesystems.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
   mount /dev/bombaclaat/root /mnt
-  mount --mkdir /dev/nvme0n1p7 /mnt/boot/efi
+  mkdir --parents /mnt/boot/efi
+  mount /dev/nvme0n1p10 /mnt/boot/efi
   swapon /dev/bombaclaat/swap
 #+end_src
 
@@ -147,8 +148,8 @@ List the UUIDs of the partitions.
 #+RESULTS:
 #+begin_example
 /dev/mapper/bombaclaat-swap: LABEL="swap" UUID="ce630ee0-04f0-4e37-9ec7-1efd08b14050" TYPE="swap"
-/dev/nvme0n1p9: UUID="56b68fba-21cb-49b5-ac44-84dc382f3426" TYPE="crypto_LUKS" PARTUUID="ba253f57-3e75-b142-9bf5-e5351ad18caa"
-/dev/nvme0n1p7: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9FBE-130E" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="376f4ff5-3a94-4151-baef-59466fb35801"
+/dev/nvme0n1p12: UUID="56b68fba-21cb-49b5-ac44-84dc382f3426" TYPE="crypto_LUKS" PARTUUID="ba253f57-3e75-b142-9bf5-e5351ad18caa"
+/dev/nvme0n1p10: LABEL_FATBOOT="EFI - UEFI" LABEL="EFI - UEFI" UUID="9FBE-130E" BLOCK_SIZE="4096" TYPE="vfat" PARTUUID="376f4ff5-3a94-4151-baef-59466fb35801"
 /dev/nvme0n1p5: LABEL="asahi-root" UUID="5d3f0ec5-c6a3-41a2-a181-6fc49279239d" BLOCK_SIZE="4096" TYPE="ext4" PARTUUID="33fa19cc-7269-4916-8d66-f9bc55adef90"
 /dev/nvme0n1p3: UUID="f3b2124c-3c4d-49ef-9945-dca555185dbd" BLOCK_SIZE="4096" TYPE="apfs" PARTUUID="c8770a42-bbdd-4dd9-9312-d2df91d8dc10"
 /dev/nvme0n1p1: UUID="743ec7b4-1da1-4d90-a575-1b2e149c999d" BLOCK_SIZE="4096" TYPE="apfs" PARTLABEL="iBootSystemContainer" PARTUUID="5eb3f5e3-071e-4fac-be15-232d314b9c94"
