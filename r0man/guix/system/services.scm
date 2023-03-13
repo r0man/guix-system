@@ -29,7 +29,7 @@
             %nix-service
             %openssh-service
             %pcscd-service-type
-            %qemu-service
+            ;; %qemu-service
             %screen-locker-service
             %slim-service
             %udev-fido2-service
@@ -71,10 +71,10 @@
 (define %pcscd-service-type
   (service pcscd-service-type))
 
-(define %qemu-service
-  (service qemu-binfmt-service-type
-           (qemu-binfmt-configuration
-            (platforms (lookup-qemu-platforms "aarch64" "x86_64")))))
+;; (define %qemu-service
+;;   (service qemu-binfmt-service-type
+;;            (qemu-binfmt-configuration
+;;             (platforms (lookup-qemu-platforms "aarch64" "x86_64")))))
 
 (define %slim-service
   (service slim-service-type
