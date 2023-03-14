@@ -79,7 +79,7 @@
 (define %qemu-service
   (service qemu-binfmt-service-type
            (qemu-binfmt-configuration
-            (platforms (lookup-qemu-platforms "x86_64")))))
+            (platforms (lookup-qemu-platforms "aarch64" "x86_64")))))
 
 (define %slim-service
   (service slim-service-type
