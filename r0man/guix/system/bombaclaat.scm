@@ -33,7 +33,7 @@
          asahi-firmware
          (replace-asahi asahi-mesa-utils)
          asahi-scripts
-         mesa-asahi-edge
+         asahi-mesa
          (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices

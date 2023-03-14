@@ -59,24 +59,30 @@
    wireplumber
    xf86-input-libinput))
 
+(define (network-manager-applet? service)
+  (eq? 'network-manager-applet
+       (service-type-name (service-kind service))))
+
 (define %services
-  (modify-services (cons* %auditd-service-type
-                          %bluetooth-service
-                          %cups-service
-                          %docker-service
-                          %libvirt-service
-                          %nix-service
-                          %openssh-service
-                          %pcscd-service-type
-                          ;; %qemu-service
-                          %slim-service
-                          %udev-fido2-service
-                          %desktop-services)
-    (delete alsa-service-type)
-    (delete pulseaudio-service-type)
-    (delete sddm-service-type)
-    (console-font-service-type config => (console-font-service-config config))
-    (guix-service-type config => (guix-service-type-config config))))
+  (remove (lambda (service)
+            (network-manager-applet? service))
+          (modify-services (cons* %auditd-service-type
+                                  %bluetooth-service
+                                  %cups-service
+                                  %docker-service
+                                  %libvirt-service
+                                  %nix-service
+                                  %openssh-service
+                                  %pcscd-service-type
+                                  %qemu-service
+                                  %slim-service
+                                  %udev-fido2-service
+                                  %desktop-services)
+            (delete alsa-service-type)
+            (delete pulseaudio-service-type)
+            (delete sddm-service-type)
+            (console-font-service-type config => (console-font-service-config config))
+            (guix-service-type config => (guix-service-type-config config)))))
 
 (define desktop-operating-system
   (operating-system
