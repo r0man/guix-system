@@ -73,7 +73,7 @@
                                   %libvirt-service
                                   %nix-service
                                   %openssh-service
-                                  %pcscd-service-type
+                                  %pcscd-service
                                   %qemu-service
                                   %slim-service
                                   %udev-fido2-service

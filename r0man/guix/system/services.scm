@@ -28,7 +28,7 @@
             %libvirt-service
             %nix-service
             %openssh-service
-            %pcscd-service-type
+            %pcscd-service
             %qemu-service
             %screen-locker-service
             %slim-service
@@ -68,7 +68,7 @@
             (permit-root-login 'prohibit-password)
             (port-number 22))))
 
-(define %pcscd-service-type
+(define %pcscd-service
   (service pcscd-service-type))
 
 ;; (define %qemu-service
