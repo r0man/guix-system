@@ -1,22 +1,7 @@
 * Burningswell
 ** Disk Setup
 
-Stop already running RAID 1.
-
-#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
-  mdadm --stop /dev/md0
-  cat /proc/mdstat
-#+end_src
-
-If the device is being reused or re-purposed from an existing array,
-erase any old RAID configuration information.
-
-#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
-  mdadm --misc --zero-superblock /dev/sda2
-  mdadm --misc --zero-superblock /dev/sdb2
-#+end_src
-
-Partition the hard drives. Start at 2MB, to make Grub2 happy.
+Partition the hard drives.
 
 #+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   for device in /dev/sda /dev/sdb ; do
@@ -49,8 +34,6 @@ Mount partitions.
 #+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   mount /dev/md0 /mnt
 #+end_src
-
-#+RESULTS:
 
 ** Installation
 
@@ -121,4 +104,21 @@ Run with RAID-1 and =megasas= (WIP)
       -drive file=burningswell.qcow2,if=none,id=drive0 \
       -device scsi-hd,drive=drive1,bus=scsi0.0,channel=0,scsi-id=1,lun=0 \
       -drive file=burningswell.qcow2,if=none,id=drive1
+#+end_src
+
+** Troubleshooting
+
+Stop already running RAID 1.
+
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
+  mdadm --stop /dev/md0
+  cat /proc/mdstat
+#+end_src
+
+If the device is being reused or re-purposed from an existing array,
+erase any old RAID configuration information.
+
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
+  mdadm --misc --zero-superblock /dev/sda2
+  mdadm --misc --zero-superblock /dev/sdb2
 #+end_src
