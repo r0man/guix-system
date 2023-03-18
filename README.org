@@ -214,12 +214,11 @@ Copy the system configuration to =/mnt/etc/config.scm=.
 #+end_src
 
 ** Burningswell
-
-*** Harddisk
+*** Disk Setup
 
 Stop already running RAID 1.
 
-#+begin_src sh
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   mdadm --stop /dev/md0
   mdadm --stop /dev/md1
   mdadm --stop /dev/md2
@@ -227,9 +226,17 @@ Stop already running RAID 1.
   cat /proc/mdstat
 #+end_src
 
+If the device is being reused or re-purposed from an existing array,
+erase any old RAID configuration information.
+
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+  mdadm --misc --zero-superblock /dev/sda
+  mdadm --misc --zero-superblock /dev/sdb
+#+end_src
+
 Partition the hard drives. Start at 2MB, to make Grub2 happy.
 
-#+begin_src sh
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   for device in /dev/sda /dev/sdb ; do
       parted $device --script -- mklabel gpt
       parted $device --script -- mkpart primary 0MB 2MB
@@ -246,7 +253,7 @@ Partition the hard drives. Start at 2MB, to make Grub2 happy.
 
 Create RAID 1 array.
 
-#+begin_src sh
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md0 /dev/sda1 /dev/sdb1
   yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md1 /dev/sda2 /dev/sdb2
   yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md2 /dev/sda3 /dev/sdb3
@@ -256,7 +263,7 @@ Create RAID 1 array.
 
 Create filesystems.
 
-#+begin_src sh
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   mkfs.ext4 -L boot /dev/md1
   mkswap -L swap /dev/md2
   mkfs.ext4 -L root /dev/md3
@@ -264,7 +271,7 @@ Create filesystems.
 
 Mount partitions.
 
-#+begin_src sh
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   mount /dev/md3 /mnt
   mkdir -p /mnt/boot
   mount /dev/md1 /mnt/boot
@@ -272,6 +279,12 @@ Mount partitions.
 #+end_src
 
 *** Installation
+
+Install Guix on the rescue system.
+
+#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+  apt-get install guix
+#+end_src
 
 Build the Guix system image.
 
