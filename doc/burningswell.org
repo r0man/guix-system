@@ -3,28 +3,22 @@
 
 Stop already running RAID 1.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   mdadm --stop /dev/md0
   cat /proc/mdstat
 #+end_src
 
-#+RESULTS:
-: Personalities : [raid1]
-: unused devices: <none>
-
 If the device is being reused or re-purposed from an existing array,
 erase any old RAID configuration information.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   mdadm --misc --zero-superblock /dev/sda2
   mdadm --misc --zero-superblock /dev/sdb2
 #+end_src
 
-#+RESULTS:
-
 Partition the hard drives. Start at 2MB, to make Grub2 happy.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   for device in /dev/sda /dev/sdb ; do
       parted $device --script -- mklabel gpt
       parted $device --script -- mkpart primary 0MB 2MB
@@ -37,47 +31,22 @@ Partition the hard drives. Start at 2MB, to make Grub2 happy.
 
 Create RAID 1 array.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md0 /dev/sda2 /dev/sdb2
   cat /proc/mdstat
 #+end_src
 
-#+RESULTS:
-: Personalities : [raid1]
-: md0 : active raid1 sdb1[1] sda1[0]
-:       499974144 blocks super 1.2 [2/2] [UU]
-:       [>....................]  resync =  0.0% (32192/499974144) finish=258.7min speed=32192K/sec
-:       bitmap: 4/4 pages [16KB], 65536KB chunk
-:
-: unused devices: <none>
 ** File systems
 
 Create filesystems.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   mkfs.ext4 -L root /dev/md0
 #+end_src
 
-#+RESULTS:
-#+begin_example
-Discarding device blocks:      4096/124993536  1576960/124993536  6295552/124993536 10489856/124993536 14684160/124993536 19402752/124993536 23597056/124993536 27791360/124993536 32509952/124993536 36704256/124993536 40898560/124993536 45092864/124993536 49287168/124993536 54005760/124993536 58200064/124993536 62918656/124993536 67112960/124993536 71307264/124993536 76025856/124993536 80220160/124993536 84414464/124993536 88608768/124993536 93327360/124993536 97521664/124993536103288832/124993536111677440/124993536117968896/124993536                   done
-Creating filesystem with 124993536 4k blocks and 31252480 inodes
-Filesystem UUID: 63811f3b-cc0b-4cb3-84f5-301c922c117b
-Superblock backups stored on blocks:
-	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
-	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
-	102400000
-
-Allocating group tables:    0/3815         done
-Writing inode tables:    0/3815         done
-Creating journal (262144 blocks): done
-Writing superblocks and filesystem accounting information:    0/3815         done
-
-#+end_example
-
 Mount partitions.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   mount /dev/md0 /mnt
 #+end_src
 
@@ -87,27 +56,23 @@ Mount partitions.
 
 Install Guix on the rescue system.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   apt-get install guix
 #+end_src
 
-#+RESULTS:
-: guix is already the newest version (1.2.0-4).
-: 0 upgraded, 0 newly installed, 0 to remove and 0 not upgraded.
-
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~ :results verbatim
   git clone git@github.com:r0man/guix-system.git
 #+end_src
 
 Build the Guix system image.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~/guix-system :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~/guix-system :results verbatim
   guix system build -L . r0man/guix/system/burningswell.scm
 #+end_src
 
 Initialize the Guix system at =/mnt=.
 
-#+begin_src sh :exports both :dir /ssh:root@burningswell.com:~/guix-system :results verbatim
+#+begin_src sh :exports code :dir /ssh:root@burningswell.com:~/guix-system :results verbatim
   guix system init --load-path=. r0man/guix/system/burningswell.scm /mnt
 #+end_src
 
@@ -115,7 +80,7 @@ Initialize the Guix system at =/mnt=.
 
 Build the system image in the =qcow2= format.
 
-#+begin_src sh :exports both :results verbatim
+#+begin_src sh :exports code :results verbatim
   guix system image -L . -t qcow2 r0man/guix/system/burningswell.scm
 #+end_src
 
