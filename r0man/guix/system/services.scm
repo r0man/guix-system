@@ -1,5 +1,6 @@
 (define-module (r0man guix system services)
   #:use-module (gnu packages cups)
+  #:use-module (gnu packages databases)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages security-token)
   #:use-module (gnu packages ssh)
@@ -8,6 +9,7 @@
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
   #:use-module (gnu services cups)
+  #:use-module (gnu services databases)
   #:use-module (gnu services desktop)
   #:use-module (gnu services docker)
   #:use-module (gnu services networking)
@@ -30,6 +32,7 @@
             %nix-service
             %openssh-service
             %pcscd-service
+            %postgresql-service
             %qemu-service
             %screen-locker-service
             %slim-service
@@ -74,6 +77,11 @@
 
 (define %pcscd-service
   (service pcscd-service-type))
+
+(define %postgresql-service
+  (service postgresql-service-type
+           (postgresql-configuration
+            (postgresql postgresql-15))))
 
 ;; (define %qemu-service
 ;;   (service qemu-binfmt-service-type

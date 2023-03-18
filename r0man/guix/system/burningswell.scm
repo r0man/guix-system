@@ -63,6 +63,7 @@
 (define %services
   (cons* %docker-service
          %elogind-service
+         %postgresql-service
          %udev-fido2-service
          (service cuirass-service-type
                   (cuirass-configuration
