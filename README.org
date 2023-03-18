@@ -304,6 +304,8 @@ Build the system image in the =qcow2= format.
       -drive if=none,file=burningswell.qcow2,id=myhd
 #+end_src
 
+Run with RAID-1 and =virtio= (WIP)
+
 #+begin_src sh
   qemu-system-x86_64 \
       -snapshot \
@@ -315,7 +317,7 @@ Build the system image in the =qcow2= format.
       -drive if=none,file=burningswell.qcow2,id=sdb
 #+end_src
 
-Run with RAID-1 (WIP)
+Run with RAID-1 and =megasas= (WIP)
 
 #+begin_src sh
   qemu-system-x86_64 \
