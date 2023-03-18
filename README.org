@@ -271,15 +271,15 @@ Mount partitions.
   swapon /dev/md2
 #+end_src
 
-*** System image
+*** Installation
 
 Build the Guix system image.
 
 #+begin_src sh :results verbatim
-  guix system image -L . r0man/guix/system/burningswell.scm
+  guix system build -L . r0man/guix/system/burningswell.scm
 #+end_src
 
-Install the system
+Initialize the Guix system at =/mnt=.
 
 #+begin_src sh :results verbatim
   guix system init --load-path=. r0man/guix/system/burningswell.scm /mnt
