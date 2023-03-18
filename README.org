@@ -166,7 +166,7 @@ Update UUIDs in =r0man/guix/system/bombaclaat.scm=.
 
 *** Image
 
-Build the Guix installation image.
+Build the Guix system image.
 
 #+begin_src sh :exports both :results verbatim
   guix system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
@@ -211,4 +211,26 @@ Copy the system configuration to =/mnt/etc/config.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
   cp r0man/guix/system/bombaclaat.scm /mnt/etc/config.scm
+#+end_src
+
+** Burningswell
+
+Build the Guix system image.
+
+#+begin_src sh :exports both :results verbatim
+  guix system image -L . r0man/guix/system/burningswell.scm
+#+end_src
+
+*** VM
+
+#+begin_src sh :exports both :results verbatim
+  guix system image -L . -t qcow2 r0man/guix/system/burningswell.scm
+#+end_src
+
+#+begin_src sh
+  qemu-system-x86_64 \
+   -nic user,model=virtio-net-pci \
+   -enable-kvm -m 2048 \
+   -device virtio-blk,drive=myhd \
+   -drive if=none,file=burningswell.qcow2,id=myhd
 #+end_src

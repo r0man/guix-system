@@ -25,6 +25,7 @@
             %bluetooth-service
             %cups-service
             %docker-service
+            %elogind-service
             %libvirt-service
             %nix-service
             %openssh-service
@@ -51,6 +52,9 @@
 
 (define %docker-service
   (service docker-service-type))
+
+(define %elogind-service
+  (elogind-service))
 
 (define %libvirt-service
   (service libvirt-service-type
