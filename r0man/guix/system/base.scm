@@ -1,4 +1,5 @@
 (define-module (r0man guix system base)
+  #:use-module (gnu packages linux)
   #:use-module (gnu system nss)
   #:use-module (gnu)
   #:use-module (guix packages)
@@ -12,6 +13,7 @@
          "e2fsprogs"
          "emacs-next"
          "lvm2-static"
+         "net-tools"
          "network-manager"
          "nss-certs")))
 
