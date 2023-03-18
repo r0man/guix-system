@@ -1,6 +1,6 @@
 * My Guix Systems
 
-https://guix.gnu.org/static/blog/img/test-pilot.png]]
+[[https://guix.gnu.org/static/blog/img/test-pilot.png]]
 
 - [[file:doc/bombaclaat.org][Bombaclaat]]
 - [[file:doc/burningswell.org][Burningswell]]
