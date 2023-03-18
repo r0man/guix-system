@@ -79,7 +79,6 @@ Mount partitions.
 
 #+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   mount /dev/md0 /mnt
-  mkdir -p /mnt/boot
 #+end_src
 
 #+RESULTS:
