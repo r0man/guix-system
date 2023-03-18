@@ -262,12 +262,27 @@ Create filesystems.
   mkfs.ext4 -L root /dev/md3
 #+end_src
 
+Mount partitions.
+
+#+begin_src sh
+  mount /dev/md3 /mnt
+  mkdir -p /mnt/boot
+  mount /dev/md1 /mnt/boot
+  swapon /dev/md2
+#+end_src
+
 *** System image
 
 Build the Guix system image.
 
-#+begin_src sh :exports both :results verbatim
+#+begin_src sh :results verbatim
   guix system image -L . r0man/guix/system/burningswell.scm
+#+end_src
+
+Install the system
+
+#+begin_src sh :results verbatim
+  guix system init --load-path=. r0man/guix/system/burningswell.scm /mnt
 #+end_src
 
 *** VM
