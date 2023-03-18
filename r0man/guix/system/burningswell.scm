@@ -33,16 +33,20 @@
    (targets (list "/dev/sda" "/dev/sdb"))
    (terminal-outputs '(console))))
 
-(define %cuirass-specs
-  #~(list (specification
-           (name "asahi-guix")
-           (build '(channels asahi-guix))
-           (channels
-            (cons (channel
-                   (name 'asahi-guix)
-                   (branch "main")
-                   (url "https://github.com/r0man/asahi-guix.git"))
-                  %default-channels)))))
+(define %cuirass-service
+  (service cuirass-service-type
+           (cuirass-configuration
+            (specifications
+             #~(list (specification
+                      (name "asahi-guix")
+                      (build '(channels asahi-guix))
+                      (channels
+                       (cons (channel
+                              (name 'asahi-guix)
+                              (branch "main")
+                              (url "https://github.com/r0man/asahi-guix.git"))
+                             %default-channels)))))
+            (use-substitutes? #t))))
 
 (define %mapped-devices
   (list (mapped-device
@@ -62,13 +66,11 @@
   (cons* (operating-system-packages base-operating-system)))
 
 (define %services
-  (cons* %docker-service
+  (cons* %cuirass-service
+         %docker-service
          %elogind-service
          %postgresql-service
          %udev-fido2-service
-         (service cuirass-service-type
-                  (cuirass-configuration
-                   (specifications %cuirass-specs)))
          (service static-networking-service-type
                   (list (static-networking
                          (addresses
