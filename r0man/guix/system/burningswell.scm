@@ -7,6 +7,7 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
+  #:use-module (gnu services cuirass)
   #:use-module (gnu services networking)
   #:use-module (gnu services sound)
   #:use-module (gnu services ssh)
@@ -32,6 +33,16 @@
    (targets (list "/dev/sda" "/dev/sdb"))
    (terminal-outputs '(console))))
 
+(define %cuirass-specs
+  #~(list (specification
+           (name "asahi-guix")
+           (build '(channels asahi-guix))
+           (channels
+            (cons (channel
+                   (name 'asahi-guix)
+                   (url "https://github.com/r0man/asahi-guix.git"))
+                  %default-channels)))))
+
 (define %mapped-devices
   (list (mapped-device
          (source (list "/dev/sda2" "/dev/sdb2"))
@@ -53,6 +64,9 @@
   (cons* %docker-service
          %elogind-service
          %udev-fido2-service
+         (service cuirass-service-type
+                  (cuirass-configuration
+                   (specifications %cuirass-specs)))
          (service static-networking-service-type
                   (list (static-networking
                          (addresses
