@@ -1,4 +1,6 @@
 * My Guix Systems
 
-- [[file:doc/BOMBACLAAT.org][Bombaclaat]]
-- [[file:doc/BURNINGSWELL.org][Burningswell]]
+https://guix.gnu.org/static/blog/img/test-pilot.png]]
+
+- [[file:doc/bombaclaat.org][Bombaclaat]]
+- [[file:doc/burningswell.org][Burningswell]]
