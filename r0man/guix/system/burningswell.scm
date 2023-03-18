@@ -27,7 +27,7 @@
 
 (define %bootloader
   (bootloader-configuration
-   (bootloader grub-efi-bootloader)
+   (bootloader grub-bootloader)
    (keyboard-layout %keyboard-layout)
    (targets (list "/dev/sda" "/dev/sdb"))
    (terminal-outputs '(console))))
