@@ -215,6 +215,8 @@ Copy the system configuration to =/mnt/etc/config.scm=.
 
 ** Burningswell
 
+*** System image
+
 Build the Guix system image.
 
 #+begin_src sh :exports both :results verbatim
@@ -223,14 +225,45 @@ Build the Guix system image.
 
 *** VM
 
+Build the system image in the =qcow2= format.
+
 #+begin_src sh :exports both :results verbatim
   guix system image -L . -t qcow2 r0man/guix/system/burningswell.scm
 #+end_src
 
+Build the system image in the =qcow2= format.
+
 #+begin_src sh
   qemu-system-x86_64 \
-   -nic user,model=virtio-net-pci \
-   -enable-kvm -m 2048 \
-   -device virtio-blk,drive=myhd \
-   -drive if=none,file=burningswell.qcow2,id=myhd
+      -snapshot \
+      -nic user,model=virtio-net-pci \
+      -enable-kvm -m 2048 \
+      -device virtio-blk,drive=myhd \
+      -drive if=none,file=burningswell.qcow2,id=myhd
+#+end_src
+
+#+begin_src sh
+  qemu-system-x86_64 \
+      -snapshot \
+      -nic user,model=virtio-net-pci \
+      -enable-kvm -m 2048 \
+      -device virtio-blk,drive=sda \
+      -device virtio-blk,drive=sdb \
+      -drive if=none,file=burningswell.qcow2,id=sda \
+      -drive if=none,file=burningswell.qcow2,id=sdb
+#+end_src
+
+Run with RAID-1 (WIP)
+
+#+begin_src sh
+  qemu-system-x86_64 \
+      -snapshot \
+      -enable-kvm -m 2048 \
+      -nic user,model=virtio-net-pci \
+      -hda burningswell.qcow2 -serial stdio \
+      -device megasas,id=scsi0 \
+      -device scsi-hd,drive=drive0,bus=scsi0.0,channel=0,scsi-id=0,lun=0 \
+      -drive file=burningswell.qcow2,if=none,id=drive0 \
+      -device scsi-hd,drive=drive1,bus=scsi0.0,channel=0,scsi-id=1,lun=0 \
+      -drive file=burningswell.qcow2,if=none,id=drive1
 #+end_src

@@ -33,28 +33,18 @@
    (terminal-outputs '(console))))
 
 (define %mapped-devices
-  (list ;; (mapped-device
-        ;;  (source (list "/dev/sda1" "/dev/sdb1"))
-        ;;  (target "/dev/md1")
-        ;;  (type raid-device-mapping))
-        (mapped-device
-         (source (list "/dev/sda2" "/dev/sdb2"))
-         (target "/dev/md2")
+  (list (mapped-device
+         (source (list "/dev/sda1" "/dev/sdb1"))
+         (target "/dev/md0")
          (type raid-device-mapping))))
 
 (define %file-systems
-  (cons* ;; (file-system
-         ;;   (device "/dev/md1")
-         ;;   (mount-point "/boot")
-         ;;   (type "ext4")
-         ;;   (dependencies %mapped-devices))
-         (file-system
-           (mount-point "/")
-           (device "/dev/md2")
-           (type "ext4")
-           (needed-for-boot? #t)
-           (dependencies %mapped-devices))
-         %base-file-systems))
+  (cons (file-system
+          (mount-point "/")
+          (device "/dev/md0")
+          (type "ext4")
+          (dependencies %mapped-devices))
+        %base-file-systems))
 
 (define %packages
   (cons* (operating-system-packages base-operating-system)))
@@ -68,18 +58,16 @@
                          (addresses
                           (list (network-address
                                  (device "eth0")
-                                 (value "136.243.174.102/24"))))
+                                 (value "136.243.174.102/26"))))
                          (routes
                           (list (network-route
                                  (destination "default")
-                                 (gateway "136.243.174.254"))))
+                                 (gateway "136.243.174.65"))))
                          (name-servers '("1.1.1.1" "8.8.8.8")))))
          (operating-system-user-services base-operating-system)))
 
 (define %swap-devices
-  (list (swap-space
-         (target (file-system-label "swap"))
-         (dependencies %mapped-devices))))
+  (list (swap-space (target "/swapfile"))))
 
 (define burningswell
   (operating-system
