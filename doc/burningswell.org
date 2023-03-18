@@ -5,9 +5,6 @@ Stop already running RAID 1.
 
 #+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
   mdadm --stop /dev/md0
-  mdadm --stop /dev/md1
-  mdadm --stop /dev/md2
-  mdadm --stop /dev/md3
   cat /proc/mdstat
 #+end_src
 
@@ -19,12 +16,8 @@ If the device is being reused or re-purposed from an existing array,
 erase any old RAID configuration information.
 
 #+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
-  mdadm --misc --zero-superblock /dev/sda1
   mdadm --misc --zero-superblock /dev/sda2
-  mdadm --misc --zero-superblock /dev/sda3
-  mdadm --misc --zero-superblock /dev/sdb1
   mdadm --misc --zero-superblock /dev/sdb2
-  mdadm --misc --zero-superblock /dev/sdb3
 #+end_src
 
 #+RESULTS:
@@ -36,122 +29,57 @@ Partition the hard drives. Start at 2MB, to make Grub2 happy.
       parted $device --script -- mklabel gpt
       parted $device --script -- mkpart primary 0MB 2MB
       parted $device --script -- set 1 bios_grub
-      parted $device --script -- mkpart primary ext4 2MB 512MB
-      parted $device --script -- mkpart primary linux-swap 512MB 2150MB
-      parted $device --script -- mkpart primary ext4 2150MB -1
+      parted $device --script -- mkpart primary ext4 2MB -1
       parted $device --script -- set 2 raid on
-      parted $device --script -- set 3 raid on
-      parted $device --script -- set 4 raid on
       parted $device --script -- print
   done
 #+end_src
 
-#+RESULTS:
-#+begin_example
-Model: ATA Micron_1100_MTFD (scsi)
-Disk /dev/sda: 512GB
-Sector size (logical/physical): 512B/512B
-Partition Table: gpt
-Disk Flags:
-
-Number  Start   End     Size    File system  Name     Flags
- 1      17.4kB  2000kB  1983kB               primary  bios_grub
- 2      2097kB  512MB   510MB                primary  raid
- 3      512MB   2150MB  1638MB               primary  raid
- 4      2150MB  512GB   510GB                primary  raid
-
-Model: ATA Micron_1100_MTFD (scsi)
-Disk /dev/sdb: 512GB
-Sector size (logical/physical): 512B/512B
-Partition Table: gpt
-Disk Flags:
-
-Number  Start   End     Size    File system  Name     Flags
- 1      17.4kB  2000kB  1983kB               primary  bios_grub
- 2      2097kB  512MB   510MB                primary  raid
- 3      512MB   2150MB  1638MB               primary  raid
- 4      2150MB  512GB   510GB                primary  raid
-
-#+end_example
-
 Create RAID 1 array.
 
 #+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
-  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md0 /dev/sda1 /dev/sdb1
-  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md1 /dev/sda2 /dev/sdb2
-  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md2 /dev/sda3 /dev/sdb3
-  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md3 /dev/sda4 /dev/sdb4
+  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md0 /dev/sda2 /dev/sdb2
   cat /proc/mdstat
 #+end_src
 
 #+RESULTS:
-#+begin_example
-Personalities : [raid1]
-md3 : active raid1 sdb4[1] sda4[0]
-      497874944 blocks super 1.2 [2/2] [UU]
-      	resync=DELAYED
-      bitmap: 4/4 pages [16KB], 65536KB chunk
-
-md1 : active raid1 sdb2[1] sda2[0]
-      496640 blocks super 1.2 [2/2] [UU]
-      [======>..............]  resync = 33.6% (167680/496640) finish=0.0min speed=167680K/sec
-
-md0 : active raid1 sdb1[1] sda1[0]
-      896 blocks super 1.2 [2/2] [UU]
-
-md2 : active raid1 sdb3[1] sda3[0]
-      1597440 blocks super 1.2 [2/2] [UU]
-      	resync=DELAYED
-
-unused devices: <none>
-#+end_example
+: Personalities : [raid1]
+: md0 : active raid1 sdb1[1] sda1[0]
+:       499974144 blocks super 1.2 [2/2] [UU]
+:       [>....................]  resync =  0.0% (32192/499974144) finish=258.7min speed=32192K/sec
+:       bitmap: 4/4 pages [16KB], 65536KB chunk
+:
+: unused devices: <none>
 ** File systems
 
 Create filesystems.
 
 #+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
-  mkfs.ext4 -L boot /dev/md1
-  mkswap -L swap /dev/md2
-  mkfs.ext4 -L root /dev/md3
+  mkfs.ext4 -L root /dev/md0
 #+end_src
 
 #+RESULTS:
 #+begin_example
-Discarding device blocks:   1024/496640             done
-Creating filesystem with 496640 1k blocks and 124440 inodes
-Filesystem UUID: 05d317fc-f29f-446e-88c9-653fe23b2238
-Superblock backups stored on blocks:
-	8193, 24577, 40961, 57345, 73729, 204801, 221185, 401409
-
-Allocating group tables:  0/61     done
-Writing inode tables:  0/61     done
-Creating journal (8192 blocks): done
-Writing superblocks and filesystem accounting information:  0/61     done
-
-Setting up swapspace version 1, size = 1.5 GiB (1635774464 bytes)
-LABEL=swap, UUID=cfa41e4a-6648-47bb-a0b8-e43e25519880
-Discarding device blocks:      4096/124468736  4722688/124468736  8392704/124468736 12062720/124468736 15208448/124468736 19402752/124468736 23072768/124468736 26218496/124468736 29888512/124468736 33558528/124468736 37752832/124468736 41947136/124468736 46665728/124468736 50860032/124468736 55578624/124468736 59772928/124468736 63967232/124468736 68685824/124468736 72880128/124468736 77598720/124468736 81793024/124468736 86511616/124468736 90705920/124468736 95424512/124468736 99618816/124468736103813120/124468736108531712/124468736113250304/124468736117444608/124468736122163200/124468736                   done
-Creating filesystem with 124468736 4k blocks and 31121408 inodes
-Filesystem UUID: 84333e36-851f-40d1-83b4-6e347042a9f1
+Discarding device blocks:      4096/124993536  1576960/124993536  6295552/124993536 10489856/124993536 14684160/124993536 19402752/124993536 23597056/124993536 27791360/124993536 32509952/124993536 36704256/124993536 40898560/124993536 45092864/124993536 49287168/124993536 54005760/124993536 58200064/124993536 62918656/124993536 67112960/124993536 71307264/124993536 76025856/124993536 80220160/124993536 84414464/124993536 88608768/124993536 93327360/124993536 97521664/124993536103288832/124993536111677440/124993536117968896/124993536                   done
+Creating filesystem with 124993536 4k blocks and 31252480 inodes
+Filesystem UUID: 63811f3b-cc0b-4cb3-84f5-301c922c117b
 Superblock backups stored on blocks:
 	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
 	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968,
 	102400000
 
-Allocating group tables:    0/3799         done
-Writing inode tables:    0/3799         done
+Allocating group tables:    0/3815         done
+Writing inode tables:    0/3815         done
 Creating journal (262144 blocks): done
-Writing superblocks and filesystem accounting information:    0/3799         done
+Writing superblocks and filesystem accounting information:    0/3815         done
 
 #+end_example
 
 Mount partitions.
 
 #+begin_src sh :exports both :dir /ssh:root@burningswell.com:~ :results verbatim
-  mount /dev/md3 /mnt
+  mount /dev/md0 /mnt
   mkdir -p /mnt/boot
-  mount /dev/md1 /mnt/boot
-  swapon /dev/md2
 #+end_src
 
 #+RESULTS:

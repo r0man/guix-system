@@ -34,7 +34,7 @@
 
 (define %mapped-devices
   (list (mapped-device
-         (source (list "/dev/sda1" "/dev/sdb1"))
+         (source (list "/dev/sda2" "/dev/sdb2"))
          (target "/dev/md0")
          (type raid-device-mapping))))
 
