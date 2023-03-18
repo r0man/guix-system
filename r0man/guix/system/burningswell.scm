@@ -40,6 +40,7 @@
            (channels
             (cons (channel
                    (name 'asahi-guix)
+                   (branch "main")
                    (url "https://github.com/r0man/asahi-guix.git"))
                   %default-channels)))))
 
