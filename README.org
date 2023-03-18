@@ -215,6 +215,53 @@ Copy the system configuration to =/mnt/etc/config.scm=.
 
 ** Burningswell
 
+*** Harddisk
+
+Stop already running RAID 1.
+
+#+begin_src sh
+  mdadm --stop /dev/md0
+  mdadm --stop /dev/md1
+  mdadm --stop /dev/md2
+  mdadm --stop /dev/md3
+  cat /proc/mdstat
+#+end_src
+
+Partition the hard drives. Start at 2MB, to make Grub2 happy.
+
+#+begin_src sh
+  for device in /dev/sda /dev/sdb ; do
+      parted $device --script -- mklabel gpt
+      parted $device --script -- mkpart primary 0MB 2MB
+      parted $device --script -- set 1 bios_grub
+      parted $device --script -- mkpart primary ext4 2MB 512MB
+      parted $device --script -- mkpart primary linux-swap 512MB 2150MB
+      parted $device --script -- mkpart primary ext4 2150MB -1
+      parted $device --script -- set 2 raid on
+      parted $device --script -- set 3 raid on
+      parted $device --script -- set 4 raid on
+      parted $device --script -- print
+  done
+#+end_src
+
+Create RAID 1 array.
+
+#+begin_src sh
+  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md0 /dev/sda1 /dev/sdb1
+  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md1 /dev/sda2 /dev/sdb2
+  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md2 /dev/sda3 /dev/sdb3
+  yes | mdadm --create --level=1 --metadata=1.2 --raid-devices=2 /dev/md3 /dev/sda4 /dev/sdb4
+  cat /proc/mdstat
+#+end_src
+
+Create filesystems.
+
+#+begin_src sh
+  mkfs.ext4 -L boot /dev/md1
+  mkswap -L swap /dev/md2
+  mkfs.ext4 -L root /dev/md3
+#+end_src
+
 *** System image
 
 Build the Guix system image.

@@ -39,12 +39,18 @@
          (type raid-device-mapping))))
 
 (define %file-systems
-  (cons (file-system
-          (mount-point "/")
-          (device "/dev/md0")
-          (type "ext4")
-          (dependencies %mapped-devices))
-        %base-file-systems))
+  (cons* (file-system
+           (mount-point "/boot")
+           (device (file-system-label "boot"))
+           (needed-for-boot? #t)
+           (type "ext4")
+           (dependencies %mapped-devices))
+         (file-system
+           (mount-point "/")
+           (device (file-system-label "root"))
+           (type "ext4")
+           (dependencies %mapped-devices))
+         %base-file-systems))
 
 (define %packages
   (cons* (operating-system-packages base-operating-system)))
@@ -67,7 +73,9 @@
          (operating-system-user-services base-operating-system)))
 
 (define %swap-devices
-  (list (swap-space (target "/swapfile"))))
+  (list (swap-space
+         (target (file-system-label "swap"))
+         (dependencies %mapped-devices))))
 
 (define burningswell
   (operating-system
