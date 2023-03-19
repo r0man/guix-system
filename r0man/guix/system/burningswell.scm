@@ -74,13 +74,14 @@
 
 (define %services
   (cons* %avahi-service
-         %cuirass-service
          %cuirass-remote-worker-service
+         %cuirass-service
          %docker-service
          %elogind-service
          %postgresql-service
          %qemu-service-x86-64
-         %udev-fido2-service
+         %udev-fido2-service ;; TODO: Remove
+         %unattended-upgrade-service
          (service static-networking-service-type
                   (list (static-networking
                          (addresses

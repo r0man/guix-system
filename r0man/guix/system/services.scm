@@ -5,6 +5,7 @@
   #:use-module (gnu packages security-token)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu services admin)
   #:use-module (gnu services auditd)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
@@ -39,6 +40,7 @@
             %screen-locker-service
             %slim-service
             %udev-fido2-service
+            %unattended-upgrade-service
             console-font-service-config
             guix-service-type-config))
 
@@ -111,6 +113,9 @@
 
 (define %udev-fido2-service
   (udev-rules-service 'fido2 libfido2 #:groups '("plugdev")))
+
+(define %unattended-upgrade-service
+  (service unattended-upgrade-service-type))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
