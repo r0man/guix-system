@@ -45,14 +45,15 @@
                               (name 'asahi-guix)
                               (branch "main")
                               (url "https://github.com/r0man/asahi-guix.git"))
-                             %default-channels)))))
+                             %default-channels))
+                      (systems '("aarch64-linux" "x86_64-linux")))))
             (use-substitutes? #t)
             (remote-server (cuirass-remote-server-configuration)))))
 
 (define %cuirass-remote-worker-service
   (service cuirass-remote-worker-service-type
            (cuirass-remote-worker-configuration
-            (systems (list "aarch64-linux" "x86_64-linux"))
+            (systems '("aarch64-linux" "x86_64-linux"))
             (workers 2))))
 
 (define %mapped-devices
