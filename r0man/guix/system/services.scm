@@ -114,7 +114,6 @@
     (server-blocks
      (list
       (nginx-server-configuration
-       (server-name '("www.burningswell.com"))
        (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
        (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
        (locations
