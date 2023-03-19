@@ -111,7 +111,6 @@
     (server-blocks
      (list
       (nginx-server-configuration
-       (listen '("80"))
        (locations
         (list
          (nginx-location-configuration
