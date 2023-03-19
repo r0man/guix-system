@@ -98,40 +98,38 @@
             (host "0.0.0.0")
             (port 8082))))
 
+(define (certbot-ssl-certificate domain)
+  (format #f "/etc/letsencrypt/live/~a/fullchain.pem" domain))
+
+(define (certbot-ssl-certificate-key domain)
+  (format #f "/etc/letsencrypt/live/~a/privkey.pem" domain))
+
 (define %http-service-burningswell
   (service
    nginx-service-type
    (nginx-configuration
     (server-blocks
-     (list ;; (nginx-server-configuration
-      ;;  (listen '("80"))
-      ;;  (listen '("443 ssl"))
-      ;;  (server-name '("cuirass.burningswell.com"))
-      ;;  (ssl-certificate #f)
-      ;;  (ssl-certificate-key #f)
-      ;;  ;; (ssl-certificate
-      ;;  ;;  "/etc/letsencrypt/live/cuirass.burningswell.com/fullchain.pem")
-      ;;  ;; (ssl-certificate-key
-      ;;  ;;  "/etc/letsencrypt/live/cuirass.burningswell.com/privkey.pem")
-      ;;  (locations
-      ;;   (list
-      ;;    (nginx-location-configuration
-      ;;     (uri "/")
-      ;;     (body '("proxy_pass http://cuirass;"))))))
-      ;; (nginx-server-configuration
-      ;;  (listen '("80"))
-      ;;  (listen '("443 ssl"))
-      ;;  (server-name '("substitutes.burningswell.com"))
-      ;;  ;; (ssl-certificate
-      ;;  ;;  "/etc/letsencrypt/live/substitutes.burningswell.com/fullchain.pem")
-      ;;  ;; (ssl-certificate-key
-      ;;  ;;  "/etc/letsencrypt/live/substitutes.burningswell.com/privkey.pem")
-      ;;  (locations
-      ;;   (list
-      ;;    (nginx-location-configuration
-      ;;     (uri "/")
-      ;;     (body '("proxy_pass http://guix-publish;"))))))
-      ))
+     (list
+      (nginx-server-configuration
+       (listen '("443 ssl"))
+       (server-name '("cuirass.burningswell.com"))
+       (ssl-certificate (certbot-ssl-certificate "cuirass.burningswell.com"))
+       (ssl-certificate-key (certbot-ssl-certificate-key "cuirass.burningswell.com"))
+       (locations
+        (list
+         (nginx-location-configuration
+          (uri "/")
+          (body '("proxy_pass http://cuirass;"))))))
+      (nginx-server-configuration
+       (listen '("443 ssl"))
+       (server-name '("substitutes.burningswell.com"))
+       (ssl-certificate (certbot-ssl-certificate "substitutes.burningswell.com"))
+       (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.burningswell.com"))
+       (locations
+        (list
+         (nginx-location-configuration
+          (uri "/")
+          (body '("proxy_pass http://guix-publish;"))))))))
     (upstream-blocks
      (list (nginx-upstream-configuration
             (name "cuirass")
