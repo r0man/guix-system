@@ -78,6 +78,7 @@
          %cuirass-service
          %docker-service
          %elogind-service
+         %guix-publish-service
          %postgresql-service
          %qemu-service-x86-64
          %udev-fido2-service ;; TODO: Remove

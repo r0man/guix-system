@@ -30,6 +30,7 @@
             %cups-service
             %docker-service
             %elogind-service
+            %guix-publish-service
             %libvirt-service
             %nix-service
             %openssh-service
@@ -65,6 +66,12 @@
 
 (define %elogind-service
   (elogind-service))
+
+(define %guix-publish-service
+  (service guix-publish-service-type
+           (guix-publish-configuration
+            (compression '(("zstd" 3)))
+            (host "0.0.0.0"))))
 
 (define %libvirt-service
   (service libvirt-service-type
