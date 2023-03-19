@@ -46,7 +46,12 @@
                               (branch "main")
                               (url "https://github.com/r0man/asahi-guix.git"))
                              %default-channels)))))
-            (use-substitutes? #t))))
+            (use-substitutes? #t)
+            (remote-server (cuirass-remote-server-configuration)))))
+
+(define %cuirass-remote-worker-service
+  (service cuirass-remote-worker-service-type
+           (cuirass-remote-worker-configuration)))
 
 (define %mapped-devices
   (list (mapped-device
@@ -66,7 +71,9 @@
   (cons* (operating-system-packages base-operating-system)))
 
 (define %services
-  (cons* %cuirass-service
+  (cons* %avahi-service
+         %cuirass-service
+         %cuirass-remote-worker-service
          %docker-service
          %elogind-service
          %postgresql-service

@@ -24,6 +24,7 @@
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system xorg)
   #:export (%auditd-service-type
+            %avahi-service
             %bluetooth-service
             %cups-service
             %docker-service
@@ -42,6 +43,9 @@
 
 (define %auditd-service-type
   (service auditd-service-type))
+
+(define %avahi-service
+  (service avahi-service-type))
 
 (define %bluetooth-service
   (service bluetooth-service-type))
