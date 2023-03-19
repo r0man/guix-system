@@ -52,7 +52,7 @@
 (define %cuirass-remote-worker-service
   (service cuirass-remote-worker-service-type
            (cuirass-remote-worker-configuration
-            (systems (list "aarch64-linux" "x86_64-linux"))
+            ;; (systems (list "aarch64-linux" "x86_64-linux"))
             (workers 2))))
 
 (define %mapped-devices
