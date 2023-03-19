@@ -80,6 +80,7 @@
          %docker-service
          %elogind-service
          %guix-publish-service
+         %http-service-burningswell
          %postgresql-service
          %qemu-service-x86-64
          %udev-fido2-service ;; TODO: Remove

@@ -19,6 +19,8 @@
   #:use-module (gnu services security-token)
   #:use-module (gnu services ssh)
   #:use-module (gnu services virtualization)
+  #:use-module (gnu services web)
+  #:use-module (gnu services web)
   #:use-module (gnu services xorg)
   #:use-module (gnu services)
   #:use-module (guix gexp)
@@ -33,6 +35,7 @@
             %docker-service
             %elogind-service
             %guix-publish-service
+            %http-service-burningswell
             %libvirt-service
             %nix-service
             %openssh-service
@@ -90,7 +93,35 @@
   (service guix-publish-service-type
            (guix-publish-configuration
             (compression '(("zstd" 3)))
-            (host "0.0.0.0"))))
+            (host "0.0.0.0")
+            (port 8082))))
+
+(define %http-service-burningswell
+  (service
+   nginx-service-type
+   (nginx-configuration
+    (server-blocks
+     (list (nginx-server-configuration
+            (server-name '("cuirass.burningswell.com"))
+            (locations
+             (list
+              (nginx-location-configuration
+               (uri "/")
+               (body '("proxy_pass http://cuirass;"))))))
+           (nginx-server-configuration
+            (server-name '("substitutes.burningswell.com"))
+            (locations
+             (list
+              (nginx-location-configuration
+               (uri "/")
+               (body '("proxy_pass http://guix-publish;"))))))))
+    (upstream-blocks
+     (list (nginx-upstream-configuration
+            (name "cuirass")
+            (servers (list "localhost:8081")))
+           (nginx-upstream-configuration
+            (name "guix-publish")
+            (servers (list "localhost:8082"))))))))
 
 (define %libvirt-service
   (service libvirt-service-type
