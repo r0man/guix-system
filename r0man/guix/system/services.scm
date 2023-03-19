@@ -120,9 +120,10 @@
        ;; (ssl-certificate-key #f)
        (locations
         (list
-         (nginx-location-configuration
-          (uri "/")
-          (body '("return 404;"))))))
+         ;; (nginx-location-configuration
+         ;;  (uri "/")
+         ;;  (body '("return 404;")))
+         )))
       (nginx-server-configuration
        (listen '("443 ssl"))
        (server-name '("cuirass.burningswell.com"))
