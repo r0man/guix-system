@@ -74,6 +74,7 @@
 
 (define %services
   (cons* %avahi-service
+         %certbot-service
          %cuirass-remote-worker-service
          %cuirass-service
          %docker-service

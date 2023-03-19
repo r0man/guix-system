@@ -9,6 +9,7 @@
   #:use-module (gnu services auditd)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
+  #:use-module (gnu services certbot)
   #:use-module (gnu services cups)
   #:use-module (gnu services databases)
   #:use-module (gnu services desktop)
@@ -27,6 +28,7 @@
   #:export (%auditd-service-type
             %avahi-service
             %bluetooth-service
+            %certbot-service
             %cups-service
             %docker-service
             %elogind-service
@@ -53,6 +55,23 @@
 
 (define %bluetooth-service
   (service bluetooth-service-type))
+
+(define %nginx-deploy-hook
+  (program-file
+   "nginx-deploy-hook"
+   #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
+       (kill pid SIGHUP))))
+
+(define %certbot-service
+  (service certbot-service-type
+           (certbot-configuration
+            (email "roman@burningswell.com")
+            (certificates
+             (list
+              (certificate-configuration
+               (domains '("cuirass.burningswell.com"
+                          "substitutes.burningswell.com"))
+               (deploy-hook %nginx-deploy-hook)))))))
 
 (define %cups-service
   (service cups-service-type
