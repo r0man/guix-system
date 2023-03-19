@@ -111,6 +111,8 @@
     (server-blocks
      (list
       (nginx-server-configuration
+       (ssl-certificate #f)
+       (ssl-certificate-key #f)
        (locations
         (list
          (nginx-location-configuration
