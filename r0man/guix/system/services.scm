@@ -143,6 +143,9 @@
           (body '("proxy_pass http://guix-publish;"))))))))
     (upstream-blocks
      (list (nginx-upstream-configuration
+            (name "default")
+            (servers (list "localhost")))
+           (nginx-upstream-configuration
             (name "cuirass")
             (servers (list "localhost:8081")))
            (nginx-upstream-configuration
