@@ -103,7 +103,7 @@
    (nginx-configuration
     (server-blocks
      (list (nginx-server-configuration
-            (listen "80")
+            (listen '("80"))
             ;; (listen '("443 ssl"))
             (server-name '("cuirass.burningswell.com"))
             ;; (ssl-certificate
@@ -116,7 +116,7 @@
                (uri "/")
                (body '("proxy_pass http://cuirass;"))))))
            (nginx-server-configuration
-            (listen "80")
+            (listen '("80"))
             ;; (listen '("443 ssl"))
             (server-name '("substitutes.burningswell.com"))
             ;; (ssl-certificate
