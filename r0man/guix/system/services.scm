@@ -34,7 +34,8 @@
             %openssh-service
             %pcscd-service
             %postgresql-service
-            %qemu-service
+            %qemu-service-aarch64
+            %qemu-service-x86-64
             %screen-locker-service
             %slim-service
             %udev-fido2-service
@@ -87,15 +88,15 @@
            (postgresql-configuration
             (postgresql postgresql-15))))
 
-;; (define %qemu-service
-;;   (service qemu-binfmt-service-type
-;;            (qemu-binfmt-configuration
-;;             (platforms (lookup-qemu-platforms "aarch64" "x86_64")))))
-
-(define %qemu-service
+(define %qemu-service-aarch64
   (service qemu-binfmt-service-type
            (qemu-binfmt-configuration
             (platforms (lookup-qemu-platforms "x86_64")))))
+
+(define %qemu-service-x86-64
+  (service qemu-binfmt-service-type
+           (qemu-binfmt-configuration
+            (platforms (lookup-qemu-platforms "aarch64")))))
 
 (define %slim-service
   (service slim-service-type

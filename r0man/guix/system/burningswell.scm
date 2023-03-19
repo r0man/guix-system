@@ -51,7 +51,8 @@
 
 (define %cuirass-remote-worker-service
   (service cuirass-remote-worker-service-type
-           (cuirass-remote-worker-configuration)))
+           (cuirass-remote-worker-configuration
+            (systems (list "aarch64-linux" "x86_64-linux")))))
 
 (define %mapped-devices
   (list (mapped-device
@@ -77,6 +78,7 @@
          %docker-service
          %elogind-service
          %postgresql-service
+         %qemu-service-x86-64
          %udev-fido2-service
          (service static-networking-service-type
                   (list (static-networking

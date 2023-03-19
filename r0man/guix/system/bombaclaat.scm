@@ -22,6 +22,7 @@
   #:use-module (guix packages)
   #:use-module (r0man guix system desktop)
   #:use-module (r0man guix system keyboard)
+  #:use-module (r0man guix system services)
   #:use-module (r0man guix system xorg))
 
 (define %firmware
@@ -69,6 +70,7 @@
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=1"))))
                           %udev-backlight-service
                           %udev-kbd-backlight-service
+                          %qemu-service-aarch64
                           (operating-system-user-services desktop-operating-system))
     (slim-service-type config =>
                        (slim-configuration
