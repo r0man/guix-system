@@ -113,17 +113,17 @@
    (nginx-configuration
     (server-blocks
      (list
-      (nginx-server-configuration
-       (server-name '("www.burningswell.com"))
-       (listen '("80"))
-       ;; (ssl-certificate #f)
-       ;; (ssl-certificate-key #f)
-       (locations
-        (list
-         ;; (nginx-location-configuration
-         ;;  (uri "/")
-         ;;  (body '("return 404;")))
-         )))
+      ;; (nginx-server-configuration
+      ;;  (server-name '("www.burningswell.com"))
+      ;;  (listen '("80"))
+      ;;  ;; (ssl-certificate #f)
+      ;;  ;; (ssl-certificate-key #f)
+      ;;  (locations
+      ;;   (list
+      ;;    ;; (nginx-location-configuration
+      ;;    ;;  (uri "/")
+      ;;    ;;  (body '("return 404;")))
+      ;;    )))
       (nginx-server-configuration
        (listen '("443 ssl"))
        (server-name '("cuirass.burningswell.com"))
