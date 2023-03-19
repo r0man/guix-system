@@ -111,6 +111,13 @@
     (server-blocks
      (list
       (nginx-server-configuration
+       (listen '("80"))
+       (locations
+        (list
+         (nginx-location-configuration
+          (uri "/")
+          (body '("return 404;"))))))
+      (nginx-server-configuration
        (listen '("443 ssl"))
        (server-name '("cuirass.burningswell.com"))
        (ssl-certificate (certbot-ssl-certificate "cuirass.burningswell.com"))
