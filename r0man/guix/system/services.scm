@@ -102,14 +102,24 @@
    (nginx-configuration
     (server-blocks
      (list (nginx-server-configuration
+            (listen '("443 ssl"))
             (server-name '("cuirass.burningswell.com"))
+            (ssl-certificate
+             "/etc/letsencrypt/live/cuirass.burningswell.com/fullchain.pem")
+            (ssl-certificate-key
+             "/etc/letsencrypt/live/cuirass.burningswell.com/privkey.pem")
             (locations
              (list
               (nginx-location-configuration
                (uri "/")
                (body '("proxy_pass http://cuirass;"))))))
            (nginx-server-configuration
+            (listen '("443 ssl"))
             (server-name '("substitutes.burningswell.com"))
+            (ssl-certificate
+             "/etc/letsencrypt/live/substitutes.burningswell.com/fullchain.pem")
+            (ssl-certificate-key
+             "/etc/letsencrypt/live/substitutes.burningswell.com/privkey.pem")
             (locations
              (list
               (nginx-location-configuration
