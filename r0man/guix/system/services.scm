@@ -72,8 +72,8 @@
             (certificates
              (list
               (certificate-configuration
-               (domains '("cuirass.burningswell.com"
-                          "substitutes.burningswell.com"))
+               (domains '("XXXcuirass.burningswell.com"
+                          "XXXsubstitutes.burningswell.com"))
                (deploy-hook %nginx-deploy-hook)))))))
 
 (define %cups-service
