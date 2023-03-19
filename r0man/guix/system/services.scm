@@ -72,10 +72,10 @@
             (certificates
              (list
               (certificate-configuration
-               (domains '("cuirass.burningswell.com"))
+               (domains '("ci.asahi-guix.org"))
                (deploy-hook %nginx-deploy-hook))
               (certificate-configuration
-               (domains '("substitutes.burningswell.com"))
+               (domains '("substitutes.asahi-guix.org"))
                (deploy-hook %nginx-deploy-hook))
               (certificate-configuration
                (domains '("www.burningswell.com"))
@@ -112,34 +112,35 @@
    (nginx-configuration
     (server-blocks
      (list
-      (nginx-server-configuration
-       (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
-       (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
-       (locations
-        (list
-         (nginx-location-configuration
-          (uri "/")
-          (body '("return 404;"))))))
-      (nginx-server-configuration
-       (listen '("443 ssl"))
-       (server-name '("cuirass.burningswell.com"))
-       (ssl-certificate (certbot-ssl-certificate "cuirass.burningswell.com"))
-       (ssl-certificate-key (certbot-ssl-certificate-key "cuirass.burningswell.com"))
-       (locations
-        (list
-         (nginx-location-configuration
-          (uri "/")
-          (body '("proxy_pass http://cuirass;"))))))
-      (nginx-server-configuration
-       (listen '("443 ssl"))
-       (server-name '("substitutes.burningswell.com"))
-       (ssl-certificate (certbot-ssl-certificate "substitutes.burningswell.com"))
-       (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.burningswell.com"))
-       (locations
-        (list
-         (nginx-location-configuration
-          (uri "/")
-          (body '("proxy_pass http://guix-publish;"))))))))
+      ;; (nginx-server-configuration
+      ;;  (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
+      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
+      ;;  (locations
+      ;;   (list
+      ;;    (nginx-location-configuration
+      ;;     (uri "/")
+      ;;     (body '("return 404;"))))))
+      ;; (nginx-server-configuration
+      ;;  (listen '("443 ssl"))
+      ;;  (server-name '("ci.asahi-guix.org"))
+      ;;  (ssl-certificate (certbot-ssl-certificate "ci.asahi-guix.org"))
+      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "ci.asahi-guix.org"))
+      ;;  (locations
+      ;;   (list
+      ;;    (nginx-location-configuration
+      ;;     (uri "/")
+      ;;     (body '("proxy_pass http://cuirass;"))))))
+      ;; (nginx-server-configuration
+      ;;  (listen '("443 ssl"))
+      ;;  (server-name '("substitutes.asahi-guix.org"))
+      ;;  (ssl-certificate (certbot-ssl-certificate "substitutes.asahi-guix.org"))
+      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.asahi-guix.org"))
+      ;;  (locations
+      ;;   (list
+      ;;    (nginx-location-configuration
+      ;;     (uri "/")
+      ;;     (body '("proxy_pass http://guix-publish;"))))))
+      ))
     (upstream-blocks
      (list (nginx-upstream-configuration
             (name "default")
