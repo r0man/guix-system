@@ -76,6 +76,9 @@
                (deploy-hook %nginx-deploy-hook))
               (certificate-configuration
                (domains '("substitutes.burningswell.com"))
+               (deploy-hook %nginx-deploy-hook))
+              (certificate-configuration
+               (domains '("www.burningswell.com"))
                (deploy-hook %nginx-deploy-hook)))))))
 
 (define %cups-service
@@ -111,8 +114,9 @@
     (server-blocks
      (list
       (nginx-server-configuration
-       (ssl-certificate #f)
-       (ssl-certificate-key #f)
+       (listen '("80"))
+       ;; (ssl-certificate #f)
+       ;; (ssl-certificate-key #f)
        (locations
         (list
          (nginx-location-configuration
