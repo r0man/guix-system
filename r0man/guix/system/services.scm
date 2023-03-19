@@ -98,7 +98,6 @@
   (service guix-publish-service-type
            (guix-publish-configuration
             (compression '(("zstd" 3)))
-            (host "0.0.0.0")
             (port 8082))))
 
 (define (certbot-ssl-certificate domain)
