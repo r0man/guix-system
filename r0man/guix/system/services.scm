@@ -114,6 +114,7 @@
     (server-blocks
      (list
       (nginx-server-configuration
+       (server-name '("www.burningswell.com"))
        (listen '("80"))
        ;; (ssl-certificate #f)
        ;; (ssl-certificate-key #f)
