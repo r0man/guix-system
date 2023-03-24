@@ -112,14 +112,14 @@
    (nginx-configuration
     (server-blocks
      (list
-      ;; (nginx-server-configuration
-      ;;  (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
-      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
-      ;;  (locations
-      ;;   (list
-      ;;    (nginx-location-configuration
-      ;;     (uri "/")
-      ;;     (body '("return 404;"))))))
+      (nginx-server-configuration
+       (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
+       (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
+       (locations
+        (list
+         (nginx-location-configuration
+          (uri "/")
+          (body '("return 404;"))))))
       ;; (nginx-server-configuration
       ;;  (listen '("443 ssl"))
       ;;  (server-name '("ci.asahi-guix.org"))
