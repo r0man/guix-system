@@ -122,10 +122,9 @@
           (body '("return 404;"))))))
       (nginx-server-configuration
        (server-name '("ci.asahi-guix.org"))
-       (listen '("80"))
-       ;; (listen '("443 ssl"))
-       ;; (ssl-certificate (certbot-ssl-certificate "ci.asahi-guix.org"))
-       ;; (ssl-certificate-key (certbot-ssl-certificate-key "ci.asahi-guix.org"))
+       (listen '("443 ssl"))
+       (ssl-certificate (certbot-ssl-certificate "ci.asahi-guix.org"))
+       (ssl-certificate-key (certbot-ssl-certificate-key "ci.asahi-guix.org"))
        (locations
         (list
          (nginx-location-configuration
@@ -133,19 +132,18 @@
           (body '("proxy_pass http://cuirass;"))))))
       (nginx-server-configuration
        (server-name '("substitutes.asahi-guix.org"))
-       (listen '("80"))
-       ;; (listen '("443 ssl"))
-       ;; (ssl-certificate (certbot-ssl-certificate "substitutes.asahi-guix.org"))
-       ;; (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.asahi-guix.org"))
+       (listen '("443 ssl"))
+       (ssl-certificate (certbot-ssl-certificate "substitutes.asahi-guix.org"))
+       (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.asahi-guix.org"))
        (locations
         (list
          (nginx-location-configuration
           (uri "/")
           (body '("proxy_pass http://guix-publish;"))))))))
     (upstream-blocks
-     (list (nginx-upstream-configuration
-            (name "default")
-            (servers (list "localhost")))
+     (list ;; (nginx-upstream-configuration
+           ;;  (name "default")
+           ;;  (servers (list "localhost")))
            (nginx-upstream-configuration
             (name "cuirass")
             (servers (list "localhost:8081")))
