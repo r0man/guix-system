@@ -23,7 +23,8 @@
   #:use-module (r0man guix system desktop)
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
-  #:use-module (r0man guix system xorg))
+  #:use-module (r0man guix system xorg)
+  #:export (burningswell-operating-system))
 
 (define %firmware
   (cons* asahi-firmware
@@ -92,7 +93,7 @@
          (target "/dev/mapper/bombaclaat-swap")
          (dependencies %mapped-devices))))
 
-(define bombaclaat
+(define bombaclaat-operating-system
   (operating-system
     (inherit desktop-operating-system)
     (host-name "bombaclaat")
@@ -105,4 +106,4 @@
     (services %services)
     (swap-devices %swap-devices)))
 
-bombaclaat
+bombaclaat-operating-system

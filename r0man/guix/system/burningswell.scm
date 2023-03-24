@@ -24,7 +24,8 @@
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
-  #:use-module (r0man guix system xorg))
+  #:use-module (r0man guix system xorg)
+  #:export (burningswell-operating-system))
 
 (define %bootloader
   (bootloader-configuration
@@ -102,7 +103,7 @@
 (define %swap-devices
   (list (swap-space (target "/swapfile"))))
 
-(define burningswell
+(define burningswell-operating-system
   (operating-system
     (inherit base-operating-system)
     (host-name "burningswell")
@@ -116,4 +117,4 @@
     (services %services)
     (swap-devices %swap-devices)))
 
-burningswell
+burningswell-operating-system
