@@ -5,7 +5,8 @@
   (list (channel
          (name 'asahi)
          (url "https://github.com/r0man/asahi-guix.git")
-         (branch "main")
+         ;; (branch "main")
+         (branch "next-release")
          ;; (commit "2e178b253243719b60a4ff6da2067696d66ac7a2")
          (introduction
           (make-channel-introduction
@@ -13,22 +14,11 @@
            (openpgp-fingerprint
             "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))
 
-        ;; (channel
-        ;;  (name 'guix)
-        ;;  (url "https://git.savannah.gnu.org/git/guix.git")
-        ;;  (branch "master")
-        ;;  ;; (commit "4f681cdbc27e6a922f24d4297efe3c0b823195f0")
-        ;;  (commit "5312d798ac36a72d8a977325a7c6ff7647be670a")
-        ;;  (introduction
-        ;;   (make-channel-introduction
-        ;;    "9edb3f66fd807b096b48283debdcddccfea34bad"
-        ;;    (openpgp-fingerprint
-        ;;     "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
-
         (channel
          (name 'guix)
-         (url "https://github.com/r0man/guix.git")
-         (branch "x-wrapper-2")
+         (url "https://git.savannah.gnu.org/git/guix.git")
+         (branch "master")
+         (commit "04724e59971b03f86a410285653d24005c62b924")
          (introduction
           (make-channel-introduction
            "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -38,7 +28,8 @@
         (channel
          (name 'r0man-system)
          (url "git@github.com:r0man/guix-system.git")
-         (branch "main")
+         ;; (branch "main")
+         (branch "next-release")
          (introduction
           (make-channel-introduction
            "754146ab5979be91a3ed69c99b9dbccb4d06b6bd"

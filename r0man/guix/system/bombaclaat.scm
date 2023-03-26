@@ -1,6 +1,7 @@
 (define-module (r0man guix system bombaclaat)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
+  #:use-module (asahi guix packages linux)
   #:use-module (asahi guix services)
   #:use-module (asahi guix transformations)
   #:use-module (gnu packages certs)
