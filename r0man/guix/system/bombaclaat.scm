@@ -110,7 +110,7 @@
     (inherit desktop-operating-system)
     (host-name "bombaclaat")
     (bootloader %bootloader)
-    (kernel (replace-asahi asahi-linux-edge))
+    (kernel asahi-linux-edge)
     (firmware %firmware)
     (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
