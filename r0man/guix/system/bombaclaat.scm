@@ -1,8 +1,10 @@
 (define-module (r0man guix system bombaclaat)
+  #:use-module (asahi guix bootloader m1n1)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages)
   #:use-module (asahi guix services)
   #:use-module (asahi guix transformations)
+  #:use-module (gnu bootloader)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages xorg)
@@ -24,7 +26,13 @@
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
   #:use-module (r0man guix system xorg)
-  #:export (burningswell-operating-system))
+  #:export (bombaclaat-operating-system))
+
+(define %bootloader
+  (bootloader-configuration
+   (bootloader m1n1-u-boot-grub-bootloader)
+   (targets (list "/boot/efi"))
+   (keyboard-layout %keyboard-layout)))
 
 (define %firmware
   (cons* asahi-firmware
@@ -97,6 +105,7 @@
   (operating-system
     (inherit desktop-operating-system)
     (host-name "bombaclaat")
+    (bootloader %bootloader)
     (kernel (replace-asahi asahi-linux-edge))
     (firmware %firmware)
     (initrd-modules asahi-initrd-modules-edge)
