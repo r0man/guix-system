@@ -96,7 +96,8 @@
                                          xf86-input-evdev
                                          xf86-input-keyboard
                                          xf86-input-mouse))
-                          (extra-config (list %xorg-libinput-config
+                          (extra-config (list %xorg-ignore-abi
+                                              %xorg-libinput-config
                                               %xorg-modeset-config))
                           (server (replace-asahi xorg-server))))))))
 
