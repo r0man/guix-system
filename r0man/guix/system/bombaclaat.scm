@@ -87,10 +87,6 @@
                           %udev-kbd-backlight-service
                           %qemu-service-aarch64
                           (operating-system-user-services desktop-operating-system))
-    (dbus-root-service-type config =>
-                            (dbus-configuration
-                             (inherit config)
-                             (services (list pipewire wireplumber))))
     (slim-service-type config =>
                        (slim-configuration
                         (inherit config)
