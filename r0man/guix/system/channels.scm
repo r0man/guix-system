@@ -5,7 +5,7 @@
   (list (channel
          (name 'asahi)
          (url "https://github.com/r0man/asahi-guix.git")
-         (branch "main")
+         (branch "audio")
          (introduction
           (make-channel-introduction
            "c11f1c583d11b1ed55d34d7041b0c12d51d573e4"
@@ -26,7 +26,7 @@
         (channel
          (name 'r0man-system)
          (url "git@github.com:r0man/guix-system.git")
-         (branch "main")
+         (branch "audio")
          (introduction
           (make-channel-introduction
            "754146ab5979be91a3ed69c99b9dbccb4d06b6bd"
