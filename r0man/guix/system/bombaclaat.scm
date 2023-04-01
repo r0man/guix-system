@@ -11,6 +11,7 @@
   #:use-module (gnu bootloader)
   #:use-module (gnu packages certs)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages music)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages xorg)
   #:use-module (gnu services avahi)
@@ -47,9 +48,10 @@
 (define %packages
   (cons* alsa-ucm-conf-asahi
          asahi-firmware
-         (replace-asahi asahi-mesa-utils)
-         asahi-scripts
          asahi-mesa
+         asahi-mesa-utils
+         asahi-scripts
+         (replace-mesa lsp-plugins)
          (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices
