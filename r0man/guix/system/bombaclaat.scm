@@ -30,7 +30,8 @@
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
   #:use-module (r0man guix system xorg)
-  #:export (bombaclaat-operating-system))
+  #:export (bombaclaat-operating-system
+            bombaclaat-operating-system-edge))
 
 (define %bootloader
   (bootloader-configuration
@@ -111,13 +112,19 @@
     (inherit desktop-operating-system)
     (host-name "bombaclaat")
     (bootloader %bootloader)
-    (kernel asahi-linux-edge)
+    (kernel asahi-linux)
     (firmware %firmware)
-    (initrd-modules asahi-initrd-modules-edge)
+    (initrd-modules asahi-initrd-modules)
     (mapped-devices %mapped-devices)
     (file-systems %file-systems)
     (packages %packages)
     (services %services)
     (swap-devices %swap-devices)))
+
+(define bombaclaat-operating-system-edge
+  (operating-system
+    (inherit bombaclaat-operating-system)
+    (kernel asahi-linux-edge)
+    (initrd-modules asahi-initrd-modules-edge)))
 
 bombaclaat-operating-system
