@@ -2,10 +2,10 @@
   #:use-module (asahi guix bootloader m1n1)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages audio)
-  #:use-module (asahi guix packages firmware)
   #:use-module (asahi guix packages gl)
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
+  #:use-module (asahi guix services firmware)
   #:use-module (asahi guix services udev)
   #:use-module (asahi guix transformations)
   #:use-module (gnu bootloader)
@@ -39,13 +39,8 @@
    (targets (list "/boot/efi"))
    (keyboard-layout %keyboard-layout)))
 
-(define %firmware
-  (cons* asahi-firmware
-         (operating-system-firmware desktop-operating-system)))
-
 (define %packages
   (cons* alsa-ucm-conf-asahi
-         asahi-firmware
          (replace-asahi asahi-mesa-utils)
          asahi-scripts
          asahi-mesa
@@ -85,7 +80,8 @@
                           %udev-backlight-service
                           %udev-kbd-backlight-service
                           %qemu-service-aarch64
-                          (operating-system-user-services desktop-operating-system))
+                          (append (operating-system-user-services desktop-operating-system)
+                                  (list (service asahi-firmware-service-type))))
     (slim-service-type config =>
                        (slim-configuration
                         (inherit config)
@@ -113,7 +109,6 @@
     (host-name "bombaclaat")
     (bootloader %bootloader)
     (kernel asahi-linux)
-    (firmware %firmware)
     (initrd-modules asahi-initrd-modules)
     (mapped-devices %mapped-devices)
     (file-systems %file-systems)
