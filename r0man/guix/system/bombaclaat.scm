@@ -6,7 +6,7 @@
   #:use-module (asahi guix packages gl)
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
-  #:use-module (asahi guix services)
+  #:use-module (asahi guix services udev)
   #:use-module (asahi guix transformations)
   #:use-module (gnu bootloader)
   #:use-module (gnu packages certs)
