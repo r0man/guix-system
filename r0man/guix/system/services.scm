@@ -211,9 +211,11 @@
   (guix-configuration
    (inherit config)
    (substitute-urls
-    (append (list "https://substitutes.nonguix.org")
-            %default-substitute-urls))
+    (append %default-substitute-urls
+            (list "https://substitutes.asahi-guix.org"
+                  "https://substitutes.nonguix.org")))
    (authorized-keys
-    (append (list (local-file "./keys/nonguix.pub")
+    (append (list (local-file "./keys/asahi-guix.pub")
+                  (local-file "./keys/nonguix.pub")
                   (local-file "./keys/precision.pub"))
             %default-authorized-guix-keys))))
