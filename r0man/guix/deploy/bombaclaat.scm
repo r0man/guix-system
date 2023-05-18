@@ -8,6 +8,7 @@
          (operating-system bombaclaat-operating-system)
          (environment managed-host-environment-type)
          (configuration (machine-ssh-configuration
+                         (allow-downgrades? #t)
                          (host-name "localhost")
                          (identity "~/.ssh/id_rsa")
                          (system "aarch64-linux"))))))

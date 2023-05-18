@@ -8,6 +8,7 @@
          (operating-system burningswell-operating-system)
          (environment managed-host-environment-type)
          (configuration (machine-ssh-configuration
+                         (allow-downgrades? #t)
                          (host-name "burningswell.com")
                          (identity "~/.ssh/id_rsa")
                          (system "x86_64-linux"))))))
