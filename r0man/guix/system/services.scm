@@ -128,11 +128,11 @@
        (locations
         (list
          (nginx-location-configuration
-          (uri "/")
-          (body '("proxy_pass http://cuirass;")))
-         (nginx-location-configuration
           (uri "~ ^/admin")
-          (body (list "if ($ssl_client_verify != SUCCESS) { return 403; } proxy_pass http://cuirass;"))))))
+          (body (list "if ($ssl_client_verify != SUCCESS) { return 403; } proxy_pass http://cuirass;")))
+         (nginx-location-configuration
+          (uri "/")
+          (body '("proxy_pass http://cuirass;"))))))
       (nginx-server-configuration
        (server-name '("substitutes.asahi-guix.org"))
        (listen '("443 ssl"))
