@@ -12,3 +12,5 @@
                          (identity "~/.ssh/id_rsa")
                          (system "x86_64-linux")
                          (user "roman"))))))
+
+machines
