@@ -128,6 +128,9 @@
        (locations
         (list
          (nginx-location-configuration
+          (uri "~ ^/admin")
+          (body (list "if ($ssl_client_verify != SUCCESS) { return 403; } proxy_pass http://cuirass;")))
+         (nginx-location-configuration
           (uri "/")
           (body '("proxy_pass http://cuirass;"))))))
       (nginx-server-configuration
@@ -141,10 +144,7 @@
           (uri "/")
           (body '("proxy_pass http://guix-publish;"))))))))
     (upstream-blocks
-     (list ;; (nginx-upstream-configuration
-           ;;  (name "default")
-           ;;  (servers (list "localhost")))
-           (nginx-upstream-configuration
+     (list (nginx-upstream-configuration
             (name "cuirass")
             (servers (list "localhost:8081")))
            (nginx-upstream-configuration
