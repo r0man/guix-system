@@ -10,7 +10,6 @@
          (configuration (machine-ssh-configuration
                          (host-name "localhost")
                          (identity "~/.ssh/id_rsa")
-                         (system "aarch64-linux")
-                         (user "roman"))))))
+                         (system "aarch64-linux"))))))
 
 machines
