@@ -10,7 +10,6 @@
          (configuration (machine-ssh-configuration
                          (host-name "burningswell.com")
                          (identity "~/.ssh/id_rsa")
-                         (system "x86_64-linux")
-                         (user "roman"))))))
+                         (system "x86_64-linux"))))))
 
 machines
