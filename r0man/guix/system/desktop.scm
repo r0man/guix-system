@@ -64,24 +64,25 @@
        (service-type-name (service-kind service))))
 
 (define %services
-  (remove (lambda (service)
-            (network-manager-applet? service))
-          (modify-services (cons* %auditd-service-type
-                                  %bluetooth-service
-                                  %cups-service
-                                  %docker-service
-                                  %libvirt-service
-                                  %nix-service
-                                  %openssh-service
-                                  %pcscd-service
-                                  %slim-service
-                                  %udev-fido2-service
-                                  %desktop-services)
-            ;; (delete alsa-service-type)
-            ;; (delete pulseaudio-service-type)
-            (delete sddm-service-type)
-            (console-font-service-type config => (console-font-service-config config))
-            (guix-service-type config => (guix-service-type-config config)))))
+  (let ((system (or (%current-target-system) (%current-system))))
+    (remove (lambda (service)
+              (network-manager-applet? service))
+            (modify-services (cons* %auditd-service-type
+                                    %bluetooth-service
+                                    %cups-service
+                                    %docker-service
+                                    %libvirt-service
+                                    %nix-service
+                                    %openssh-service
+                                    %pcscd-service
+                                    %slim-service
+                                    %udev-fido2-service
+                                    %desktop-services)
+              ;; (delete alsa-service-type)
+              ;; (delete pulseaudio-service-type)
+              (delete (if (string-prefix? "x86_64" system) gdm-service-type sddm-service-type))
+              (console-font-service-type config => (console-font-service-config config))
+              (guix-service-type config => (guix-service-type-config config))))))
 
 (define desktop-operating-system
   (operating-system
