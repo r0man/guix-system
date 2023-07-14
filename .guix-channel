@@ -9,6 +9,7 @@
    (branch "main")
    (introduction
     (channel-introduction
+     (version 0)
      (commit "c11f1c583d11b1ed55d34d7041b0c12d51d573e4")
      (signer "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))
   (channel
@@ -17,5 +18,6 @@
    (branch "main")
    (introduction
     (channel-introduction
+     (version 0)
      (commit "8eb7a76af9b51b80f5c01f18639e6360833fc377")
      (signer "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))))
