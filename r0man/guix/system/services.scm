@@ -113,36 +113,37 @@
     (server-blocks
      (list
       (nginx-server-configuration
-       (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
-       (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
+       ;; (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
+       ;; (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
        (locations
         (list
          (nginx-location-configuration
           (uri "/")
           (body '("return 404;"))))))
-      (nginx-server-configuration
-       (server-name '("ci.asahi-guix.org"))
-       (listen '("443 ssl"))
-       (ssl-certificate (certbot-ssl-certificate "ci.asahi-guix.org"))
-       (ssl-certificate-key (certbot-ssl-certificate-key "ci.asahi-guix.org"))
-       (locations
-        (list
-         (nginx-location-configuration
-          (uri "~ ^/admin")
-          (body (list "if ($ssl_client_verify != SUCCESS) { return 403; } proxy_pass http://cuirass;")))
-         (nginx-location-configuration
-          (uri "/")
-          (body '("proxy_pass http://cuirass;"))))))
-      (nginx-server-configuration
-       (server-name '("substitutes.asahi-guix.org"))
-       (listen '("443 ssl"))
-       (ssl-certificate (certbot-ssl-certificate "substitutes.asahi-guix.org"))
-       (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.asahi-guix.org"))
-       (locations
-        (list
-         (nginx-location-configuration
-          (uri "/")
-          (body '("proxy_pass http://guix-publish;"))))))))
+      ;; (nginx-server-configuration
+      ;;  (server-name '("ci.asahi-guix.org"))
+      ;;  (listen '("443 ssl"))
+      ;;  (ssl-certificate (certbot-ssl-certificate "ci.asahi-guix.org"))
+      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "ci.asahi-guix.org"))
+      ;;  (locations
+      ;;   (list
+      ;;    (nginx-location-configuration
+      ;;     (uri "~ ^/admin")
+      ;;     (body (list "if ($ssl_client_verify != SUCCESS) { return 403; } proxy_pass http://cuirass;")))
+      ;;    (nginx-location-configuration
+      ;;     (uri "/")
+      ;;     (body '("proxy_pass http://cuirass;"))))))
+      ;; (nginx-server-configuration
+      ;;  (server-name '("substitutes.asahi-guix.org"))
+      ;;  (listen '("443 ssl"))
+      ;;  (ssl-certificate (certbot-ssl-certificate "substitutes.asahi-guix.org"))
+      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.asahi-guix.org"))
+      ;;  (locations
+      ;;   (list
+      ;;    (nginx-location-configuration
+      ;;     (uri "/")
+      ;;     (body '("proxy_pass http://guix-publish;"))))))
+      ))
     (upstream-blocks
      (list (nginx-upstream-configuration
             (name "cuirass")
