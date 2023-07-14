@@ -115,6 +115,7 @@
       (nginx-server-configuration
        ;; (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
        ;; (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
+       (listen '("80")) ;; REMOVE
        (locations
         (list
          (nginx-location-configuration
