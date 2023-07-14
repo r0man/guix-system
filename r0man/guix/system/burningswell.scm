@@ -199,7 +199,6 @@
     (inherit base-operating-system)
     (host-name "burningswell")
     (kernel linux-libre)
-    ;; (firmware %firmware)
     (initrd-modules (cons "raid1" %base-initrd-modules))
     (bootloader %bootloader)
     (mapped-devices %mapped-devices)
