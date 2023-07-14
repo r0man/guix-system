@@ -9,7 +9,6 @@
   #:use-module (gnu services auditd)
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
-  #:use-module (gnu services certbot)
   #:use-module (gnu services cups)
   #:use-module (gnu services databases)
   #:use-module (gnu services desktop)
@@ -30,12 +29,10 @@
   #:export (%auditd-service-type
             %avahi-service
             %bluetooth-service
-            %certbot-service
             %cups-service
             %docker-service
             %elogind-service
             %guix-publish-service
-            %http-service-burningswell
             %libvirt-service
             %nix-service
             %openssh-service
@@ -46,7 +43,8 @@
             %screen-locker-service
             %slim-service
             %udev-fido2-service
-            %unattended-upgrade-service
+            certbot-ssl-certificate
+            certbot-ssl-certificate-key
             console-font-service-config
             guix-service-type-config))
 
@@ -58,28 +56,6 @@
 
 (define %bluetooth-service
   (service bluetooth-service-type))
-
-(define %nginx-deploy-hook
-  (program-file
-   "nginx-deploy-hook"
-   #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
-       (kill pid SIGHUP))))
-
-(define %certbot-service
-  (service certbot-service-type
-           (certbot-configuration
-            (email "roman@burningswell.com")
-            (certificates
-             (list
-              (certificate-configuration
-               (domains '("ci.asahi-guix.org"))
-               (deploy-hook %nginx-deploy-hook))
-              (certificate-configuration
-               (domains '("substitutes.asahi-guix.org"))
-               (deploy-hook %nginx-deploy-hook))
-              (certificate-configuration
-               (domains '("www.burningswell.com"))
-               (deploy-hook %nginx-deploy-hook)))))))
 
 (define %cups-service
   (service cups-service-type
@@ -105,54 +81,6 @@
 
 (define (certbot-ssl-certificate-key domain)
   (format #f "/etc/letsencrypt/live/~a/privkey.pem" domain))
-
-(define %http-service-burningswell
-  (service
-   nginx-service-type
-   (nginx-configuration
-    (server-blocks
-     (list
-      (nginx-server-configuration
-       ;; (ssl-certificate (certbot-ssl-certificate "www.burningswell.com"))
-       ;; (ssl-certificate-key (certbot-ssl-certificate-key "www.burningswell.com"))
-       (listen '("80")) ;; REMOVE
-       (locations
-        (list
-         (nginx-location-configuration
-          (uri "/")
-          (body '("return 404;"))))))
-      ;; (nginx-server-configuration
-      ;;  (server-name '("ci.asahi-guix.org"))
-      ;;  (listen '("443 ssl"))
-      ;;  (ssl-certificate (certbot-ssl-certificate "ci.asahi-guix.org"))
-      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "ci.asahi-guix.org"))
-      ;;  (locations
-      ;;   (list
-      ;;    (nginx-location-configuration
-      ;;     (uri "~ ^/admin")
-      ;;     (body (list "if ($ssl_client_verify != SUCCESS) { return 403; } proxy_pass http://cuirass;")))
-      ;;    (nginx-location-configuration
-      ;;     (uri "/")
-      ;;     (body '("proxy_pass http://cuirass;"))))))
-      ;; (nginx-server-configuration
-      ;;  (server-name '("substitutes.asahi-guix.org"))
-      ;;  (listen '("443 ssl"))
-      ;;  (ssl-certificate (certbot-ssl-certificate "substitutes.asahi-guix.org"))
-      ;;  (ssl-certificate-key (certbot-ssl-certificate-key "substitutes.asahi-guix.org"))
-      ;;  (locations
-      ;;   (list
-      ;;    (nginx-location-configuration
-      ;;     (uri "/")
-      ;;     (body '("proxy_pass http://guix-publish;"))))))
-      ))
-    ;; (upstream-blocks
-    ;;  (list (nginx-upstream-configuration
-    ;;         (name "cuirass")
-    ;;         (servers (list "localhost:8081")))
-    ;;        (nginx-upstream-configuration
-    ;;         (name "guix-publish")
-    ;;         (servers (list "localhost:8082")))))
-    )))
 
 (define %libvirt-service
   (service libvirt-service-type
@@ -201,9 +129,6 @@
 
 (define %udev-fido2-service
   (udev-rules-service 'fido2 libfido2 #:groups '("plugdev")))
-
-(define %unattended-upgrade-service
-  (service unattended-upgrade-service-type))
 
 (define (console-font-service-config config)
   (map (lambda (tty)
