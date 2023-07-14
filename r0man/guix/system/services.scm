@@ -144,13 +144,14 @@
       ;;     (uri "/")
       ;;     (body '("proxy_pass http://guix-publish;"))))))
       ))
-    (upstream-blocks
-     (list (nginx-upstream-configuration
-            (name "cuirass")
-            (servers (list "localhost:8081")))
-           (nginx-upstream-configuration
-            (name "guix-publish")
-            (servers (list "localhost:8082"))))))))
+    ;; (upstream-blocks
+    ;;  (list (nginx-upstream-configuration
+    ;;         (name "cuirass")
+    ;;         (servers (list "localhost:8081")))
+    ;;        (nginx-upstream-configuration
+    ;;         (name "guix-publish")
+    ;;         (servers (list "localhost:8082")))))
+    )))
 
 (define %libvirt-service
   (service libvirt-service-type
