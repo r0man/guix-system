@@ -146,7 +146,8 @@
                               guix-channel
                               (channel
                                (inherit system-channel)
-                               (url "/root/guix-system")))))))
+                               (url "/root/guix-system"))))
+            (schedule "0 12 * * *"))))
 
 (define %mapped-devices
   (list (mapped-device
