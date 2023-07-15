@@ -85,6 +85,16 @@
                               (branch "next")
                               (url "https://github.com/r0man/asahi-guix.git"))
                              %default-channels))
+                      (systems '("aarch64-linux" "x86_64-linux")))
+                     (specification
+                      (name "r0man-guix-channel")
+                      (build '(channels r0man-guix-channel))
+                      (channels
+                       (cons (channel
+                              (name 'r0man-guix-channel)
+                              (branch "main")
+                              (url "https://github.com/r0man/guix-channel.git"))
+                             %default-channels))
                       (systems '("aarch64-linux" "x86_64-linux")))))
             (use-substitutes? #t)
             (remote-server (cuirass-remote-server-configuration)))))
