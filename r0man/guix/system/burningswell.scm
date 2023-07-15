@@ -160,7 +160,6 @@
                                        (channel
                                         (inherit system-channel)
                                         (url "/root/guix-system"))))))
-            (schedule "*/5 * * * *")
             (services-to-restart '(avahi-daemon
                                    console-font-tty1
                                    console-font-tty2
