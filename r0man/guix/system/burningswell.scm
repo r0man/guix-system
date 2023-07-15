@@ -163,7 +163,6 @@
                                    cuirass-remote-server
                                    cuirass-remote-worker
                                    cuirass-web
-                                   dbus-system
                                    dockerd
                                    elogind
                                    guix-daemon
