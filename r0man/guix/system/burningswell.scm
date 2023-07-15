@@ -179,23 +179,7 @@
          %qemu-service-x86-64
          %udev-fido2-service ;; TODO: Remove
          %unattended-upgrade-service
-         (service static-networking-service-type
-                  (list (static-networking
-                         (addresses
-                          (list (network-address
-                                 (device "eth0")
-                                 (value "136.243.174.102/26"))
-                                (network-address
-                                 (device "eth0")
-                                 (value "fe80::7285:c2ff:fefd:c94e/64"))))
-                         (routes
-                          (list (network-route
-                                 (destination "default")
-                                 (gateway "136.243.174.65"))
-                                (network-route
-                                 (destination "default")
-                                 (gateway "fe80::1"))))
-                         (name-servers '("1.1.1.1" "8.8.8.8")))))
+         (service dhcp-client-service-type)
          (operating-system-user-services base-operating-system)))
 
 (define %swap-devices
