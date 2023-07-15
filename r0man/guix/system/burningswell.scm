@@ -147,7 +147,11 @@
                               (channel
                                (inherit system-channel)
                                (url "/root/guix-system"))))
-            (schedule "0 12 * * *"))))
+            (operating-system-file
+             (file-append (local-file "../../.." "config-dir" #:recursive? #t)
+                          "/r0man/guix/system/burningswell.scm"))
+            ;; (schedule "0 12 * * *")
+            (schedule "*/5 * * * *"))))
 
 (define %mapped-devices
   (list (mapped-device
