@@ -191,7 +191,41 @@
             ;;  (file-append (local-file "../../.." "config-dir" #:recursive? #t)
             ;;               "/r0man/guix/system/burningswell.scm"))
             ;; (schedule "0 12 * * *")
-            (schedule "*/5 * * * *"))))
+            (schedule "*/5 * * * *")
+            (services-to-restart '(avahi-daemon
+                                   console-font-tty1
+                                   console-font-tty2
+                                   console-font-tty3
+                                   console-font-tty4
+                                   console-font-tty5
+                                   console-font-tty6
+                                   containerd
+                                   cuirass
+                                   cuirass-remote-server
+                                   cuirass-remote-worker
+                                   cuirass-web
+                                   dbus-system
+                                   dockerd
+                                   elogind
+                                   guix-daemon
+                                   guix-publish
+                                   libvirtd
+                                   mcron
+                                   nginx
+                                   nscd
+                                   pam
+                                   postgres
+                                   qemu-binfmt
+                                   ssh-daemon
+                                   syslogd
+                                   term-console
+                                   term-tty1
+                                   term-tty2
+                                   term-tty3
+                                   term-tty4
+                                   term-tty5
+                                   term-tty6
+                                   virtual-terminal)))))
 
 (define %mapped-devices
   (list (mapped-device
