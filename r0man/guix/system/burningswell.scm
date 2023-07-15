@@ -24,6 +24,7 @@
   #:use-module (gnu system)
   #:use-module (guix channels)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (guix packages)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system channels)
@@ -142,11 +143,13 @@
 (define %unattended-upgrade-service
   (service unattended-upgrade-service-type
            (unattended-upgrade-configuration
-            (channels #~(list asahi-channel
-                              guix-channel
-                              (channel
-                               (inherit system-channel)
-                               (url "/root/guix-system"))))
+            (channels (with-imported-modules (source-module-closure
+                                              '((r0man guix system channels)))
+                        #~(list asahi-channel
+                                guix-channel
+                                (channel
+                                 (inherit system-channel)
+                                 (url "/root/guix-system")))))
             (operating-system-file
              (file-append (local-file "../../.." "config-dir" #:recursive? #t)
                           "/r0man/guix/system/burningswell.scm"))
