@@ -176,6 +176,23 @@
             ;; (schedule "0 12 * * *")
             (schedule "*/5 * * * *"))))
 
+(define %unattended-upgrade-service
+  (service unattended-upgrade-service-type
+           (unattended-upgrade-configuration
+            (channels (with-imported-modules (source-module-closure
+                                              '((r0man guix system channels)))
+                        #~(begin (use-modules (r0man guix system channels))
+                                 (list asahi-channel guix-channel
+                                       (channel
+                                        (inherit system-channel)
+                                        (url "/root/guix-system"))))))
+
+            ;; (operating-system-file
+            ;;  (file-append (local-file "../../.." "config-dir" #:recursive? #t)
+            ;;               "/r0man/guix/system/burningswell.scm"))
+            ;; (schedule "0 12 * * *")
+            (schedule "*/5 * * * *"))))
+
 (define %mapped-devices
   (list (mapped-device
          (source (list "/dev/sda2" "/dev/sdb2"))
