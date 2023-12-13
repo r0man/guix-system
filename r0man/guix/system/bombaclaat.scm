@@ -122,4 +122,4 @@
     (kernel asahi-linux-edge)
     (initrd-modules asahi-initrd-modules-edge)))
 
-bombaclaat-operating-system
+bombaclaat-operating-system-edge
