@@ -41,7 +41,7 @@
 
 (define %packages
   (cons* alsa-ucm-conf-asahi
-         (replace-asahi asahi-mesa-utils)
+         asahi-mesa-utils
          asahi-scripts
          asahi-mesa
          (operating-system-packages desktop-operating-system)))
@@ -71,12 +71,10 @@
          %base-file-systems))
 
 (define %services
-  (modify-services (cons* (service kernel-module-loader-service-type
-                                   '("asahi"
-                                     "appledrm"))
+  (modify-services (cons* (service kernel-module-loader-service-type '("asahi" "appledrm"))
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
-                                                  ,(plain-file "asahi.conf" "options asahi debug_flags=1"))))
+                                                  ,(plain-file "asahi.conf" "options asahi debug_flags=0"))))
                           %udev-backlight-service
                           %udev-kbd-backlight-service
                           %qemu-service-aarch64
@@ -96,7 +94,7 @@
                           (extra-config (list %xorg-ignore-abi
                                               %xorg-libinput-config
                                               %xorg-modeset-config))
-                          (server (replace-asahi xorg-server))))))))
+                          (server (replace-mesa xorg-server))))))))
 
 (define %swap-devices
   (list (swap-space
