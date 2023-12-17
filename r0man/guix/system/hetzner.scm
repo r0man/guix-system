@@ -41,9 +41,6 @@
 (define %initrd-modules
   (cons* "sd_mod" "virtio_scsi" %base-initrd-modules))
 
-(define %kernel-arguments
-  '("vga=0x317" "console=ttyAMA0" "console=tty0"))
-
 (define %packages
   (append (map specification->package
                '("e2fsprogs"
@@ -83,7 +80,6 @@
     (timezone "Etc/UTC")
     (locale "en_US.utf8")
     (kernel linux-libre)
-    ;; (kernel-arguments %kernel-arguments)
     (bootloader %bootloader)
     (initrd-modules %initrd-modules)
     (file-systems %file-systems)
