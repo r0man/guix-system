@@ -38,56 +38,18 @@
            (type "vfat"))
          %base-file-systems))
 
-;; WORKING MODULES
-(define %initrd-modules
-  (cons* "autofs4"
-         "binfmt_misc"
-         "cdrom"
-         "configfs"
-         "dm_mod"
-         "efivarfs"
-         "evdev"
-         "failover"
-         "fat"
-         "fuse"
-         "ip_tables"
-         "ipmi_devintf"
-         "ipmi_msghandler"
-         "ipmi_ssif"
-         "jc42"
-         "net_failover"
-         "nls_cp437"
-         "sd_mod"
-         "sg"
-         "sha256_arm64"
-         "sha2_ce"
-         "sr_mod"
-         "t10_pi"
-         "vfat"
-         "virtio_balloon"
-         "virtio_console"
-         "virtio_mmio"
-         "virtio_net"
-         "virtio_pci"
-         "virtio_pci_legacy_dev"
-         "virtio_pci_modern_dev"
-         "virtio_rng"
-         "virtio_scsi"
-         "x_tables"
-         %base-initrd-modules))
-
 (define %initrd-modules
   (cons* "sd_mod"
          "vfat"
-         "virtio_balloon"
-         "virtio_console"
-         "virtio_mmio"
+         ;; "virtio_balloon"
+         ;; "virtio_console"
+         ;; "virtio_mmio"
          "virtio_net"
          "virtio_pci"
-         "virtio_pci_legacy_dev"
-         "virtio_pci_modern_dev"
-         "virtio_rng"
-         "virtio_scsi"
+         ;; "virtio_pci_legacy_dev"
+         ;; "virtio_pci_modern_dev"
+         ;; "virtio_rng"
+         ;; "virtio_scsi"
          %base-initrd-modules))
 
 (define %kernel-arguments
