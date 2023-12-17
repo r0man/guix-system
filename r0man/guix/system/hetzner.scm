@@ -89,7 +89,7 @@
 
 (define hetzner-operating-system
   (operating-system
-    (host-name "guix")
+    (host-name "hetzner")
     (timezone "Etc/UTC")
     (locale "en_US.utf8")
     (kernel linux-libre)
