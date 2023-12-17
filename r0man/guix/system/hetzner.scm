@@ -83,7 +83,7 @@
     (timezone "Etc/UTC")
     (locale "en_US.utf8")
     (kernel linux-libre)
-    (kernel-arguments %kernel-arguments)
+    ;; (kernel-arguments %kernel-arguments)
     (bootloader %bootloader)
     (initrd-modules %initrd-modules)
     (file-systems %file-systems)
