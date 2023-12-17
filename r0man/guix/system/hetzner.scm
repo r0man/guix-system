@@ -39,12 +39,7 @@
          %base-file-systems))
 
 (define %initrd-modules
-  (cons* "sd_mod"
-         "vfat"
-         "virtio_net"
-         "virtio_pci"
-         "virtio_scsi"
-         %base-initrd-modules))
+  (cons* "sd_mod" "virtio_scsi" %base-initrd-modules))
 
 (define %kernel-arguments
   '("vga=0x317" "console=ttyAMA0" "console=tty0"))
