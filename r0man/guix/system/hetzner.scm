@@ -115,8 +115,7 @@
   (service openssh-service-type
            (openssh-configuration
             (authorized-keys
-             `(("root" ,(local-file "../files/ssh/authorized-keys/root.pub"))
-               ("roman" ,(local-file "../files/ssh/authorized-keys/roman.pub"))))
+             `(("root" ,(local-file "keys/roman.pub"))))
             (openssh openssh-sans-x)
             (permit-root-login 'prohibit-password)
             (port-number 22))))
