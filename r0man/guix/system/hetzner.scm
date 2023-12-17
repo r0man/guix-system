@@ -87,6 +87,7 @@
     (initrd-modules %initrd-modules)
     (file-systems %file-systems)
     (packages %packages)
-    (services %services)))
+    (services %services)
+    (users %users)))
 
 hetzner-operating-system
