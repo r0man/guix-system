@@ -41,14 +41,8 @@
 (define %initrd-modules
   (cons* "sd_mod"
          "vfat"
-         ;; "virtio_balloon"
-         ;; "virtio_console"
-         ;; "virtio_mmio"
          "virtio_net"
          "virtio_pci"
-         ;; "virtio_pci_legacy_dev"
-         ;; "virtio_pci_modern_dev"
-         ;; "virtio_rng"
          "virtio_scsi"
          %base-initrd-modules))
 
