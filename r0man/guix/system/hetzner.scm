@@ -60,7 +60,7 @@
          (comment "Roman")
          (group "users")
          (home-directory "/home/roman")
-         (supplementary-groups '("audio" "netdev" "plugdev" "video" "wheel")))))
+         (supplementary-groups '("audio" "netdev" "video" "wheel")))))
 
 (define %openssh-service
   (service openssh-service-type
