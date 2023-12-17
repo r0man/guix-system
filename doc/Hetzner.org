@@ -1,0 +1,355 @@
+* Hetzner
+** Installation
+
+Install Guix as a foreign distribution.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  apt-get update && apt-get install guix --assume-yes
+#+end_src
+
+#+RESULTS:
+#+begin_example
+0% [Working]            Get:1 http://mirror.hetzner.com/debian/packages bookworm InRelease [151 kB]
+0% [1 InRelease 14.0 kB/151 kB 9%] [Waiting for headers] [Waiting for headers]                                                                              Get:2 http://deb.debian.org/debian bookworm InRelease [151 kB]
+0% [1 InRelease 14.0 kB/151 kB 9%] [2 InRelease 20.5 kB/151 kB 14%] [Waiting fo                                                                               Get:3 http://security.debian.org bookworm-security InRelease [48.0 kB]
+0% [1 InRelease 14.0 kB/151 kB 9%] [2 InRelease 21.1 kB/151 kB 14%] [3 InReleas                                                                               0% [1 InRelease 151 kB/151 kB 100%] [2 InRelease 151 kB/151 kB 100%]                                                                    Get:4 http://mirror.hetzner.com/debian/packages bookworm-updates InRelease [52.1 kB]
+                                                                    Get:5 http://mirror.hetzner.com/debian/security bookworm-security InRelease [48.0 kB]
+                                                                    Get:6 http://deb.debian.org/debian bookworm-updates InRelease [52.1 kB]
+                                                                    0% [Working]0% [Working]            Get:7 http://security.debian.org bookworm-security/non-free-firmware Sources [796 B]
+0% [7 Sources 796 B/796 B 100%]                               0% [Working]0% [7 Sources store 0 B] [Waiting for headers]                                              0% [Waiting for headers]                        Get:8 http://security.debian.org bookworm-security/main Sources [65.8 kB]
+0% [8 Sources 48.1 kB/65.8 kB 73%]                                  0% [Waiting for headers]0% [8 Sources store 0 B] [Waiting for headers]                                              Get:9 http://security.debian.org bookworm-security/contrib Sources [852 B]
+0% [8 Sources store 0 B] [9 Sources 852 B/852 B 100%]                                                     0% [8 Sources store 0 B]                        Get:10 http://security.debian.org bookworm-security/main arm64 Packages [124 kB]
+0% [8 Sources store 0 B] [10 Packages 15.7 kB/124 kB 13%]                                                         0% [8 Sources store 0 B]                        0% [Working]0% [9 Sources store 0 B]                        0% [Working]0% [10 Packages store 0 B]                          0% [Working]0% [Working]            Get:11 http://mirror.hetzner.com/debian/packages bookworm/contrib arm64 Packages [45.6 kB]
+0% [11 Packages 10.0 kB/45.6 kB 22%]                                    0% [Working]0% [11 Packages store 0 B]                          0% [Waiting for headers]                        Get:12 http://mirror.hetzner.com/debian/packages bookworm/non-free-firmware arm64 Packages [5,824 B]
+0% [12 Packages 5,464 B/5,824 B 94%]                                    0% [Working]            Get:13 http://mirror.hetzner.com/debian/packages bookworm/main arm64 Packages [8,685 kB]
+0% [12 Packages store 0 B] [13 Packages 23.6 kB/8,685 kB 0%]                                                            0% [13 Packages 87.1 kB/8,685 kB 1%]                                    0% [Waiting for headers]                        Get:14 http://mirror.hetzner.com/debian/packages bookworm/non-free arm64 Packages [75.4 kB]
+0% [14 Packages 75.4 kB/75.4 kB 100%]                                     0% [13 Packages store 0 B]0% [13 Packages store 0 B]                          Get:15 http://mirror.hetzner.com/debian/packages bookworm-updates/main arm64 Packages [11.1 kB]
+0% [13 Packages store 0 B] [15 Packages 11.1 kB/11.1 kB 100%]                                                             0% [13 Packages store 0 B]0% [13 Packages store 0 B]                          Get:16 http://mirror.hetzner.com/debian/security bookworm-security/main arm64 Packages [124 kB]
+0% [13 Packages store 0 B] [16 Packages 32.8 kB/124 kB 26%]                                                           0% [13 Packages store 0 B]0% [13 Packages store 0 B]                          Get:17 http://deb.debian.org/debian bookworm/non-free-firmware Sources [6,168 B]
+0% [13 Packages store 0 B] [17 Sources 6,168 B/6,168 B 100%]                                                            0% [13 Packages store 0 B]                          Get:18 http://deb.debian.org/debian bookworm/main Sources [9,488 kB]
+0% [13 Packages store 0 B] [18 Sources 50.3 kB/9,488 kB 1%]                                                           0% [13 Packages store 0 B] [Waiting for headers]                                                Get:19 http://deb.debian.org/debian bookworm/contrib Sources [51.3 kB]
+0% [13 Packages store 0 B] [19 Sources 51.3 kB/51.3 kB 100%]                                                            0% [13 Packages store 0 B] [Waiting for headers]                                                Get:20 http://deb.debian.org/debian bookworm/non-free Sources [77.9 kB]
+0% [13 Packages store 0 B] [20 Sources 47.7 kB/77.9 kB 61%]                                                           0% [13 Packages store 0 B] [Waiting for headers]                                                Get:21 http://deb.debian.org/debian bookworm/main arm64 Packages [8,685 kB]
+0% [13 Packages store 0 B] [21 Packages 64.9 kB/8,685 kB 1%]                                                            0% [13 Packages store 0 B] [Waiting for headers]                                                Get:22 http://deb.debian.org/debian bookworm/non-free-firmware arm64 Packages [5,824 B]
+                                                Get:23 http://deb.debian.org/debian bookworm/contrib arm64 Packages [45.6 kB]
+                                                Get:24 http://deb.debian.org/debian bookworm/non-free arm64 Packages [75.4 kB]
+0% [13 Packages store 0 B] [24 Packages 75.4 kB/75.4 kB 100%]                                                             0% [13 Packages store 0 B]96% [13 Packages store 0 B]                           Get:25 http://deb.debian.org/debian bookworm-updates/main Sources [16.4 kB]
+96% [13 Packages store 0 B] [25 Sources 16.4 kB/16.4 kB 100%]                                                             96% [13 Packages store 0 B]                           Get:26 http://deb.debian.org/debian bookworm-updates/main arm64 Packages [11.1 kB]
+96% [13 Packages store 0 B] [26 Packages 11.1 kB/11.1 kB 100%]                                                              96% [13 Packages store 0 B]                           96% [Working]96% [14 Packages store 0 B]                           96% [Working]96% [15 Packages store 0 B]                           97% [Working]97% [16 Packages store 0 B]                           97% [Working]97% [17 Sources store 0 B]                          97% [Working]97% [18 Sources store 0 B]97% [18 Sources store 0 B]                          98% [Working]98% [19 Sources store 0 B]                          98% [Working]98% [20 Sources store 0 B]                          98% [Working]98% [21 Packages store 0 B]98% [21 Packages store 0 B]                           98% [Working]98% [22 Packages store 0 B]                           99% [Working]99% [23 Packages store 0 B]                           99% [Working]99% [24 Packages store 0 B]                           99% [Working]99% [25 Sources store 0 B]                          100% [Working]100% [26 Packages store 0 B]                            100% [Working]              Fetched 28.1 MB in 3s (9,287 kB/s)
+Reading package lists... 0%Reading package lists... 0%Reading package lists... 0%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 48%Reading package lists... 49%Reading package lists... 49%Reading package lists... 97%Reading package lists... 97%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 98%Reading package lists... 99%Reading package lists... 99%Reading package lists... Done
+Reading package lists... 0%Reading package lists... 100%Reading package lists... Done
+Building dependency tree... 0%Building dependency tree... 0%Building dependency tree... 50%Building dependency tree... 50%Building dependency tree... Done
+Reading state information... 0% Reading state information... 0%Reading state information... Done
+The following additional packages will be installed:
+  guile-3.0 guile-3.0-libs guile-bytestructures guile-gcrypt guile-git
+  guile-gnutls guile-json guile-lzlib guile-sqlite3 guile-ssh guile-zlib
+  libgc1 libgcrypt20-dev libgit2-1.5 libgit2-dev libgnutls30 libgpg-error-dev
+  libguile-ssh14 libhttp-parser-dev libhttp-parser2.9 liblz-dev libmbedcrypto7
+  libmbedtls-dev libmbedtls14 libmbedx509-1 libpcre2-16-0 libpcre2-32-0
+  libpcre2-dev libpcre2-posix3 libssh-dev libssh2-1-dev libssl-dev libssl3
+  nscd openssl
+Suggested packages:
+  guile-3.0-doc libgcrypt20-doc gnutls-bin libmbedtls-doc libssh-doc
+  libssl-doc
+The following NEW packages will be installed:
+  guile-3.0 guile-3.0-libs guile-bytestructures guile-gcrypt guile-git
+  guile-gnutls guile-json guile-lzlib guile-sqlite3 guile-ssh guile-zlib guix
+  libgc1 libgcrypt20-dev libgit2-1.5 libgit2-dev libgpg-error-dev
+  libguile-ssh14 libhttp-parser-dev libhttp-parser2.9 liblz-dev libmbedcrypto7
+  libmbedtls-dev libmbedtls14 libmbedx509-1 libpcre2-16-0 libpcre2-32-0
+  libpcre2-dev libpcre2-posix3 libssh-dev libssh2-1-dev libssl-dev nscd
+The following packages will be upgraded:
+  libgnutls30 libssl3 openssl
+3 upgraded, 33 newly installed, 0 to remove and 31 not upgraded.
+Need to get 61.0 MB/68.1 MB of archives.
+After this operation, 448 MB of additional disk space will be used.
+10% [Working]             Get:1 http://mirror.hetzner.com/debian/packages bookworm/main arm64 nscd arm64 2.36-9+deb12u3 [95.3 kB]
+10% [1 nscd 14.0 kB/95.3 kB 15%]                                11% [Working]             Get:2 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libgnutls30 arm64 3.7.9-2+deb12u1 [1,313 kB]
+11% [2 libgnutls30 35.3 kB/1,313 kB 3%]                                       13% [Waiting for headers]                         Get:3 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-3.0 arm64 3.0.8-2 [23.5 kB]
+13% [Waiting for headers]                         Get:4 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-bytestructures arm64 1.0.10-3 [184 kB]
+13% [4 guile-bytestructures 65.3 kB/184 kB 35%]                                               14% [Waiting for headers]                         Get:5 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libgpg-error-dev arm64 1.46-1 [130 kB]
+14% [5 libgpg-error-dev 77.7 kB/130 kB 60%]                                           15% [Waiting for headers]                         Get:6 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libgcrypt20-dev arm64 1.10.1-3 [683 kB]
+15% [6 libgcrypt20-dev 78.2 kB/683 kB 11%]                                          16% [Waiting for headers]                         Get:7 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-gcrypt arm64 0.4.0-2 [164 kB]
+16% [7 guile-gcrypt 65.5 kB/164 kB 40%]                                       17% [Waiting for headers]                         Get:8 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libhttp-parser2.9 arm64 2.9.4-5 [20.7 kB]
+18% [Waiting for headers]                         Get:9 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libmbedx509-1 arm64 2.28.3-1 [127 kB]
+18% [9 libmbedx509-1 127 kB/127 kB 100%]                                        18% [Waiting for headers]                         Get:10 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libmbedtls14 arm64 2.28.3-1 [156 kB]
+18% [10 libmbedtls14 74.2 kB/156 kB 47%]                                        19% [Waiting for headers]                         Get:11 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libgit2-1.5 arm64 1.5.1+ds-1 [468 kB]
+19% [11 libgit2-1.5 65.5 kB/468 kB 14%]                                       20% [Waiting for headers]                         Get:12 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libmbedtls-dev arm64 2.28.3-1 [676 kB]
+20% [12 libmbedtls-dev 95.0 kB/676 kB 14%]                                          21% [Waiting for headers]                         Get:13 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libssl3 arm64 3.0.11-1~deb12u2 [1,803 kB]
+22% [13 libssl3 73.9 kB/1,803 kB 4%]                                    24% [Waiting for headers]                         Get:14 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libssl-dev arm64 3.0.11-1~deb12u2 [2,302 kB]
+24% [14 libssl-dev 39.7 kB/2,302 kB 2%]                                       27% [Waiting for headers]                         Get:15 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libssh2-1-dev arm64 1.10.0-3+b1 [306 kB]
+27% [15 libssh2-1-dev 53.2 kB/306 kB 17%]                                         28% [Waiting for headers]                         Get:16 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libhttp-parser-dev arm64 2.9.4-5 [20.0 kB]
+                         Get:17 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libpcre2-16-0 arm64 10.42-1 [216 kB]
+29% [17 libpcre2-16-0 65.3 kB/216 kB 30%]                                         30% [Waiting for headers]                         Get:18 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libpcre2-32-0 arm64 10.42-1 [207 kB]
+30% [18 libpcre2-32-0 45.7 kB/207 kB 22%]                                         30% [Waiting for headers]                         Get:19 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libpcre2-posix3 arm64 10.42-1 [55.5 kB]
+                         31% [Working]             Get:20 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libpcre2-dev arm64 10.42-1 [664 kB]
+31% [20 libpcre2-dev 45.1 kB/664 kB 7%]                                       32% [Waiting for headers]                         Get:21 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libgit2-dev arm64 1.5.1+ds-1 [783 kB]
+33% [21 libgit2-dev 77.4 kB/783 kB 10%]                                       34% [Waiting for headers]                         Get:22 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-git arm64 0.5.2-5 [470 kB]
+34% [22 guile-git 38.4 kB/470 kB 8%]                                    35% [Waiting for headers]                         Get:23 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-gnutls arm64 3.7.9-2+deb12u1 [456 kB]
+35% [23 guile-gnutls 68.3 kB/456 kB 15%]                                        36% [Waiting for headers]                         Get:24 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-json arm64 4.7.3-2 [76.4 kB]
+36% [24 guile-json 69.6 kB/76.4 kB 91%]                                       37% [Working]             Get:25 http://mirror.hetzner.com/debian/packages bookworm/main arm64 liblz-dev arm64 1.13-5 [55.6 kB]
+37% [25 liblz-dev 17.8 kB/55.6 kB 32%]                                      Get:26 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-lzlib arm64 0.0.2-3 [35.2 kB]
+                                      38% [Waiting for headers]                         Get:27 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-sqlite3 arm64 0.1.3-3 [47.5 kB]
+                         Get:28 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libguile-ssh14 arm64 0.16.2-1 [30.0 kB]
+39% [28 libguile-ssh14 30.0 kB/30.0 kB 100%]                                            39% [Waiting for headers]                         Get:29 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-ssh arm64 0.16.2-1 [196 kB]
+39% [29 guile-ssh 36.9 kB/196 kB 19%]                                     40% [Waiting for headers]                         Get:30 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guile-zlib arm64 0.1.0-4 [43.7 kB]
+40% [30 guile-zlib 43.7 kB/43.7 kB 100%]                                        41% [Waiting for headers]                         Get:31 http://mirror.hetzner.com/debian/packages bookworm/main arm64 libssh-dev arm64 0.10.5-2 [236 kB]
+41% [31 libssh-dev 42.8 kB/236 kB 18%]                                      41% [Waiting for headers]                         Get:32 http://mirror.hetzner.com/debian/packages bookworm/main arm64 guix arm64 1.4.0-3 [47.6 MB]
+41% [32 guix 68.5 kB/47.6 MB 0%]                                98% [Waiting for headers]                         Get:33 http://mirror.hetzner.com/debian/packages bookworm/main arm64 openssl arm64 3.0.11-1~deb12u2 [1,385 kB]
+98% [33 openssl 79.9 kB/1,385 kB 6%]                                    100% [Working]              Fetched 61.0 MB in 0s (221 MB/s)
+Selecting previously unselected package nscd.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 64438 files and directories currently installed.)
+Preparing to unpack .../nscd_2.36-9+deb12u3_arm64.deb ...
+Unpacking nscd (2.36-9+deb12u3) ...
+Preparing to unpack .../libgnutls30_3.7.9-2+deb12u1_arm64.deb ...
+Unpacking libgnutls30:arm64 (3.7.9-2+deb12u1) over (3.7.9-2) ...
+Setting up libgnutls30:arm64 (3.7.9-2+deb12u1) ...
+Selecting previously unselected package libgc1:arm64.
+(Reading database ... (Reading database ... 5%(Reading database ... 10%(Reading database ... 15%(Reading database ... 20%(Reading database ... 25%(Reading database ... 30%(Reading database ... 35%(Reading database ... 40%(Reading database ... 45%(Reading database ... 50%(Reading database ... 55%(Reading database ... 60%(Reading database ... 65%(Reading database ... 70%(Reading database ... 75%(Reading database ... 80%(Reading database ... 85%(Reading database ... 90%(Reading database ... 95%(Reading database ... 100%(Reading database ... 64450 files and directories currently installed.)
+Preparing to unpack .../00-libgc1_1%3a8.2.2-3_arm64.deb ...
+Unpacking libgc1:arm64 (1:8.2.2-3) ...
+Selecting previously unselected package guile-3.0-libs:arm64.
+Preparing to unpack .../01-guile-3.0-libs_3.0.8-2_arm64.deb ...
+Unpacking guile-3.0-libs:arm64 (3.0.8-2) ...
+Selecting previously unselected package guile-3.0.
+Preparing to unpack .../02-guile-3.0_3.0.8-2_arm64.deb ...
+Unpacking guile-3.0 (3.0.8-2) ...
+Selecting previously unselected package guile-bytestructures.
+Preparing to unpack .../03-guile-bytestructures_1.0.10-3_arm64.deb ...
+Unpacking guile-bytestructures (1.0.10-3) ...
+Selecting previously unselected package libgpg-error-dev.
+Preparing to unpack .../04-libgpg-error-dev_1.46-1_arm64.deb ...
+Unpacking libgpg-error-dev (1.46-1) ...
+Selecting previously unselected package libgcrypt20-dev.
+Preparing to unpack .../05-libgcrypt20-dev_1.10.1-3_arm64.deb ...
+Unpacking libgcrypt20-dev (1.10.1-3) ...
+Selecting previously unselected package guile-gcrypt.
+Preparing to unpack .../06-guile-gcrypt_0.4.0-2_arm64.deb ...
+Unpacking guile-gcrypt (0.4.0-2) ...
+Selecting previously unselected package libhttp-parser2.9:arm64.
+Preparing to unpack .../07-libhttp-parser2.9_2.9.4-5_arm64.deb ...
+Unpacking libhttp-parser2.9:arm64 (2.9.4-5) ...
+Selecting previously unselected package libmbedcrypto7:arm64.
+Preparing to unpack .../08-libmbedcrypto7_2.28.3-1_arm64.deb ...
+Unpacking libmbedcrypto7:arm64 (2.28.3-1) ...
+Selecting previously unselected package libmbedx509-1:arm64.
+Preparing to unpack .../09-libmbedx509-1_2.28.3-1_arm64.deb ...
+Unpacking libmbedx509-1:arm64 (2.28.3-1) ...
+Selecting previously unselected package libmbedtls14:arm64.
+Preparing to unpack .../10-libmbedtls14_2.28.3-1_arm64.deb ...
+Unpacking libmbedtls14:arm64 (2.28.3-1) ...
+Selecting previously unselected package libgit2-1.5:arm64.
+Preparing to unpack .../11-libgit2-1.5_1.5.1+ds-1_arm64.deb ...
+Unpacking libgit2-1.5:arm64 (1.5.1+ds-1) ...
+Selecting previously unselected package libmbedtls-dev:arm64.
+Preparing to unpack .../12-libmbedtls-dev_2.28.3-1_arm64.deb ...
+Unpacking libmbedtls-dev:arm64 (2.28.3-1) ...
+Preparing to unpack .../13-libssl3_3.0.11-1~deb12u2_arm64.deb ...
+Unpacking libssl3:arm64 (3.0.11-1~deb12u2) over (3.0.11-1~deb12u1) ...
+Selecting previously unselected package libssl-dev:arm64.
+Preparing to unpack .../14-libssl-dev_3.0.11-1~deb12u2_arm64.deb ...
+Unpacking libssl-dev:arm64 (3.0.11-1~deb12u2) ...
+Selecting previously unselected package libssh2-1-dev:arm64.
+Preparing to unpack .../15-libssh2-1-dev_1.10.0-3+b1_arm64.deb ...
+Unpacking libssh2-1-dev:arm64 (1.10.0-3+b1) ...
+Selecting previously unselected package libhttp-parser-dev.
+Preparing to unpack .../16-libhttp-parser-dev_2.9.4-5_arm64.deb ...
+Unpacking libhttp-parser-dev (2.9.4-5) ...
+Selecting previously unselected package libpcre2-16-0:arm64.
+Preparing to unpack .../17-libpcre2-16-0_10.42-1_arm64.deb ...
+Unpacking libpcre2-16-0:arm64 (10.42-1) ...
+Selecting previously unselected package libpcre2-32-0:arm64.
+Preparing to unpack .../18-libpcre2-32-0_10.42-1_arm64.deb ...
+Unpacking libpcre2-32-0:arm64 (10.42-1) ...
+Selecting previously unselected package libpcre2-posix3:arm64.
+Preparing to unpack .../19-libpcre2-posix3_10.42-1_arm64.deb ...
+Unpacking libpcre2-posix3:arm64 (10.42-1) ...
+Selecting previously unselected package libpcre2-dev:arm64.
+Preparing to unpack .../20-libpcre2-dev_10.42-1_arm64.deb ...
+Unpacking libpcre2-dev:arm64 (10.42-1) ...
+Selecting previously unselected package libgit2-dev:arm64.
+Preparing to unpack .../21-libgit2-dev_1.5.1+ds-1_arm64.deb ...
+Unpacking libgit2-dev:arm64 (1.5.1+ds-1) ...
+Selecting previously unselected package guile-git.
+Preparing to unpack .../22-guile-git_0.5.2-5_arm64.deb ...
+Unpacking guile-git (0.5.2-5) ...
+Selecting previously unselected package guile-gnutls.
+Preparing to unpack .../23-guile-gnutls_3.7.9-2+deb12u1_arm64.deb ...
+Unpacking guile-gnutls (3.7.9-2+deb12u1) ...
+Selecting previously unselected package guile-json:arm64.
+Preparing to unpack .../24-guile-json_4.7.3-2_arm64.deb ...
+Unpacking guile-json:arm64 (4.7.3-2) ...
+Selecting previously unselected package liblz-dev:arm64.
+Preparing to unpack .../25-liblz-dev_1.13-5_arm64.deb ...
+Unpacking liblz-dev:arm64 (1.13-5) ...
+Selecting previously unselected package guile-lzlib.
+Preparing to unpack .../26-guile-lzlib_0.0.2-3_arm64.deb ...
+Unpacking guile-lzlib (0.0.2-3) ...
+Selecting previously unselected package guile-sqlite3.
+Preparing to unpack .../27-guile-sqlite3_0.1.3-3_arm64.deb ...
+Unpacking guile-sqlite3 (0.1.3-3) ...
+Selecting previously unselected package libguile-ssh14.
+Preparing to unpack .../28-libguile-ssh14_0.16.2-1_arm64.deb ...
+Unpacking libguile-ssh14 (0.16.2-1) ...
+Selecting previously unselected package guile-ssh.
+Preparing to unpack .../29-guile-ssh_0.16.2-1_arm64.deb ...
+Unpacking guile-ssh (0.16.2-1) ...
+Selecting previously unselected package guile-zlib.
+Preparing to unpack .../30-guile-zlib_0.1.0-4_arm64.deb ...
+Unpacking guile-zlib (0.1.0-4) ...
+Selecting previously unselected package libssh-dev:arm64.
+Preparing to unpack .../31-libssh-dev_0.10.5-2_arm64.deb ...
+Unpacking libssh-dev:arm64 (0.10.5-2) ...
+Selecting previously unselected package guix.
+Preparing to unpack .../32-guix_1.4.0-3_arm64.deb ...
+Unpacking guix (1.4.0-3) ...
+Preparing to unpack .../33-openssl_3.0.11-1~deb12u2_arm64.deb ...
+Unpacking openssl (3.0.11-1~deb12u2) over (3.0.11-1~deb12u1) ...
+Setting up libssl3:arm64 (3.0.11-1~deb12u2) ...
+Setting up libpcre2-16-0:arm64 (10.42-1) ...
+Setting up libpcre2-32-0:arm64 (10.42-1) ...
+Setting up libmbedcrypto7:arm64 (2.28.3-1) ...
+Setting up libgpg-error-dev (1.46-1) ...
+Setting up libssl-dev:arm64 (3.0.11-1~deb12u2) ...
+Setting up liblz-dev:arm64 (1.13-5) ...
+Setting up nscd (2.36-9+deb12u3) ...
+Created symlink /etc/systemd/system/multi-user.target.wants/nscd.service → /lib/systemd/system/nscd.service.
+Setting up libssh2-1-dev:arm64 (1.10.0-3+b1) ...
+Setting up libgc1:arm64 (1:8.2.2-3) ...
+Setting up libpcre2-posix3:arm64 (10.42-1) ...
+Setting up openssl (3.0.11-1~deb12u2) ...
+Setting up libhttp-parser2.9:arm64 (2.9.4-5) ...
+Setting up libhttp-parser-dev (2.9.4-5) ...
+Setting up libmbedx509-1:arm64 (2.28.3-1) ...
+Setting up libpcre2-dev:arm64 (10.42-1) ...
+Setting up libmbedtls14:arm64 (2.28.3-1) ...
+Setting up guile-3.0-libs:arm64 (3.0.8-2) ...
+Setting up libmbedtls-dev:arm64 (2.28.3-1) ...
+Setting up libssh-dev:arm64 (0.10.5-2) ...
+Setting up libgcrypt20-dev (1.10.1-3) ...
+Setting up libguile-ssh14 (0.16.2-1) ...
+Setting up guile-3.0 (3.0.8-2) ...
+update-alternatives: using /usr/lib/aarch64-linux-gnu/guile/3.0/bin/guile to provide /usr/bin/guile (guile) in auto mode
+Setting up libgit2-1.5:arm64 (1.5.1+ds-1) ...
+Setting up libgit2-dev:arm64 (1.5.1+ds-1) ...
+Setting up guile-ssh (0.16.2-1) ...
+Setting up guile-gcrypt (0.4.0-2) ...
+Setting up guile-lzlib (0.0.2-3) ...
+Setting up guile-json:arm64 (4.7.3-2) ...
+Setting up guile-bytestructures (1.0.10-3) ...
+Setting up guile-sqlite3 (0.1.3-3) ...
+Setting up guile-git (0.5.2-5) ...
+Setting up guile-zlib (0.1.0-4) ...
+Setting up guile-gnutls (3.7.9-2+deb12u1) ...
+Setting up guix (1.4.0-3) ...
+Creating group '_guixbuild' with GID 995.
+Creating group '_guixbuilder0' with GID 994.
+Creating user '_guixbuilder0' (Guix build user 0) with UID 994 and GID 994.
+Creating group '_guixbuilder1' with GID 993.
+Creating user '_guixbuilder1' (Guix build user 1) with UID 993 and GID 993.
+Creating group '_guixbuilder2' with GID 992.
+Creating user '_guixbuilder2' (Guix build user 2) with UID 992 and GID 992.
+Creating group '_guixbuilder3' with GID 991.
+Creating user '_guixbuilder3' (Guix build user 3) with UID 991 and GID 991.
+Creating group '_guixbuilder4' with GID 990.
+Creating user '_guixbuilder4' (Guix build user 4) with UID 990 and GID 990.
+Creating group '_guixbuilder5' with GID 989.
+Creating user '_guixbuilder5' (Guix build user 5) with UID 989 and GID 989.
+Creating group '_guixbuilder6' with GID 988.
+Creating user '_guixbuilder6' (Guix build user 6) with UID 988 and GID 988.
+Creating group '_guixbuilder7' with GID 987.
+Creating user '_guixbuilder7' (Guix build user 7) with UID 987 and GID 987.
+Creating group '_guixbuilder8' with GID 986.
+Creating user '_guixbuilder8' (Guix build user 8) with UID 986 and GID 986.
+Creating group '_guixbuilder9' with GID 985.
+Creating user '_guixbuilder9' (Guix build user 9) with UID 985 and GID 985.
+Created symlink /etc/systemd/system/guix-daemon.service.wants/gnu-store.mount → /lib/systemd/system/gnu-store.mount.
+Created symlink /etc/systemd/system/multi-user.target.wants/guix-daemon.service → /lib/systemd/system/guix-daemon.service.
+Created symlink /etc/systemd/system/multi-user.target.wants/guix-publish.service → /lib/systemd/system/guix-publish.service.
+Processing triggers for libc-bin (2.36-9+deb12u3) ...
+Processing triggers for man-db (2.11.2-2) ...
+Processing triggers for install-info (6.8-6+b1) ...
+#+end_example
+
+Clone the system channel.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  git clone git@github.com:r0man/guix-system.git
+#+end_src
+
+Format the root file system.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  mkfs.ext4 -L root -F /dev/sda1
+#+end_src
+
+#+RESULTS:
+#+begin_example
+Discarding device blocks:        0/79934971                 done
+Creating filesystem with 79934971 4k blocks and 19988480 inodes
+Filesystem UUID: a8ea28cc-1042-47ca-8451-bda68bb5cc83
+Superblock backups stored on blocks:
+	32768, 98304, 163840, 229376, 294912, 819200, 884736, 1605632, 2654208,
+	4096000, 7962624, 11239424, 20480000, 23887872, 71663616, 78675968
+
+Allocating group tables:    0/2440         done
+Writing inode tables:    0/2440         done
+Creating journal (262144 blocks): done
+Writing superblocks and filesystem accounting information:    0/2440         done
+
+#+end_example
+
+Format the EFI boot file system.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  mkfs.vfat -n EFI /dev/sda15
+#+end_src
+
+#+RESULTS:
+: mkfs.fat 4.2 (2021-01-31)
+
+Mount the new root file system under =/mnt=.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  mount /dev/sda1 /mnt
+#+end_src
+
+#+RESULTS:
+
+Create the boot file system directory under =/mnt/boot/efi=.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  mkdir --parents /mnt/boot/efi
+#+end_src
+
+#+RESULTS:
+
+Mount the new boot file system under =/mnt/boot/efi=.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  mount /dev/sda15 /mnt/boot/efi
+#+end_src
+
+#+RESULTS:
+
+Initialize the Guix system under =/mnt=.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  cd guix-system && guix system init --load-path=src src/r0man/guix/system/hetzner.scm /mnt
+#+end_src
+
+Unmount the new boot and root file systems.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  umount /mnt/boot/efi && umount /mnt
+#+end_src
+
+#+RESULTS:
+
+Reboot the server.
+
+#+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
+  reboot
+#+end_src
+
+#+RESULTS:
