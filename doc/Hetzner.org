@@ -335,7 +335,7 @@ Mount the new boot file system under =/mnt/boot/efi=.
 Initialize the Guix system under =/mnt=.
 
 #+begin_src sh :dir /ssh:root@hetzner:~ :exports both :results verbatim
-  cd guix-system && guix system init --load-path=src src/r0man/guix/system/hetzner.scm /mnt
+  cd guix-system && guix system init --load-path=src r0man/guix/system/hetzner.scm /mnt
 #+end_src
 
 Unmount the new boot and root file systems.

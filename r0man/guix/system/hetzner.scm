@@ -142,3 +142,5 @@
     (packages %packages)
     (services %services)
     (swap-devices %swap-devices)))
+
+hetzner-operating-system
