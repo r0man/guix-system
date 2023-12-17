@@ -49,7 +49,7 @@
          ;; "virtio_pci_legacy_dev"
          ;; "virtio_pci_modern_dev"
          ;; "virtio_rng"
-         ;; "virtio_scsi"
+         "virtio_scsi"
          %base-initrd-modules))
 
 (define %kernel-arguments
