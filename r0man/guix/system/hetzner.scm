@@ -125,9 +125,6 @@
          (service dhcp-client-service-type)
          %base-services))
 
-(define %swap-devices
-  (list (swap-space (target "/swapfile"))))
-
 (define hetzner-operating-system
   (operating-system
     (host-name "guix")
@@ -139,7 +136,6 @@
     (initrd-modules %initrd-modules)
     (file-systems %file-systems)
     (packages %packages)
-    (services %services)
-    (swap-devices %swap-devices)))
+    (services %services)))
 
 hetzner-operating-system
