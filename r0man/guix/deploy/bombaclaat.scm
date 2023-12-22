@@ -5,7 +5,7 @@
 
 (define machines
   (list (machine
-         (operating-system bombaclaat-operating-system)
+         (operating-system bombaclaat-operating-system-edge)
          (environment managed-host-environment-type)
          (configuration (machine-ssh-configuration
                          (allow-downgrades? #t)
