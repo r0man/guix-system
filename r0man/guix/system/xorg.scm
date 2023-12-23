@@ -1,13 +1,6 @@
 (define-module (r0man guix system xorg)
-  #:export (%xorg-ignore-abi
-            %xorg-libinput-config
+  #:export (%xorg-libinput-config
             %xorg-modeset-config))
-
-(define %xorg-ignore-abi "
-Section \"ServerFlags\"
-    Option \"IgnoreABI\" \"True\"
-EndSection
-")
 
 (define %xorg-libinput-config "
 Section \"InputClass\"
