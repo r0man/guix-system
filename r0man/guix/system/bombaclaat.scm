@@ -6,6 +6,7 @@
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
   #:use-module (asahi guix services firmware)
+  #:use-module (asahi guix services speakersafetyd)
   #:use-module (asahi guix services udev)
   #:use-module (asahi guix transformations)
   #:use-module (gnu bootloader)
@@ -70,14 +71,18 @@
            (type "vfat"))
          %base-file-systems))
 
+(define %speakersafetyd-service
+  (service speakersafetyd-service-type))
+
 (define %services
   (modify-services (cons* (service kernel-module-loader-service-type '("asahi" "appledrm"))
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=0"))))
+                          %qemu-service-aarch64
+                          %speakersafetyd-service
                           %udev-backlight-service
                           %udev-kbd-backlight-service
-                          %qemu-service-aarch64
                           (append (operating-system-user-services desktop-operating-system)
                                   (list (service asahi-firmware-service-type))))
     (slim-service-type config =>
