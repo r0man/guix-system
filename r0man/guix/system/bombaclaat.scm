@@ -42,9 +42,7 @@
 
 (define %packages
   (cons* alsa-ucm-conf-asahi
-         asahi-mesa-utils
          asahi-scripts
-         asahi-mesa
          (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices
