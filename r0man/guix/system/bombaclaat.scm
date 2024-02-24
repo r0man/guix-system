@@ -6,6 +6,7 @@
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
   #:use-module (asahi guix services firmware)
+  #:use-module (asahi guix services sound)
   #:use-module (asahi guix services speakersafetyd)
   #:use-module (asahi guix services udev)
   #:use-module (asahi guix transformations)
@@ -41,8 +42,7 @@
    (keyboard-layout %keyboard-layout)))
 
 (define %packages
-  (cons* alsa-ucm-conf-asahi
-         asahi-scripts
+  (cons* asahi-scripts
          (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices
@@ -73,7 +73,8 @@
   (service speakersafetyd-service-type))
 
 (define %services
-  (modify-services (cons* (service kernel-module-loader-service-type '("asahi" "appledrm"))
+  (modify-services (cons* asahi-alsa-service
+                          (service kernel-module-loader-service-type '("asahi" "appledrm"))
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=0"))))
