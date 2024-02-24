@@ -84,6 +84,7 @@
                           %udev-kbd-backlight-service
                           (append (operating-system-user-services desktop-operating-system)
                                   (list (service asahi-firmware-service-type))))
+    (delete alsa-service-type)
     (slim-service-type config =>
                        (slim-configuration
                         (inherit config)
