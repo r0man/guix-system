@@ -43,6 +43,7 @@
 
 (define %packages
   (cons* asahi-scripts
+         asahi-alsa-utils
          (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices
