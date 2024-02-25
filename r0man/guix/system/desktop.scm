@@ -29,8 +29,8 @@
 
 (define %packages
   (list
-   alsa-plugins
-   alsa-utils
+   ;; alsa-plugins
+   ;; alsa-utils
    blueman
    ;; cl-stumpwm
    ;; sbcl
@@ -55,8 +55,8 @@
    ;; sbcl-stumpwm-winner-mode
    ;; stumpish
    ;; stumpwm
-   pipewire
-   wireplumber
+   ;; pipewire
+   ;; wireplumber
    xf86-input-libinput))
 
 (define (network-manager-applet? service)
