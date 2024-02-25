@@ -42,8 +42,8 @@
    (keyboard-layout %keyboard-layout)))
 
 (define %packages
-  (cons* asahi-scripts
-         asahi-alsa-utils
+  (cons* asahi-alsa-utils
+         asahi-scripts
          (operating-system-packages desktop-operating-system)))
 
 (define %mapped-devices
