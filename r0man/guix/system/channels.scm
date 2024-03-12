@@ -27,7 +27,7 @@
   (channel
    (name 'r0man-system)
    (url "https://github.com/r0man/guix-system")
-   (branch "main")
+   (branch "asahi")
    (introduction
     (make-channel-introduction
      "754146ab5979be91a3ed69c99b9dbccb4d06b6bd"

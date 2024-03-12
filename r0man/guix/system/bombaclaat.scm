@@ -1,4 +1,5 @@
 (define-module (r0man guix system bombaclaat)
+  #:use-module ((gnu services sound) #:prefix sound:)
   #:use-module (asahi guix bootloader m1n1)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages audio)
@@ -17,7 +18,6 @@
   #:use-module (gnu services avahi)
   #:use-module (gnu services linux)
   #:use-module (gnu services networking)
-  #:use-module (gnu services sound)
   #:use-module (gnu services ssh)
   #:use-module (gnu services xorg)
   #:use-module (gnu services)
@@ -74,8 +74,7 @@
   (service speakersafetyd-service-type))
 
 (define %services
-  (modify-services (cons* asahi-alsa-service
-                          (service kernel-module-loader-service-type '("asahi" "appledrm"))
+  (modify-services (cons* (service kernel-module-loader-service-type '("asahi" "appledrm"))
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=0"))))
@@ -85,7 +84,7 @@
                           %udev-kbd-backlight-service
                           (append (operating-system-user-services desktop-operating-system)
                                   (list (service asahi-firmware-service-type))))
-    (delete alsa-service-type)
+    (delete sound:alsa-service-type)
     (slim-service-type config =>
                        (slim-configuration
                         (inherit config)
