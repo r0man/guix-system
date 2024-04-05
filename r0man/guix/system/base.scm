@@ -11,7 +11,7 @@
   (map specification->package
        '("cryptsetup-static"
          "e2fsprogs"
-         "emacs-next"
+         "emacs"
          "lvm2-static"
          "net-tools"
          "network-manager"
