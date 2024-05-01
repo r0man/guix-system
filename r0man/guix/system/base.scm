@@ -14,8 +14,7 @@
          "emacs"
          "lvm2-static"
          "net-tools"
-         "network-manager"
-         "nss-certs")))
+         "network-manager")))
 
 (define %users
   (list (user-account
