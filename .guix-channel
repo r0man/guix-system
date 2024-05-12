@@ -1,20 +1,15 @@
 ;; -*- mode: scheme; -*-
 (channel
  (version 0)
- (url "https://github.com/r0man/guix-system.git")
+ (url "https://github.com/r0man/guix-system")
  (dependencies
   (channel
    (name asahi)
-   (url "https://github.com/r0man/asahi-guix.git")
-   (branch "main")
-   (introduction
-    (channel-introduction
-     (version 0)
-     (commit "c11f1c583d11b1ed55d34d7041b0c12d51d573e4")
-     (signer "D226 A339 D8DF 4481 5DDE  0CA0 3DDA 5252 7D2A C199"))))
+   (url "https://github.com/asahi-guix/channel")
+   (branch "main"))
   (channel
    (name r0man-channel)
-   (url "https://github.com/r0man/guix-channel.git")
+   (url "https://github.com/r0man/guix-channel")
    (branch "main")
    (introduction
     (channel-introduction
