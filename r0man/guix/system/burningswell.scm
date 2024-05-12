@@ -96,7 +96,6 @@
                               (url "https://github.com/r0man/guix-channel.git"))
                              %default-channels))
                       (systems '("aarch64-linux" "x86_64-linux")))))
-            (use-substitutes? #t)
             (remote-server (cuirass-remote-server-configuration)))))
 
 (define %cuirass-remote-worker-service
