@@ -3,6 +3,7 @@
   #:use-module (asahi guix bootloader m1n1)
   #:use-module (asahi guix initrd)
   #:use-module (asahi guix packages audio)
+  #:use-module (asahi guix packages display-managers)
   #:use-module (asahi guix packages gl)
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
@@ -90,6 +91,7 @@
     (slim-service-type config =>
                        (slim-configuration
                         (inherit config)
+                        (slim asahi-slim)
                         (xorg-configuration
                          (xorg-configuration
                           (keyboard-layout %keyboard-layout)
