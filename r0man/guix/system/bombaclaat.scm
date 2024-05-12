@@ -44,6 +44,7 @@
 
 (define %packages
   (cons* asahi-alsa-utils
+         asahi-mesa-utils
          asahi-scripts
          (operating-system-packages desktop-operating-system)))
 
