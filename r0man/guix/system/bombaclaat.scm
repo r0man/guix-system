@@ -6,6 +6,7 @@
   #:use-module (asahi guix packages gl)
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
+  #:use-module (asahi guix packages xorg)
   #:use-module (asahi guix services firmware)
   #:use-module (asahi guix services sound)
   #:use-module (asahi guix services speakersafetyd)
@@ -98,7 +99,7 @@
                                          xf86-input-mouse))
                           (extra-config (list %xorg-libinput-config
                                               %xorg-modeset-config))
-                          (server xorg-server)))))))
+                          (server asahi-xorg-server)))))))
 
 (define %swap-devices
   (list (swap-space
