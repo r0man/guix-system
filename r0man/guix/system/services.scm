@@ -29,6 +29,7 @@
   #:export (%auditd-service-type
             %avahi-service
             %bluetooth-service
+            %containerd-service
             %cups-service
             %docker-service
             %elogind-service
@@ -63,6 +64,9 @@
             (web-interface? #t)
             (extensions
              (list cups-filters)))))
+
+(define %containerd-service
+  (service containerd-service-type))
 
 (define %docker-service
   (service docker-service-type))

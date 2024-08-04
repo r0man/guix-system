@@ -69,6 +69,7 @@
               (network-manager-applet? service))
             (modify-services (cons* %auditd-service-type
                                     %bluetooth-service
+                                    %containerd-service
                                     %cups-service
                                     %docker-service
                                     %libvirt-service
