@@ -77,7 +77,7 @@
   (modify-services (cons* (service asahi-firmware-service-type)
                           (service alsa-service-type)
                           (service kernel-module-loader-service-type '("asahi" "appledrm"))
-                          ;; (service pipewire-service-type)
+                          (service pipewire-service-type)
                           (service speakersafetyd-service-type)
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
