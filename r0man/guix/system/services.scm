@@ -4,6 +4,7 @@
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages security-token)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages suckless)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu services admin)
   #:use-module (gnu services auditd)
@@ -129,7 +130,10 @@
               (extra-config (list %xorg-libinput-config)))))))
 
 (define %screen-locker-service
-  (screen-locker-service xlockmore "xlock"))
+  (service screen-locker-service-type
+           (screen-locker-configuration
+            (name "slock")
+            (program (file-append slock "/bin/slock")))))
 
 (define %udev-fido2-service
   (udev-rules-service 'fido2 libfido2 #:groups '("plugdev")))
