@@ -72,7 +72,7 @@
   (service docker-service-type))
 
 (define %elogind-service
-  (elogind-service))
+  (service elogind-service-type))
 
 (define %guix-publish-service
   (service guix-publish-service-type
