@@ -1,4 +1,4 @@
-(define-module (r0man guix system bombaclaat)
+(define-module (r0man guix system m1)
   #:use-module ((gnu services sound) #:prefix sound:)
   #:use-module (asahi guix bootloader m1n1)
   #:use-module (asahi guix initrd)
@@ -31,9 +31,7 @@
   #:use-module (r0man guix system desktop)
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
-  #:use-module (r0man guix system xorg)
-  #:export (bombaclaat-operating-system
-            bombaclaat-operating-system-edge))
+  #:use-module (r0man guix system xorg))
 
 (define %bootloader
   (bootloader-configuration
@@ -115,23 +113,17 @@
           (target "/dev/mapper/bombaclaat-swap")
           (dependencies %mapped-devices))))
 
-(define bombaclaat-operating-system
+(define-public m1-operating-system
   (operating-system
     (inherit desktop-operating-system)
-    (host-name "bombaclaat")
+    (host-name "m1")
     (bootloader %bootloader)
-    (kernel asahi-linux)
-    (initrd-modules asahi-initrd-modules)
+    (kernel asahi-linux-edge)
+    (initrd-modules asahi-initrd-modules-edge)
     (mapped-devices %mapped-devices)
     (file-systems %file-systems)
     (packages %packages)
     (services %services)
     (swap-devices %swap-devices)))
 
-(define bombaclaat-operating-system-edge
-  (operating-system
-    (inherit bombaclaat-operating-system)
-    (kernel asahi-linux-edge)
-    (initrd-modules asahi-initrd-modules-edge)))
-
-bombaclaat-operating-system-edge
+m1-operating-system

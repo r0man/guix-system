@@ -2,5 +2,5 @@
 
 [[https://guix.gnu.org/static/blog/img/gnu-guix-a-frogs-dream.jpg]]
 
-- [[file:doc/bombaclaat.org][Bombaclaat]]
+- [[file:doc/m1.org][M1]]
 - [[file:doc/burningswell.org][Burningswell]]

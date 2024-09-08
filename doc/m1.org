@@ -161,20 +161,20 @@ List the UUIDs of the partitions.
 /dev/sda1: SEC_TYPE="msdos" LABEL_FATBOOT="GNU-ESP" LABEL="GNU-ESP" UUID="72A9-2BFE" BLOCK_SIZE="512" TYPE="vfat"
 #+end_example
 
-Update UUIDs in =r0man/guix/system/bombaclaat.scm=.
+Update UUIDs in =r0man/guix/system/m1.scm=.
 
 ** Installation
 
 Build the Guix system image.
 
 #+begin_src sh :exports both :results verbatim
-  guix system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
+  guix system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/m1.scm
 #+end_src
 
 Or, build the image with the Guix time machine.
 
 #+begin_src sh :exports both :results verbatim
-  guix time-machine -C r0man/guix/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/bombaclaat.scm
+  guix time-machine -C r0man/guix/system/channels.scm -- system image -L . --image-type=efi-raw --system=aarch64-linux r0man/guix/system/m1.scm
 #+end_src
 
 Write the image to the USB stick at =/dev/sda=.
@@ -188,13 +188,13 @@ Write the image to the USB stick at =/dev/sda=.
 Initialize the system using the mounted file systems in =/mnt=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  guix system init -L . --system=aarch64-linux r0man/guix/system/bombaclaat.scm /mnt
+  guix system init -L . --system=aarch64-linux r0man/guix/system/m1.scm /mnt
 #+end_src
 
 Or, initialize the system with the Guix time machine.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  guix time-machine -C r0man/guix/system/channels.scm -- system init -L . --system=aarch64-linux r0man/guix/system/bombaclaat.scm /mnt
+  guix time-machine -C r0man/guix/system/channels.scm -- system init -L . --system=aarch64-linux r0man/guix/system/m1.scm /mnt
 #+end_src
 
 Copy the channels to =/mnt/etc/channels.scm=.
@@ -209,5 +209,5 @@ Copy the channels to =/mnt/etc/channels.scm=.
 Copy the system configuration to =/mnt/etc/config.scm=.
 
 #+begin_src sh :exports both :dir /sudo:: :results verbatim
-  cp r0man/guix/system/bombaclaat.scm /mnt/etc/config.scm
+  cp r0man/guix/system/m1.scm /mnt/etc/config.scm
 #+end_src
