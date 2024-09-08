@@ -7,20 +7,18 @@
   #:use-module (asahi guix packages gl)
   #:use-module (asahi guix packages linux)
   #:use-module (asahi guix packages misc)
+  #:use-module (asahi guix packages wm)
   #:use-module (asahi guix packages xorg)
   #:use-module (asahi guix services firmware)
   #:use-module (asahi guix services sound)
   #:use-module (asahi guix services speakersafetyd)
   #:use-module (asahi guix services udev)
-  #:use-module (asahi guix transformations)
   #:use-module (gnu bootloader)
-  #:use-module (gnu packages certs)
-  #:use-module (gnu packages ssh)
+  #:use-module (gnu packages display-managers)
+  #:use-module (gnu packages wm)
   #:use-module (gnu packages xorg)
-  #:use-module (gnu services avahi)
   #:use-module (gnu services linux)
-  #:use-module (gnu services networking)
-  #:use-module (gnu services ssh)
+  #:use-module (gnu services sddm)
   #:use-module (gnu services xorg)
   #:use-module (gnu services)
   #:use-module (gnu system file-systems)
@@ -46,6 +44,8 @@
 (define %packages
   (cons* asahi-alsa-utils
          asahi-mesa-utils
+         asahi-sway
+         stumpwm
          asahi-scripts
          (operating-system-packages desktop-operating-system)))
 
@@ -73,6 +73,26 @@
            (type "vfat"))
          %base-file-systems))
 
+(define %xorg-configuration
+  (xorg-configuration
+   (keyboard-layout %keyboard-layout)
+   (modules (map replace-mesa
+                 (list xf86-video-fbdev
+                       xf86-input-libinput
+                       xf86-input-evdev
+                       xf86-input-keyboard
+                       xf86-input-mouse)))
+   (extra-config (list %xorg-libinput-config
+                       %xorg-modeset-config))
+   (server asahi-xorg-server)))
+
+(define %sddm-service
+  (service sddm-service-type
+           (sddm-configuration
+            (auto-login-user "roman")
+            (sddm (replace-mesa sddm))
+            (xorg-configuration %xorg-configuration))))
+
 (define %services
   (modify-services (cons* (service alsa-service-type)
                           (service asahi-firmware-service-type)
@@ -81,32 +101,19 @@
                           (simple-service 'asahi-config etc-service-type
                                           (list `("modprobe.d/asahi.conf"
                                                   ,(plain-file "asahi.conf" "options asahi debug_flags=0"))))
+                          %sddm-service
                           %qemu-service-aarch64
                           %udev-backlight-service
                           %udev-kbd-backlight-service
                           (operating-system-user-services desktop-operating-system))
     (delete sound:alsa-service-type)
     (delete sound:pulseaudio-service-type)
-    (slim-service-type config =>
-                       (slim-configuration
-                        (inherit config)
-                        (slim asahi-slim)
-                        (xorg-configuration
-                         (xorg-configuration
-                          (keyboard-layout %keyboard-layout)
-                          (modules (list xf86-video-fbdev
-                                         xf86-input-libinput
-                                         xf86-input-evdev
-                                         xf86-input-keyboard
-                                         xf86-input-mouse))
-                          (extra-config (list %xorg-libinput-config
-                                              %xorg-modeset-config))
-                          (server asahi-xorg-server)))))))
+    (delete slim-service-type)))
 
 (define %swap-devices
   (list (swap-space
-         (target "/dev/mapper/bombaclaat-swap")
-         (dependencies %mapped-devices))))
+          (target "/dev/mapper/bombaclaat-swap")
+          (dependencies %mapped-devices))))
 
 (define bombaclaat-operating-system
   (operating-system
