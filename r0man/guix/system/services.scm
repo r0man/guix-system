@@ -99,9 +99,10 @@
 (define %openssh-service
   (service openssh-service-type
            (openssh-configuration
-            (openssh openssh-sans-x)
+            (openssh openssh)
             (permit-root-login 'prohibit-password)
-            (port-number 22))))
+            (port-number 22)
+            (x11-forwarding? #t))))
 
 (define %pcscd-service
   (service pcscd-service-type))
