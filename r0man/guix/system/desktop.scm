@@ -19,13 +19,13 @@
   #:use-module (gnu services sound)
   #:use-module (gnu services xorg)
   #:use-module (gnu services)
+  #:use-module (gnu system nss)
   #:use-module (gnu system)
   #:use-module (guix utils)
+  #:use-module (r0man guix packages lisp)
   #:use-module (r0man guix system base)
   #:use-module (r0man guix system services)
-  #:use-module (r0man guix packages lisp)
-  #:use-module (srfi srfi-1)
-  #:export (desktop-operating-system))
+  #:use-module (srfi srfi-1))
 
 (define %packages
   (list
@@ -85,9 +85,10 @@
               (console-font-service-type config => (console-font-service-config config))
               (guix-service-type config => (guix-service-type-config config))))))
 
-(define desktop-operating-system
+(define-public desktop-operating-system
   (operating-system
     (inherit base-operating-system)
+    (name-service-switch %mdns-host-lookup-nss)
     (packages (append %packages (operating-system-packages base-operating-system)))
     (services %services)))
 
