@@ -88,7 +88,9 @@
   (service sddm-service-type
            (sddm-configuration
             (auto-login-user "roman")
-            (sddm (replace-mesa sddm))
+            (sddm (replace-mesa sddm-qt5))
+            (theme "guix-sugar-light")
+            (themes-directory (file-append guix-sugar-light-sddm-theme "/share/sddm/themes"))
             (xorg-configuration %xorg-configuration))))
 
 (define %services
