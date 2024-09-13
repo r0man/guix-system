@@ -15,6 +15,7 @@
   #:use-module (asahi guix services udev)
   #:use-module (gnu bootloader)
   #:use-module (gnu packages display-managers)
+  #:use-module (gnu packages gnome)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xorg)
   #:use-module (gnu services linux)
@@ -28,10 +29,12 @@
   #:use-module (gnu system)
   #:use-module (guix gexp)
   #:use-module (guix packages)
+  #:use-module (r0man guix packages display-managers)
   #:use-module (r0man guix system desktop)
   #:use-module (r0man guix system keyboard)
   #:use-module (r0man guix system services)
-  #:use-module (r0man guix system xorg))
+  #:use-module (r0man guix system xorg)
+  #:use-module (srfi srfi-1))
 
 (define %bootloader
   (bootloader-configuration
@@ -43,9 +46,13 @@
   (cons* asahi-alsa-utils
          asahi-mesa-utils
          asahi-sway
-         stumpwm
          asahi-scripts
-         (operating-system-packages desktop-operating-system)))
+         network-manager
+         (remove (lambda (package)
+                   (equal? "network-manager" (package-name package)))
+                 (map replace-mesa
+                      (cons* stumpwm
+                             (operating-system-packages desktop-operating-system))))))
 
 (define %mapped-devices
   (list (mapped-device
